@@ -1,0 +1,15 @@
+
+
+
+RewriteEngine On
+RewriteRule ^([a-zA-Z0-9_-]+)$ media.php?module=$1
+RewriteRule ^([a-z]*)\-([a-z]*).html media.php?module=$1&act=$2
+RewriteRule ^([a-z]*)\-([a-z]*)-([a-zA-Z0-9_-]+]*).html media.php?module=$1&act=$2&id=$3 [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+
+
+
+
