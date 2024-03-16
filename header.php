@@ -28,6 +28,8 @@ else{
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
     <link rel="stylesheet" href="plugins/iCheck/all.css">
     <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="plugins/fullcalendar/dist/fullcalendar.min.css">
+    <link rel="stylesheet" href="plugins/fullcalendar/dist/fullcalendar.print.min.css" media="print">
     <link rel="stylesheet" href="plugins/select2/select2.min.css">
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">

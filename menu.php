@@ -60,6 +60,17 @@ else{
 							<li class="<?php if($module=="kinerja") echo "active"; ?>"><a href="<?php echo $base_url;?>tugas"><i class="fa fa-list-ol"></i> <span>Tugas</span></a></li>
 						</ul>
 					</li>
+					
+					<li class="treeview <?php if($module=="jadwal") echo "active"; ?>">
+						<a href="#">
+							<i class="fa fa-check-square-o"></i>
+								<span><b>Jadwal</b></span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li class="<?php if($module=="jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>jadwal"><i class="fa fa-list-ol"></i> <span>Jadwal</span></a></li>
+						</ul>
+					</li>
 					<li>
 						<ul>
 							<li><a href="<?php echo $base_url;?>gajitest">Test Gaji</a></li>
@@ -106,6 +117,17 @@ else{
 							<li class="<?php if($module=="kinerja") echo "active"; ?>"><a href="<?php echo $base_url;?>tugas"><i class="fa fa-list-ol"></i> <span>Tugas</span></a></li>
 						</ul>
 					</li>
+					
+					<li class="treeview <?php if($module=="jadwal") echo "active"; ?>">
+						<a href="#">
+							<i class="fa fa-check-square-o"></i>
+								<span><b>Jadwal</b></span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li class="<?php if($module=="jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>jadwal"><i class="fa fa-list-ol"></i> <span>Jadwal</span></a></li>
+						</ul>
+					</li>
 
 			<!-- JIKA USER ADALAH USER BIASA MAKA TAMPIL MENU -->
 				<?php }else{ ?>
@@ -129,6 +151,16 @@ else{
 						</a>
 						<ul class="treeview-menu">
 							<li class="<?php if($module=="kinerja") echo "active"; ?>"><a href="<?php echo $base_url;?>tugas"><i class="fa fa-list-ol"></i> <span>Tugas</span></a></li>
+						</ul>
+					</li>
+					<li class="treeview <?php if($module=="jadwal") echo "active"; ?>">
+						<a href="#">
+							<i class="fa fa-check-square-o"></i>
+								<span><b>Jadwal</b></span>
+							<i class="fa fa-angle-left pull-right"></i>
+						</a>
+						<ul class="treeview-menu">
+							<li class="<?php if($module=="jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>jadwal"><i class="fa fa-list-ol"></i> <span>Jadwal</span></a></li>
 						</ul>
 					</li>
 				<?php } ?>

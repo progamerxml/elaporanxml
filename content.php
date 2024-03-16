@@ -24,6 +24,12 @@ else{
     include "modul/mod_tugas/tugas.php";
   }
 
+  //jadwal
+  elseif ($_GET['module']=='jadwal'){               
+   
+    include "modul/mod_jadwal/jadwal.php";
+  }
+
   //rekap_report
   elseif ($_GET['module']=='rekap_report'){               
     

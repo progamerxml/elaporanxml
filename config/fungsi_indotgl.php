@@ -134,5 +134,26 @@ function terbilang($x)
     
     
 } 
+
+function translateDayName($englishDay) {
+    $englishDays = array(
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu',
+        'Sunday' => 'Minggu'
+    );
+
+    // Mengecek apakah nama hari dalam Bahasa Inggris ada dalam array $englishDays
+    if (array_key_exists($englishDay, $englishDays)) {
+        // Jika ada, kembalikan terjemahan Bahasa Indonesia
+        return $englishDays[$englishDay];
+    } else {
+        // Jika tidak ada, kembalikan pesan error
+        return "Nama hari tidak valid";
+    }
+}
 ?>
 
