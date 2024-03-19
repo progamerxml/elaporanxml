@@ -27,7 +27,7 @@ else{
 				<font style="vertical-align: inherit;">Home </font>
 			</a>
 		</li>
-		<li class="active"><font style="vertical-align: inherit;">Manajemen Data</font></li>
+		<li class="active"><font style="vertical-align: inherit;">Manajemen Jadwal</font></li>
 		<li class="active"><font style="vertical-align: inherit;"><?php echo $mod; ?> </font></li>
 	</ol>
 </section>
@@ -56,7 +56,7 @@ else{
 				</section>
 				<hr>
 				<div class="box-body">
-					<table id="" class="table table-hover table-bordered table-responsive no-padding">
+					<table id="" class="table table-bordered table-responsive no-padding">
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, 3, 2024); ?>
 						<thead>
 							<tr>
@@ -70,7 +70,44 @@ else{
                             </tr>
 						</thead>
 						<tbody>
-							
+							<tr>
+                                <?php 
+                                    $karyawan = array(); 
+                                    for($i=1; $i<=62; $i++)
+                                    {
+                                        $dataKaryawan = array(
+                                            "employ_id" => "nama $i",
+                                            "date" => array()
+                                        );
+
+                                        for($a=1; $a<= $dates; $a++)
+                                        {
+                                        
+                                            $tanggal = array(
+                                                "tanggal" => $a,
+                                                "role" => rand(1, 5),
+                                                "shift" => rand(1, 3)
+                                            );
+
+                                            array_push($dataKaryawan['date'], $tanggal);
+                                        }
+
+                                        array_push($karyawan, $dataKaryawan);
+                                    }
+
+                                    // print_r($karyawan);
+                                    foreach($karyawan as $kry) {
+                                ?>
+                                
+                                <td><?= $kry["employ_id"] ?></td>
+                                <?php foreach($kry['date'] as $jadwal) { ?>
+                                    <td style="text-align: center;" >
+                                    <?= "role : " . $jadwal['role'] . "<br>"; ?>
+                                    <?= "shift : " . $jadwal['shift']; ?>
+                                    </td>
+                                <?php } ?>
+                            </tr>
+                            <?php  } ?>
 						</tbody>
 					</table>
 				</div><!-- /.box-body -->
