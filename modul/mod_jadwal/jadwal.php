@@ -56,7 +56,7 @@ else{
 				</section>
 				<hr>
 				<div class="box-body">
-					<table id="" class="table table-bordered table-responsive no-padding">
+					<table id="" class="table table-bordered table-responsive">
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, 3, 2024); ?>
 						<thead>
 							<tr>
@@ -69,46 +69,87 @@ else{
                                 <?php } ?>
                             </tr>
 						</thead>
-						<tbody>
-							<tr>
-                                <?php 
-                                    $karyawan = array(); 
-                                    for($i=1; $i<=62; $i++)
-                                    {
-                                        $dataKaryawan = array(
-                                            "employ_id" => "nama $i",
-                                            "date" => array()
-                                        );
+                        <tbody>
+    <?php 
+    $karyawan = array(); 
+    for($i=1; $i<=62; $i++) {
+        $dataKaryawan = array(
+            "employ_id" => "nama $i",
+            "date" => array()
+        );
 
-                                        for($a=1; $a<= $dates; $a++)
-                                        {
-                                        
-                                            $tanggal = array(
-                                                "tanggal" => $a,
-                                                "role" => rand(1, 5),
-                                                "shift" => rand(1, 3)
-                                            );
+        for($a=1; $a<= $dates; $a++) {
+            $tanggal = array(
+                "tanggal" => $a,
+                "role" => rand(1, 5),
+                "shift" => rand(1, 3)
+            );
 
-                                            array_push($dataKaryawan['date'], $tanggal);
-                                        }
+            array_push($dataKaryawan['date'], $tanggal);
+        }
 
-                                        array_push($karyawan, $dataKaryawan);
-                                    }
+        array_push($karyawan, $dataKaryawan);
+    }
 
-                                    // print_r($karyawan);
-                                    foreach($karyawan as $kry) {
-                                ?>
-                                
-                                <td><?= $kry["employ_id"] ?></td>
-                                <?php foreach($kry['date'] as $jadwal) { ?>
-                                    <td style="text-align: center;" >
-                                    <?= "role : " . $jadwal['role'] . "<br>"; ?>
-                                    <?= "shift : " . $jadwal['shift']; ?>
-                                    </td>
-                                <?php } ?>
-                            </tr>
-                            <?php  } ?>
-						</tbody>
+    foreach($karyawan as $kry) { ?>
+        <tr>
+            <td><?= $kry["employ_id"] ?></td>
+            <?php foreach($kry['date'] as $jadwal) { ?>
+                <td class="editable" style="text-align: center;" data-employ="<?= $kry['employ_id'] ?>" data-tanggal="<?= $jadwal['tanggal'] ?>" data-role="<?= $jadwal['role'] ?>" data-shift="<?= $jadwal['shift'] ?>">
+                    <span class="info-box-text"><?= "role : " . $jadwal['role'] . "<br>"; ?></span>
+                    <span class="info-box-text"><?= "shift : " . $jadwal['shift']; ?></span>
+                </td>
+            <?php } ?>
+        </tr>
+    <?php } ?>
+</tbody>
+
+<script>
+    document.addEventListener('click', function(event) {
+        var clickedElement = event.target;
+        var editableElement = null;
+
+        if (clickedElement.classList.contains('editable')) {
+            editableElement = clickedElement;
+        } else if (clickedElement.closest('.editable')) {
+            editableElement = clickedElement.closest('.editable');
+        }
+
+        if (editableElement) {
+            var employId = editableElement.dataset.employ;
+            var tanggal = editableElement.dataset.tanggal;
+            var role = editableElement.dataset.role;
+            var shift = editableElement.dataset.shift;
+
+            var roleInput = document.createElement('input');
+            roleInput.type = 'text';
+            roleInput.name = 'role_' + employId + '_' + tanggal;
+            roleInput.value = role;
+
+            var shiftInput = document.createElement('input');
+            shiftInput.type = 'text';
+            shiftInput.name = 'shift_' + employId + '_' + tanggal;
+            shiftInput.value = shift;
+
+            editableElement.innerHTML = '';
+            editableElement.appendChild(roleInput);
+            editableElement.appendChild(shiftInput);
+
+            roleInput.focus();
+
+            roleInput.addEventListener('blur', function() {
+                editableElement.innerHTML = '<span>role : ' + this.value + '<br></span><span>shift : ' + shiftInput.value + '</span>';
+            });
+
+            shiftInput.addEventListener('blur', function() {
+                editableElement.innerHTML = '<span>role : ' + roleInput.value + '<br></span><span>shift : ' + this.value + '</span>';
+            });
+        }
+    });
+</script>
+
+
+
 					</table>
 				</div><!-- /.box-body -->
 			</div><!-- /.box -->
