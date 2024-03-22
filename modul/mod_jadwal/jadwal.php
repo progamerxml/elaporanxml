@@ -8,6 +8,11 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 else{
   $aksi = "modul/mod_jadwal/aksi_jadwal.php";
   require __DIR__ . "/../../config/fungsi_kalender.php";
+  require __DIR__ . "/aksi_jadwal.php";
+  $roles2 = getRole();
+  $shifts2 = getShift();
+  $employes = getKaryawan();
+//   print_r([$roles2, $shifts2]);
 
   // mengatasi variabel yang belum di definisikan (notice undefined index)
   $act = isset($_GET['act']) ? $_GET['act'] : '';
@@ -60,7 +65,7 @@ else{
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, 3, 2024); ?>
 						<thead>
 							<tr>
-								<th rowspan="3" style="vertical-align: middle; text-align: center; width: 12%;">Nama</th>
+								<th rowspan="3" style="vertical-align: middle; text-align: center; width: 10%;">Nama</th>
                                 <td colspan="<?= $dates ?>" style="text-align: center;" > <strong>Tanggal</strong></td>
 							</tr>
                             <tr>
@@ -91,61 +96,71 @@ else{
         array_push($karyawan, $dataKaryawan);
     }
 
-    foreach($karyawan as $kry) { ?>
+    foreach($employes as $employ) { ?>
         <tr>
-            <td><?= $kry["employ_id"] ?></td>
+            <form action="<?= $aksi ?>" method="post">
+            <td style="text-align: left; vertical-align: middle;"><?= $employ["nama"] ?></td>
             <?php foreach($kry['date'] as $jadwal) { ?>
                 <td class="editable" style="text-align: center;" data-employ="<?= $kry['employ_id'] ?>" data-tanggal="<?= $jadwal['tanggal'] ?>" data-role="<?= $jadwal['role'] ?>" data-shift="<?= $jadwal['shift'] ?>">
-                    <span class="info-box-text"><?= "role : " . $jadwal['role'] . "<br>"; ?></span>
-                    <span class="info-box-text"><?= "shift : " . $jadwal['shift']; ?></span>
+                    <select name="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
+                        <?php  foreach($roles2 as $role) { ?>
+                            <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>
+                        <?php } ?>
+                    </select>
+                    <select name="shift-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="shift-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
+                        <?php  foreach($shifts2 as $shift) { ?>
+                            <option value="<?= $shift['id'] ?>"> <?= $shift['nama'] ?> </option>
+                        <?php } ?>
+                    </select>
                 </td>
+                </form>
             <?php } ?>
         </tr>
     <?php } ?>
 </tbody>
 
 <script>
-    document.addEventListener('click', function(event) {
-        var clickedElement = event.target;
-        var editableElement = null;
+    // document.addEventListener('click', function(event) {
+    //     var clickedElement = event.target;
+    //     var editableElement = null;
 
-        if (clickedElement.classList.contains('editable')) {
-            editableElement = clickedElement;
-        } else if (clickedElement.closest('.editable')) {
-            editableElement = clickedElement.closest('.editable');
-        }
+    //     if (clickedElement.classList.contains('editable')) {
+    //         editableElement = clickedElement;
+    //     } else if (clickedElement.closest('.editable')) {
+    //         editableElement = clickedElement.closest('.editable');
+    //     }
 
-        if (editableElement) {
-            var employId = editableElement.dataset.employ;
-            var tanggal = editableElement.dataset.tanggal;
-            var role = editableElement.dataset.role;
-            var shift = editableElement.dataset.shift;
+    //     if (editableElement) {
+    //         var employId = editableElement.dataset.employ;
+    //         var tanggal = editableElement.dataset.tanggal;
+    //         var role = editableElement.dataset.role;
+    //         var shift = editableElement.dataset.shift;
 
-            var roleInput = document.createElement('input');
-            roleInput.type = 'text';
-            roleInput.name = 'role_' + employId + '_' + tanggal;
-            roleInput.value = role;
+    //         var roleInput = document.createElement('input');
+    //         roleInput.type = 'text';
+    //         roleInput.name = 'role_' + employId + '_' + tanggal;
+    //         roleInput.value = role;
 
-            var shiftInput = document.createElement('input');
-            shiftInput.type = 'text';
-            shiftInput.name = 'shift_' + employId + '_' + tanggal;
-            shiftInput.value = shift;
+    //         var shiftInput = document.createElement('input');
+    //         shiftInput.type = 'text';
+    //         shiftInput.name = 'shift_' + employId + '_' + tanggal;
+    //         shiftInput.value = shift;
 
-            editableElement.innerHTML = '';
-            editableElement.appendChild(roleInput);
-            editableElement.appendChild(shiftInput);
+    //         editableElement.innerHTML = '';
+    //         editableElement.appendChild(roleInput);
+    //         editableElement.appendChild(shiftInput);
 
-            roleInput.focus();
+    //         roleInput.focus();
 
-            roleInput.addEventListener('blur', function() {
-                editableElement.innerHTML = '<span>role : ' + this.value + '<br></span><span>shift : ' + shiftInput.value + '</span>';
-            });
+    //         roleInput.addEventListener('blur', function() {
+    //             editableElement.innerHTML = '<span>role : ' + this.value + '<br></span><span>shift : ' + shiftInput.value + '</span>';
+    //         });
 
-            shiftInput.addEventListener('blur', function() {
-                editableElement.innerHTML = '<span>role : ' + roleInput.value + '<br></span><span>shift : ' + this.value + '</span>';
-            });
-        }
-    });
+    //         shiftInput.addEventListener('blur', function() {
+    //             editableElement.innerHTML = '<span>role : ' + roleInput.value + '<br></span><span>shift : ' + this.value + '</span>';
+    //         });
+    //     }
+    // });
 </script>
 
 
