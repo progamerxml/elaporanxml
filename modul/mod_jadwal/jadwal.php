@@ -11,8 +11,10 @@ else{
   require __DIR__ . "/aksi_jadwal.php";
   $roles2 = getRole();
   $shifts2 = getShift();
-  $employes = getKaryawan();
-//   print_r([$roles2, $shifts2]);
+  $schedules = getJadwal();
+//   print_r([$schedules]);
+  echo json_encode($schedules, JSON_PRETTY_PRINT);
+
 
   // mengatasi variabel yang belum di definisikan (notice undefined index)
   $act = isset($_GET['act']) ? $_GET['act'] : '';
@@ -96,10 +98,10 @@ else{
         array_push($karyawan, $dataKaryawan);
     }
 
-    foreach($employes as $employ) { ?>
+    foreach($schedules as $jadwal) { ?>
         <tr>
             <form action="<?= $aksi ?>" method="post">
-            <td style="text-align: left; vertical-align: middle;"><?= $employ["nama"] ?></td>
+            <td style="text-align: left; vertical-align: middle;"><?= $jadwal["nama_pegawai"] ?></td>
             <?php foreach($kry['date'] as $jadwal) { ?>
                 <td class="editable" style="text-align: center;" data-employ="<?= $kry['employ_id'] ?>" data-tanggal="<?= $jadwal['tanggal'] ?>" data-role="<?= $jadwal['role'] ?>" data-shift="<?= $jadwal['shift'] ?>">
                     <select name="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
