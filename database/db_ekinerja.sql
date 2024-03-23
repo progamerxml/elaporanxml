@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 21, 2024 at 08:52 AM
+-- Generation Time: Mar 23, 2024 at 08:48 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -802,8 +802,7 @@ CREATE TABLE `schedules` (
   `schedule_id` int(11) NOT NULL,
   `employ_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `date` date NOT NULL
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -817,7 +816,8 @@ CREATE TABLE `schedule_relations` (
   `shift_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1081,15 +1081,15 @@ ALTER TABLE `roles`
 ALTER TABLE `schedules`
   ADD PRIMARY KEY (`id`),
   ADD KEY `schedule_id` (`schedule_id`),
-  ADD KEY `employ_id` (`employ_id`);
+  ADD KEY `fk_employ_id` (`employ_id`);
 
 --
 -- Indexes for table `schedule_relations`
 --
 ALTER TABLE `schedule_relations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `shift_id` (`shift_id`),
-  ADD KEY `role_id` (`role_id`);
+  ADD KEY `fk_role_id` (`role_id`),
+  ADD KEY `fk_shift_id` (`shift_id`);
 
 --
 -- Indexes for table `shifts`
@@ -1208,7 +1208,7 @@ ALTER TABLE `schedules`
 -- AUTO_INCREMENT for table `schedule_relations`
 --
 ALTER TABLE `schedule_relations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `shifts`
@@ -1242,6 +1242,7 @@ ALTER TABLE `user_level`
 -- Constraints for table `schedules`
 --
 ALTER TABLE `schedules`
+  ADD CONSTRAINT `fk_employ_id` FOREIGN KEY (`employ_id`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `schedules_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `schedule_relations` (`id`),
   ADD CONSTRAINT `schedules_ibfk_2` FOREIGN KEY (`employ_id`) REFERENCES `pegawai` (`id`);
 
@@ -1249,6 +1250,8 @@ ALTER TABLE `schedules`
 -- Constraints for table `schedule_relations`
 --
 ALTER TABLE `schedule_relations`
+  ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_shift_id` FOREIGN KEY (`shift_id`) REFERENCES `shifts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `schedule_relations_ibfk_1` FOREIGN KEY (`shift_id`) REFERENCES `shifts` (`id`),
   ADD CONSTRAINT `schedule_relations_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 COMMIT;
