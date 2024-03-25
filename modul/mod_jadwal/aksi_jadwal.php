@@ -65,45 +65,58 @@ else{
     {
       global $konek;
       $qjdwl = mysqli_query($konek, "SELECT 
-                                          p.id AS pegawai_id,
-                                          p.nama AS nama_pegawai,
-                                          s.id AS schedule_id,
-                                          sr.id AS schedule_relation_id,
-                                          sr.shift_id,
-                                          sr.role_id,
-                                          sr.date,
-                                          r.kode AS role_kode,
-                                          r.nama AS role_nama,
-                                          sh.nama AS shift_nama
-                                      FROM 
-                                          pegawai p
-                                      LEFT JOIN 
-                                          schedules s ON p.id = s.employ_id
-                                      LEFT JOIN 
-                                          schedule_relations sr ON s.schedule_id = sr.id
-                                      LEFT JOIN 
-                                          roles r ON sr.role_id = r.id
-                                      LEFT JOIN 
-                                          shifts sh ON sr.shift_id = sh.id");
+                                        p.id AS pegawai_id,
+                                        p.nama AS nama_pegawai,
+                                        s.id AS schedule_id,
+                                        sr.id AS schedule_relation_id,
+                                        sr.shift_id,
+                                        sr.role_id,
+                                        sr.date,
+                                        r.kode AS role_kode,
+                                        r.nama AS role_nama,
+                                        sh.nama AS shift_nama
+                                    FROM 
+                                        pegawai p
+                                    LEFT JOIN 
+                                        schedules s ON p.id = s.employ_id
+                                    LEFT JOIN 
+                                        schedule_relations sr ON s.schedule_id = sr.id
+                                    LEFT JOIN 
+                                        roles r ON sr.role_id = r.id
+                                    LEFT JOIN 
+                                        shifts sh ON sr.shift_id = sh.id
+                                    where month(sr.date) = 3 and year(sr.date) = 2024;"
+                            );
       $schedules = array();
       if(mysqli_num_rows($qjdwl) > 0){
         while($hjdwl = mysqli_fetch_assoc($qjdwl)){
-          $schedules [] = [
-            "pegawai_id" => $hjdwl['pegawai_id'],
-            "nama_pegawai" => $hjdwl['nama_pegawai'],
-            "schedule_id" => $hjdwl['schedule_id'],
-            "schedule_relation_id" => $hjdwl['schedule_relation_id'],
-            "shift_id" => $hjdwl['shift_id'],
-            "role_id" => $hjdwl['role_id'],
-            "date" => $hjdwl['date'],
-            "role_kode" => $hjdwl['role_kode'],
-            "role_nama" => $hjdwl['role_nama'],
-            "shift_nama" => $hjdwl['shift_nama'],
+          $pegawaiId = $hjdwl['pegawai_id'];
+          $tanggal = $hjdwl['date'];
+          $role = $hjdwl['role_id'];
+          $shift = $hjdwl['shift_id'];
+          if(!isset($schedules[$pegawaiId])){
+            $schedules[$pegawaiId] = [];
+          }
+
+          if(!isset($schedules[$pegawaiId][$tanggal])){
+            $schedules[$pegawaiId][$tanggal] = [];
+          }
+          
+          $schedules[$pegawaiId][$tanggal] = [
+            'role' => $role,
+            'shift' => $shift
           ];
+          
         }
       }
 
       return $schedules;
+    }
+
+    function getJumlahHari()
+    {
+      $total_hari = cal_days_in_month(CAL_GREGORIAN, date("m"),date("Y"));
+      return $total_hari;
     }
 
   // Hapus templates

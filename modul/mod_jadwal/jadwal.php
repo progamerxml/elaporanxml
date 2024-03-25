@@ -12,7 +12,7 @@ else{
   $roles2 = getRole();
   $shifts2 = getShift();
   $schedules = getJadwal();
-//   print_r([$schedules]);
+  // var_dump($schedules);
   echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
