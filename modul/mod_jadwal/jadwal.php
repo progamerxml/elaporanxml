@@ -12,8 +12,8 @@ else{
   $roles2 = getRole();
   $shifts2 = getShift();
   $schedules = getJadwal();
-  // var_dump($schedules);
-  echo json_encode($schedules, JSON_PRETTY_PRINT);
+  var_dump($schedules);
+//   echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
   // mengatasi variabel yang belum di definisikan (notice undefined index)
@@ -62,6 +62,7 @@ else{
 					<!-- debuging -->
 				</section>
 				<hr>
+
 				<div class="box-body">
 					<table id="" class="table table-bordered table-responsive">
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, 3, 2024); ?>
@@ -98,11 +99,11 @@ else{
         array_push($karyawan, $dataKaryawan);
     }
 
-    foreach($schedules as $jadwal) { ?>
+    foreach($schedules as $key => $value) { ?>
         <tr>
             <form action="<?= $aksi ?>" method="post">
-            <td style="text-align: left; vertical-align: middle;"><?= $jadwal["nama_pegawai"] ?></td>
-            <?php foreach($kry['date'] as $jadwal) { ?>
+            <td style="text-align: left; vertical-align: middle;"><?= $key ?></td>
+            <?php foreach($value as $subKey => $subValue) { ?>
                 <td class="editable" style="text-align: center;" data-employ="<?= $kry['employ_id'] ?>" data-tanggal="<?= $jadwal['tanggal'] ?>" data-role="<?= $jadwal['role'] ?>" data-shift="<?= $jadwal['shift'] ?>">
                     <select name="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
                         <?php  foreach($roles2 as $role) { ?>

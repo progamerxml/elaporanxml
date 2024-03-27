@@ -65,27 +65,21 @@ else{
     {
       global $konek;
       $qjdwl = mysqli_query($konek, "SELECT 
-                                        p.id AS pegawai_id,
-                                        p.nama AS nama_pegawai,
-                                        s.id AS schedule_id,
-                                        sr.id AS schedule_relation_id,
-                                        sr.shift_id,
-                                        sr.role_id,
-                                        sr.date,
-                                        r.kode AS role_kode,
-                                        r.nama AS role_nama,
-                                        sh.nama AS shift_nama
-                                    FROM 
-                                        pegawai p
-                                    LEFT JOIN 
-                                        schedules s ON p.id = s.employ_id
-                                    LEFT JOIN 
-                                        schedule_relations sr ON s.schedule_id = sr.id
-                                    LEFT JOIN 
-                                        roles r ON sr.role_id = r.id
-                                    LEFT JOIN 
-                                        shifts sh ON sr.shift_id = sh.id
-                                    where month(sr.date) = 3 and year(sr.date) = 2024;"
+                                          p.id AS pegawai_id,
+                                          p.nama AS nama_pegawai,
+                                          COALESCE(sr.date, '2024-03-01') AS tanggal,
+                                          COALESCE(r.nama, 'Tidak ada role') AS nama_role,
+                                          COALESCE(s.nama, 'Tidak ada shift') AS nama_shift
+                                      FROM 
+                                          pegawai p
+                                      LEFT JOIN 
+                                          schedules sc ON p.id = sc.employ_id
+                                      LEFT JOIN 
+                                          schedule_relations sr ON sc.schedule_id = sr.id AND MONTH(sr.date) = 3
+                                      LEFT JOIN 
+                                          roles r ON sr.role_id = r.id
+                                      LEFT JOIN 
+                                          shifts s ON sr.shift_id = s.id"
                             );
       $schedules = array();
       if(mysqli_num_rows($qjdwl) > 0){
