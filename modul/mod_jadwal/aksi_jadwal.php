@@ -61,7 +61,7 @@ else{
       return $employes;
     }
 
-    function getJadwal()
+    function getJadwal($waktu)
     {
       global $konek;
       $qjdwl = mysqli_query($konek, "SELECT 
@@ -84,7 +84,7 @@ else{
       $schedules = array();
       if(mysqli_num_rows($qjdwl) > 0){
         while($hjdwl = mysqli_fetch_assoc($qjdwl)){
-          $pegawaiId = $hjdwl['pegawai_id'];
+          $pegawaiId = $hjdwl['nama_pegawai'];
           $tanggal = $hjdwl['date'];
           $role = $hjdwl['role_id'];
           $shift = $hjdwl['shift_id'];
@@ -96,10 +96,13 @@ else{
             $schedules[$pegawaiId][$tanggal] = [];
           }
           
-          $schedules[$pegawaiId][$tanggal] = [
-            'role' => $role,
-            'shift' => $shift
-          ];
+          for($tanggal = 1; $tanggal < cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
+          {
+            $schedules[$pegawaiId][$tanggal] = [
+              'role' => $role,
+              'shift' => $shift
+            ];
+          }
           
         }
       }
@@ -112,6 +115,44 @@ else{
       $total_hari = cal_days_in_month(CAL_GREGORIAN, date("m"),date("Y"));
       return $total_hari;
     }
+
+// Pastikan Anda memiliki koneksi ke basis data jika diperlukan
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Tangkap data yang dikirimkan melalui AJAX
+    $employ = $_POST['employ'];
+    $tanggal = $_POST['tanggal'];
+    $role = $_POST['role'];
+    $shift = $_POST['shift'];
+
+    // Lakukan operasi yang diperlukan, misalnya simpan data ke basis data
+    // Contoh: Simpan data ke basis data menggunakan PDO
+    // Ganti informasi koneksi dengan yang sesuai
+    $host = 'localhost';
+    $db = 'nama_database';
+    $user = 'nama_pengguna';
+    $pass = 'password';
+
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Lakukan operasi simpan data ke dalam tabel tertentu
+        // Contoh: Simpan data ke dalam tabel jadwal
+        $stmt = $conn->prepare("INSERT INTO jadwal (employ, tanggal, role, shift) VALUES (:employ, :tanggal, :role, :shift)");
+        $stmt->bindParam(':employ', $employ);
+        $stmt->bindParam(':tanggal', $tanggal);
+        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':shift', $shift);
+        $stmt->execute();
+
+        echo "Data berhasil disimpan"; // Kirim respon ke client
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage(); // Tangani kesalahan jika terjadi
+    }
+}
+
+
 
   // Hapus templates
   if ($module=='jadwal' AND $act=='hapus'){

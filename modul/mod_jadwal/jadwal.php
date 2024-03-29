@@ -9,10 +9,12 @@ else{
   $aksi = "modul/mod_jadwal/aksi_jadwal.php";
   require __DIR__ . "/../../config/fungsi_kalender.php";
   require __DIR__ . "/aksi_jadwal.php";
+  $waktu = explode("-", date("m-Y"));
   $roles2 = getRole();
   $shifts2 = getShift();
-  $schedules = getJadwal();
-  var_dump($schedules);
+  $schedules = getJadwal($waktu);
+//   var_dump($waktu);
+//   var_dump($schedules);
 //   echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
@@ -46,7 +48,7 @@ else{
 				<section class="content-header">
                     <div class="row border">
                         <div class="col-md-11 border">
-                            <h1>Jadwal <?= "Maret 2024" ?></h1>
+                            <h1>Jadwal <?= date("M Y") ?></h1>
                         </div>
                         <div class="col-md-1">
                             <div class="button-group pull-right">
@@ -64,8 +66,8 @@ else{
 				<hr>
 
 				<div class="box-body">
-					<table id="" class="table table-bordered table-responsive">
-                        <?php $dates = cal_days_in_month(CAL_GREGORIAN, 3, 2024); ?>
+					<table id="datatemplates" class="table table-bordered table-responsive table-hover table-striped">
+                        <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
 						<thead>
 							<tr>
 								<th rowspan="3" style="vertical-align: middle; text-align: center; width: 10%;">Nama</th>
@@ -79,38 +81,18 @@ else{
 						</thead>
                         <tbody>
     <?php 
-    $karyawan = array(); 
-    for($i=1; $i<=62; $i++) {
-        $dataKaryawan = array(
-            "employ_id" => "nama $i",
-            "date" => array()
-        );
-
-        for($a=1; $a<= $dates; $a++) {
-            $tanggal = array(
-                "tanggal" => $a,
-                "role" => rand(1, 5),
-                "shift" => rand(1, 3)
-            );
-
-            array_push($dataKaryawan['date'], $tanggal);
-        }
-
-        array_push($karyawan, $dataKaryawan);
-    }
-
     foreach($schedules as $key => $value) { ?>
         <tr>
             <form action="<?= $aksi ?>" method="post">
             <td style="text-align: left; vertical-align: middle;"><?= $key ?></td>
             <?php foreach($value as $subKey => $subValue) { ?>
-                <td class="editable" style="text-align: center;" data-employ="<?= $kry['employ_id'] ?>" data-tanggal="<?= $jadwal['tanggal'] ?>" data-role="<?= $jadwal['role'] ?>" data-shift="<?= $jadwal['shift'] ?>">
-                    <select name="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="role-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
+                <td class="editable bg-body-secondary" style="text-align: center;" data-employ="<?= $key ?>" data-tanggal="<?= $subKey ?>" data-role="<?= $role['id'] ?>" data-shift="<?= $jadwal['shift'] ?>">
+                    <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" class="form-control" >
                         <?php  foreach($roles2 as $role) { ?>
                             <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>
                         <?php } ?>
                     </select>
-                    <select name="shift-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" id="shift-<?= $kry['employ_id'] . '-' . $jadwal['tanggal'] ?>" style="border:none;" class="form-control">
+                    <select name="shift-<?= $key . '-' . $subKey ?>" id="shift-<?= $key . '-' . $subKey ?>" style="border:none;" class="form-control" >
                         <?php  foreach($shifts2 as $shift) { ?>
                             <option value="<?= $shift['id'] ?>"> <?= $shift['nama'] ?> </option>
                         <?php } ?>
@@ -122,49 +104,38 @@ else{
     <?php } ?>
 </tbody>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // document.addEventListener('click', function(event) {
-    //     var clickedElement = event.target;
-    //     var editableElement = null;
-
-    //     if (clickedElement.classList.contains('editable')) {
-    //         editableElement = clickedElement;
-    //     } else if (clickedElement.closest('.editable')) {
-    //         editableElement = clickedElement.closest('.editable');
-    //     }
-
-    //     if (editableElement) {
-    //         var employId = editableElement.dataset.employ;
-    //         var tanggal = editableElement.dataset.tanggal;
-    //         var role = editableElement.dataset.role;
-    //         var shift = editableElement.dataset.shift;
-
-    //         var roleInput = document.createElement('input');
-    //         roleInput.type = 'text';
-    //         roleInput.name = 'role_' + employId + '_' + tanggal;
-    //         roleInput.value = role;
-
-    //         var shiftInput = document.createElement('input');
-    //         shiftInput.type = 'text';
-    //         shiftInput.name = 'shift_' + employId + '_' + tanggal;
-    //         shiftInput.value = shift;
-
-    //         editableElement.innerHTML = '';
-    //         editableElement.appendChild(roleInput);
-    //         editableElement.appendChild(shiftInput);
-
-    //         roleInput.focus();
-
-    //         roleInput.addEventListener('blur', function() {
-    //             editableElement.innerHTML = '<span>role : ' + this.value + '<br></span><span>shift : ' + shiftInput.value + '</span>';
-    //         });
-
-    //         shiftInput.addEventListener('blur', function() {
-    //             editableElement.innerHTML = '<span>role : ' + roleInput.value + '<br></span><span>shift : ' + this.value + '</span>';
-    //         });
-    //     }
-    // });
+$(document).ready(function() {
+    $('.editable select').change(function() {
+        var employ = $(this).data('employ');
+        var tanggal = $(this).data('tanggal');
+        var role = $(this).val(); // Mengambil nilai dari select role
+        var shift = $(this).closest('td').find('select[name^="shift"]').val(); // Mengambil nilai dari select shift
+        
+        // Kirim data ke server menggunakan AJAX
+        $.ajax({
+            type: 'POST',
+            url: '<?= $aksi ?>', // Ganti dengan URL endpoint Anda
+            data: {
+                employ: employ,
+                tanggal: tanggal,
+                role: role,
+                shift: shift
+            },
+            success: function(response) {
+                // Handle respon dari server jika diperlukan
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle kesalahan jika terjadi
+                console.error(error);
+            }
+        });
+    });
+});
 </script>
+
 
 
 
