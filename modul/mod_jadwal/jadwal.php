@@ -87,6 +87,7 @@ else{
             <td style="text-align: left; vertical-align: middle;"><?= $key ?></td>
             <?php foreach($value as $subKey => $subValue) { ?>
                 <td class="editable bg-body-secondary" data-employ="<?= $key ?>" data-tanggal="<?= $subKey ?>" data-role="<?= $role['id'] ?>" data-shift="<?= $jadwal['shift'] ?>">
+                    <span class="fc-day-number"><?= $subKey ?></span>
                     <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" >
                         <?php  foreach($roles2 as $role) { ?>
                             <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>

@@ -96,7 +96,7 @@ else{
             $schedules[$pegawaiId][$tanggal] = [];
           }
           
-          for($tanggal = 1; $tanggal < cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
+          for($tanggal = 1; $tanggal <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
           {
             $schedules[$pegawaiId][$tanggal] = [
               'role' => $role,
