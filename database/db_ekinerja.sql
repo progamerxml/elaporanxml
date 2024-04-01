@@ -1257,29 +1257,3 @@ ALTER TABLE `users`
 --
 ALTER TABLE `user_level`
   MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `schedules`
---
-ALTER TABLE `schedules`
-  ADD CONSTRAINT `fk_employ_id` FOREIGN KEY (`employ_id`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `schedules_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `schedule_relations` (`id`),
-  ADD CONSTRAINT `schedules_ibfk_2` FOREIGN KEY (`employ_id`) REFERENCES `pegawai` (`id`);
-
---
--- Constraints for table `schedule_relations`
---
-ALTER TABLE `schedule_relations`
-  ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_shift_id` FOREIGN KEY (`shift_id`) REFERENCES `shifts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `schedule_relations_ibfk_1` FOREIGN KEY (`shift_id`) REFERENCES `shifts` (`id`),
-  ADD CONSTRAINT `schedule_relations_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

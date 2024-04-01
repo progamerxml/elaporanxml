@@ -64,22 +64,14 @@ else{
     function getJadwal($waktu)
     {
       global $konek;
-      $qjdwl = mysqli_query($konek, "SELECT 
-                                          p.id AS pegawai_id,
-                                          p.nama AS nama_pegawai,
-                                          COALESCE(sr.date, '2024-03-01') AS tanggal,
-                                          COALESCE(r.nama, 'Tidak ada role') AS nama_role,
-                                          COALESCE(s.nama, 'Tidak ada shift') AS nama_shift
-                                      FROM 
-                                          pegawai p
-                                      LEFT JOIN 
-                                          schedules sc ON p.id = sc.employ_id
-                                      LEFT JOIN 
-                                          schedule_relations sr ON sc.schedule_id = sr.id AND MONTH(sr.date) = 3
-                                      LEFT JOIN 
-                                          roles r ON sr.role_id = r.id
-                                      LEFT JOIN 
-                                          shifts s ON sr.shift_id = s.id"
+      $qjdwl = mysqli_query($konek, "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
+                                    r.id AS role_id, r.nama AS nama_role, 
+                                    s.id AS shift_id, s.nama AS nama_shift, 
+                                    sc.id AS schedule_id, sc.date
+                              FROM pegawai p
+                              LEFT JOIN schedules sc ON p.id = sc.employ_id
+                              LEFT JOIN roles r ON sc.role_id = r.id
+                              LEFT JOIN shifts s ON sc.shift_id = s.id"
                             );
       $schedules = array();
       if(mysqli_num_rows($qjdwl) > 0){
