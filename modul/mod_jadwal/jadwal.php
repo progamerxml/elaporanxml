@@ -14,7 +14,7 @@ else{
   $shifts2 = getShift();
   $schedules = getJadwal($waktu);
 //   var_dump($waktu);
-//   var_dump($schedules);
+  var_dump($schedules);
 //   echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
@@ -81,23 +81,38 @@ else{
 						</thead>
                         <tbody>
                             <?php 
+
+                            foreach ($schedules as $nama => $jadwal) {
+                                echo "Nama: $nama<br>";
+                                
+                                if (empty($jadwal)) {
+                                    echo "Tidak ada jadwal untuk karyawan ini.<br><br>";
+                                    continue;
+                                }
+                                
+                                foreach ($jadwal as $tanggal => $data) {
+                                    echo "Tanggal: $tanggal<br>";
+                                    
+                                    if (empty($data)) {
+                                        echo "Tidak ada jadwal untuk tanggal ini.<br>";
+                                        continue;
+                                    }
+                                    
+                                    echo "Role ID: {$data['role_id']}<br>";
+                                    echo "Shift ID: {$data['shift_id']}<br><br>";
+                                }
+                                
+                                echo "<br>";
+                            }
+
                             foreach($schedules as $key => $value) { ?>
                                 <tr>
                                     <form action="<?= $aksi ?>" method="post">
                                     <td style="text-align: left; vertical-align: middle;"><?= $key ?></td>
                                     <?php foreach($value as $subKey => $subValue) { ?>
                                         <td class="editable bg-body-secondary" data-employ="<?= $key ?>" data-tanggal="<?= $subKey ?>" data-role="<?= $role['id'] ?>" data-shift="<?= $jadwal['shift'] ?>">
-                                            <!-- <span class="fc-day-number"><?= $subKey ?></span> -->
-                                            <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" >
-                                                <?php  foreach($roles2 as $role) { ?>
-                                                    <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>
-                                                <?php } ?>
-                                            </select>
-                                            <select name="shift-<?= $key . '-' . $subKey ?>" id="shift-<?= $key . '-' . $subKey ?>" style="border:none;" >
-                                                <?php  foreach($shifts2 as $shift) { ?>
-                                                    <option value="<?= $shift['id'] ?>"> <?= $shift['nama'] ?> </option>
-                                                <?php } ?>
-                                            </select>
+                                            <span class="fc-day-number"><?= date("d", strtotime($subKey)) ?></span>
+                                            
                                         </td>
                                         </form>
                                     <?php } ?>
@@ -105,37 +120,37 @@ else{
                             <?php } ?>
                         </tbody>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('.editable select').change(function() {
-        var employ = $(this).data('employ');
-        var tanggal = $(this).data('tanggal');
-        var role = $(this).val(); // Mengambil nilai dari select role
-        var shift = $(this).closest('td').find('select[name^="shift"]').val(); // Mengambil nilai dari select shift
-        
-        // Kirim data ke server menggunakan AJAX
-        $.ajax({
-            type: 'POST',
-            url: '<?= $aksi ?>', // Ganti dengan URL endpoint Anda
-            data: {
-                employ: employ,
-                tanggal: tanggal,
-                role: role,
-                shift: shift
-            },
-            success: function(response) {
-                // Handle respon dari server jika diperlukan
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                // Handle kesalahan jika terjadi
-                console.error(error);
-            }
-        });
-    });
-});
-</script>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                        $(document).ready(function() {
+                            $('.editable select').change(function() {
+                                var employ = $(this).data('employ');
+                                var tanggal = $(this).data('tanggal');
+                                var role = $(this).val(); // Mengambil nilai dari select role
+                                var shift = $(this).closest('td').find('select[name^="shift"]').val(); // Mengambil nilai dari select shift
+                                
+                                // Kirim data ke server menggunakan AJAX
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '<?= $aksi ?>', // Ganti dengan URL endpoint Anda
+                                    data: {
+                                        employ: employ,
+                                        tanggal: tanggal,
+                                        role: role,
+                                        shift: shift
+                                    },
+                                    success: function(response) {
+                                        // Handle respon dari server jika diperlukan
+                                        console.log(response);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        // Handle kesalahan jika terjadi
+                                        console.error(error);
+                                    }
+                                });
+                            });
+                        });
+                        </script>
 
 
 

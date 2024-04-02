@@ -76,27 +76,56 @@ else{
       $schedules = array();
       if(mysqli_num_rows($qjdwl) > 0){
         while($hjdwl = mysqli_fetch_assoc($qjdwl)){
-          $pegawaiId = $hjdwl['nama_pegawai'];
-          $tanggal = $hjdwl['date'];
-          $role = $hjdwl['role_id'];
-          $shift = $hjdwl['shift_id'];
-          if(!isset($schedules[$pegawaiId])){
-            $schedules[$pegawaiId] = [];
-          }
+          $pegawai_id = $hjdwl['pegawai_id'];
+          $nama_pegawai = $hjdwl['nama_pegawai'];
+          $role_id = $hjdwl['role_id']; 
+          $nama_role = $hjdwl['nama_role']; 
+          $shift_id = $hjdwl['shift_id']; 
+          $nama_shift = $hjdwl['nama_shift']; 
+          $schedule_id = $hjdwl['schedule_id']; 
+          $date = $hjdwl['date']; 
 
-          if(!isset($schedules[$pegawaiId][$tanggal])){
-            $schedules[$pegawaiId][$tanggal] = [];
+          if(!isset($schedules[$nama_pegawai])){
+            $schedules[$nama_pegawai] = [];
+          }
+          if(!isset($schedules[$nama_pegawai][$date])){
+            $schedules[$nama_pegawai][$date] = [];
           }
           
-          for($tanggal = 1; $tanggal <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
-          {
-            $schedules[$pegawaiId][$tanggal] = [
-              'role' => $role,
-              'shift' => $shift
-            ];
-          }
-          
+
+          // for($date = 1; $date <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $date++)
+          // {
+          //   if($schedules[$nama_pegawai] != null && $schedules[$nama_pegawai] == $date){
+
+          //   }
+          //   $schedules[$nama_pegawai][$date] = [
+          //     'role' => $nama_role,
+          //     'shift' => $nama_shift
+          //   ];
+          // }
         }
+
+
+
+      //   $pegawaiId = $hjdwl['nama_pegawai'];
+      //     $tanggal = $hjdwl['date'];
+      //     $role = $hjdwl['role_id'];
+      //     $shift = $hjdwl['shift_id'];
+      //     if(!isset($schedules[$pegawaiId])){
+      //       $schedules[$pegawaiId] = [];
+      //     }
+
+      //     if(!isset($schedules[$pegawaiId][$tanggal])){
+      //       $schedules[$pegawaiId][$tanggal] = [];
+      //     }
+          
+      //     for($tanggal = 1; $tanggal <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
+      //     {
+      //       $schedules[$pegawaiId][$tanggal] = [
+      //         'role' => $role,
+      //         'shift' => $shift
+      //       ];
+      //     }
       }
 
       return $schedules;
