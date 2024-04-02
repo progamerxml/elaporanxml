@@ -112,7 +112,16 @@ else{
                                     <?php foreach($value as $subKey => $subValue) { ?>
                                         <td class="editable bg-body-secondary" data-employ="<?= $key ?>" data-tanggal="<?= $subKey ?>" data-role="<?= $role['id'] ?>" data-shift="<?= $jadwal['shift'] ?>">
                                             <span class="fc-day-number"><?= date("d", strtotime($subKey)) ?></span>
-                                            
+                                            <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" >
+                                                <?php  foreach($roles2 as $role) { ?>
+                                                    <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>
+                                                <?php } ?>
+                                            </select>
+                                            <select name="shift-<?= $key . '-' . $subKey ?>" id="shift-<?= $key . '-' . $subKey ?>" style="border:none;" >
+                                                <?php  foreach($shifts2 as $shift) { ?>
+                                                    <option value="<?= $shift['id'] ?>"> <?= $shift['nama'] ?> </option>
+                                                <?php } ?>
+                                            </select>
                                         </td>
                                         </form>
                                     <?php } ?>
