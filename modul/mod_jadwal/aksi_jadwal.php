@@ -73,60 +73,52 @@ else{
                               LEFT JOIN roles r ON sc.role_id = r.id
                               LEFT JOIN shifts s ON sc.shift_id = s.id"
                             );
+      // Membuat array untuk menyimpan data jadwal untuk setiap karyawan
       $schedules = array();
-      if(mysqli_num_rows($qjdwl) > 0){
-        while($hjdwl = mysqli_fetch_assoc($qjdwl)){
-          $pegawai_id = $hjdwl['pegawai_id'];
-          $nama_pegawai = $hjdwl['nama_pegawai'];
-          $role_id = $hjdwl['role_id']; 
-          $nama_role = $hjdwl['nama_role']; 
-          $shift_id = $hjdwl['shift_id']; 
-          $nama_shift = $hjdwl['nama_shift']; 
-          $schedule_id = $hjdwl['schedule_id']; 
-          $date = $hjdwl['date']; 
 
-          if(!isset($schedules[$nama_pegawai])){
-            $schedules[$nama_pegawai] = [];
-          }
-          if(!isset($schedules[$nama_pegawai][$date])){
-            $schedules[$nama_pegawai][$date] = [];
-          }
+      // Menyiapkan daftar tanggal dari 1 hingga 30
+      for ($i = 1; $i <= 30; $i++) {
+          $tanggal = sprintf('%02d', $i); // Format tanggal menjadi dua digit angka
+          $date = "2024-04-$tanggal"; // Format tanggal sesuai kebutuhan Anda
           
+          // Menambahkan tanggal ke array jadwal untuk setiap karyawan
+          foreach ($qjdwl as $row) {
+              $nama_pegawai = $row['nama_pegawai'];
+              $schedule_date = $row['date'];
 
-          // for($date = 1; $date <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $date++)
-          // {
-          //   if($schedules[$nama_pegawai] != null && $schedules[$nama_pegawai] == $date){
+              // Jika tanggal yang cocok ditemukan, tambahkan data role dan shift
+              if ($date == $schedule_date) {
+                  $role_id = $row['role_id'];
+                  $nama_role = $row['nama_role'];
+                  $shift_id = $row['shift_id'];
+                  $nama_shift = $row['nama_shift'];
 
-          //   }
-          //   $schedules[$nama_pegawai][$date] = [
-          //     'role' => $nama_role,
-          //     'shift' => $nama_shift
-          //   ];
-          // }
-        }
+                  // Memasukkan data role dan shift ke dalam array jadwal
+                  if (!isset($schedules[$nama_pegawai][$date])) {
+                      $schedules[$nama_pegawai][$date] = array();
+                  }
 
+                  // Menambahkan data role dan shift ke dalam array jadwal
+                  $schedules[$nama_pegawai][$date][] = array(
+                      'role_id' => $role_id,
+                      'nama_role' => $nama_role,
+                      'shift_id' => $shift_id,
+                      'nama_shift' => $nama_shift
+                  );
+              }
+          }
 
+          // Jika tidak ada data untuk tanggal tertentu, tetap tambahkan tanggal dengan nilai null
+          foreach ($qjdwl as $row) {
+              $nama_pegawai = $row['nama_pegawai'];
+              $schedule_date = $row['date'];
 
-      //   $pegawaiId = $hjdwl['nama_pegawai'];
-      //     $tanggal = $hjdwl['date'];
-      //     $role = $hjdwl['role_id'];
-      //     $shift = $hjdwl['shift_id'];
-      //     if(!isset($schedules[$pegawaiId])){
-      //       $schedules[$pegawaiId] = [];
-      //     }
-
-      //     if(!isset($schedules[$pegawaiId][$tanggal])){
-      //       $schedules[$pegawaiId][$tanggal] = [];
-      //     }
-          
-      //     for($tanggal = 1; $tanggal <= cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); $tanggal++)
-      //     {
-      //       $schedules[$pegawaiId][$tanggal] = [
-      //         'role' => $role,
-      //         'shift' => $shift
-      //       ];
-      //     }
+              if (!isset($schedules[$nama_pegawai][$date])) {
+                  $schedules[$nama_pegawai][$date] = null;
+              }
+          }
       }
+
 
       return $schedules;
     }

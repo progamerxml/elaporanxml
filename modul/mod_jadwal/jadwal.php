@@ -66,6 +66,39 @@ else{
 				<hr>
 
 				<div class="box-body">
+
+                <?php
+                echo '<table border="1">';
+                echo '<thead>';
+                echo '<tr>';
+                echo '<th>Nama</th>';
+                foreach (array_keys(reset($data)) as $tanggal) {
+                    echo '<th>' . $tanggal . '</th>';
+                }
+                echo '</tr>';
+                echo '</thead>';
+                echo '<tbody>';
+                
+                foreach ($schedules as $nama => $shifts) {
+                    echo '<tr>';
+                    echo '<td rowspan="' . (count($shifts) > 0 ? count($shifts) : 1) . '">' . $nama . '</td>';
+                    foreach ($shifts as $tanggal => $shift) {
+                        echo '<td>';
+                        if ($shift != null) {
+                            foreach ($shift as $detail) {
+                                echo 'Role: ' . $detail["nama_role"] . '<br>';
+                                echo 'Shift: ' . $detail["nama_shift"] . '<br>';
+                            }
+                        } else {
+                            echo '-';
+                        }
+                        echo '</td>';
+                    }
+                    echo '</tr>';
+                }
+                echo '</tbody>';
+                echo '</table>';
+                ?>
 					<table id="datatemplates" class="table table-bordered table-responsive table-hover table-striped">
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
 						<thead>
@@ -81,40 +114,16 @@ else{
 						</thead>
                         <tbody>
                             <?php 
-
-                            foreach ($schedules as $nama => $jadwal) {
-                                echo "Nama: $nama<br>";
-                                
-                                if (empty($jadwal)) {
-                                    echo "Tidak ada jadwal untuk karyawan ini.<br><br>";
-                                    continue;
-                                }
-                                
-                                foreach ($jadwal as $tanggal => $data) {
-                                    echo "Tanggal: $tanggal<br>";
-                                    
-                                    if (empty($data)) {
-                                        echo "Tidak ada jadwal untuk tanggal ini.<br>";
-                                        continue;
-                                    }
-                                    
-                                    echo "Role ID: {$data['role_id']}<br>";
-                                    echo "Shift ID: {$data['shift_id']}<br><br>";
-                                }
-                                
-                                echo "<br>";
-                            }
-
-                            foreach($schedules as $key => $value) { ?>
+                            foreach($schedules as $nama => $shifts) { ?>
                                 <tr>
                                     <form action="<?= $aksi ?>" method="post">
                                     <td style="text-align: left; vertical-align: middle;"><?= $key ?></td>
-                                    <?php foreach($value as $subKey => $subValue) { ?>
+                                    <?php foreach($shifts as $subKey => $subValue) { ?>
                                         <td class="editable bg-body-secondary" data-employ="<?= $key ?>" data-tanggal="<?= $subKey ?>" data-role="<?= $role['id'] ?>" data-shift="<?= $jadwal['shift'] ?>">
                                             <span class="fc-day-number"><?= date("d", strtotime($subKey)) ?></span>
                                             <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" >
-                                                <?php  foreach($roles2 as $role) { ?>
-                                                    <option value="<?= $role['id'] ?>"> <?= $role['kode'] ?> </option>
+                                                <?php  foreach($subKey as $role) { ?>
+                                                    <option value="<?= $role['id'] ?>"> <?= $role['nama_role'] ?> </option>
                                                 <?php } ?>
                                             </select>
                                             <select name="shift-<?= $key . '-' . $subKey ?>" id="shift-<?= $key . '-' . $subKey ?>" style="border:none;" >
