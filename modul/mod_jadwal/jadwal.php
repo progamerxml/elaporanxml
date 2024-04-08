@@ -14,7 +14,7 @@ else{
   $shifts2 = getShift();
   $schedules = getJadwal($waktu);
 //   var_dump($waktu);
-  var_dump($schedules);
+  var_dump($roles2);
 //   echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
@@ -67,38 +67,66 @@ else{
 
 				<div class="box-body">
 
-                <?php
-                echo '<table border="1">';
-                echo '<thead>';
-                echo '<tr>';
-                echo '<th>Nama</th>';
-                foreach (array_keys(reset($data)) as $tanggal) {
-                    echo '<th>' . $tanggal . '</th>';
-                }
-                echo '</tr>';
-                echo '</thead>';
-                echo '<tbody>';
-                
-                foreach ($schedules as $nama => $shifts) {
-                    echo '<tr>';
-                    echo '<td rowspan="' . (count($shifts) > 0 ? count($shifts) : 1) . '">' . $nama . '</td>';
-                    foreach ($shifts as $tanggal => $shift) {
-                        echo '<td>';
-                        if ($shift != null) {
-                            foreach ($shift as $detail) {
-                                echo 'Role: ' . $detail["nama_role"] . '<br>';
-                                echo 'Shift: ' . $detail["nama_shift"] . '<br>';
+                <table id="datatemplates" class="table table-bordered table-responsive table-hover table-striped">
+                <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <?php
+                            // Generate column headers for dates from 1 to 30
+                            for ($date = 1; $date <= $dates; $date++) {
+                                echo '<th>' . $date . '</th>';
                             }
-                        } else {
-                            echo '-';
-                        }
-                        echo '</td>';
-                    }
-                    echo '</tr>';
-                }
-                echo '</tbody>';
-                echo '</table>';
-                ?>
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Iterate over the array of names and their schedules
+                        foreach ($schedules as $nama => $jadwal) { ?>
+                            <tr>
+                            <td><?= $nama ?></td>
+
+                            <!-- // Generate cells for each date from 1 to 30 -->
+                            <?php for ($date = 1; $date <= $dates; $date++) {
+                                $tanggal = date('Y-m') . '-' . sprintf("%02d", $date); // Format tanggal
+
+                                // Check if the date exists in the schedule
+                                if (isset($jadwal[$tanggal])) { ?>
+                                    <!-- If data exists for this date, display it -->
+                                    <td style="text-align: left; vertical-align: middle;">
+                                    <?php if ($jadwal[$tanggal] !== null) {
+                                        foreach ($jadwal[$tanggal] as $item) { ?>
+                                            <div class="d-flex flex-column">
+
+                                                <span class=""><?//= date("d", strtotime($tanggal)) ?></span>
+                                                <select name="role-<?= $key . '-' . $subKey ?>" id="role-<?= $key . '-' . $subKey ?>" style="border:none;" >
+                                                    <?php  foreach($roles2 as $role) { ?>
+                                                        <option value="<?= $item['role_id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> > <?= $role['kode'] ?> </option>
+                                                    <?php } ?>
+                                                </select> <br>   
+                                                <select name="shift-<?= $key . '-' . $subKey ?>" id="shift-<?= $key . '-' . $subKey ?>" style="border:none;" >
+                                                    <?php  foreach($shifts2 as $shift) { ?>
+                                                        <option value="<?= $item['shift_id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> > <?= $shift['nama'] ?> </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+
+                                        <?php }
+                                    } ?>
+                                    </td>
+                                <?php } else { ?>
+                                    <!-- If data does not exist for this date, display empty cell -->
+                                    <td style="text-align: left; vertical-align: middle;"></td>
+                                <?php }
+                            } ?>
+
+                            </tr>
+                        <?php }
+                        ?>
+                    </tbody>
+                </table>
+
 					<table id="datatemplates" class="table table-bordered table-responsive table-hover table-striped">
                         <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
 						<thead>
