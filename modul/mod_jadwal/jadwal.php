@@ -98,7 +98,7 @@ else{
                                             <td style="text-align: left; vertical-align: middle;">
                                                 <div class="d-flex flex-column">
 
-                                                    <span class=""><? //= date("d", strtotime($tanggal)) ?></span>
+                                                    <span class=""><?= date("d", strtotime($tanggal)) ?></span>
                                                     <select name="role.<?= $tanggal . '.' . $item['pegawai_id'] ?>" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>" style="border:none;" >
                                                         <?php  foreach($roles2 as $role) { ?>
                                                             <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> > <?= $role['kode'] ?> </option>
