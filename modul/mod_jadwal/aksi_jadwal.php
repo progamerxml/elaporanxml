@@ -83,15 +83,18 @@ else{
           
           // Menambahkan tanggal ke array jadwal untuk setiap karyawan
           foreach ($qjdwl as $row) {
+            
               $nama_pegawai = $row['nama_pegawai'];
               $schedule_date = $row['date'];
 
               // Jika tanggal yang cocok ditemukan, tambahkan data role dan shift
               if ($date == $schedule_date) {
+                  $id_pegawai = $row['pegawai_id'];
                   $role_id = $row['role_id'];
                   $nama_role = $row['nama_role'];
                   $shift_id = $row['shift_id'];
                   $nama_shift = $row['nama_shift'];
+                  $schedule_date = $row['date'];
 
                   // Memasukkan data role dan shift ke dalam array jadwal
                   if (!isset($schedules[$nama_pegawai][$date])) {
@@ -100,10 +103,12 @@ else{
 
                   // Menambahkan data role dan shift ke dalam array jadwal
                   $schedules[$nama_pegawai][$date][] = array(
+                      'pegawai_id' => $id_pegawai,
                       'role_id' => $role_id,
                       'nama_role' => $nama_role,
                       'shift_id' => $shift_id,
-                      'nama_shift' => $nama_shift
+                      'nama_shift' => $nama_shift,
+                      'tanggal' => $schedule_date
                   );
               }
           }
@@ -112,9 +117,12 @@ else{
           foreach ($qjdwl as $row) {
               $nama_pegawai = $row['nama_pegawai'];
               $schedule_date = $row['date'];
+              $id_pegawai = $row['pegawai_id'];
 
               if (!isset($schedules[$nama_pegawai][$date])) {
-                  $schedules[$nama_pegawai][$date] = null;
+                  $schedules[$nama_pegawai][$date][] = array(
+                    'pegawai_id' => $id_pegawai
+                  );
               }
           }
       }
@@ -133,36 +141,37 @@ else{
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data yang dikirimkan melalui AJAX
-    $employ = $_POST['employ'];
-    $tanggal = $_POST['tanggal'];
-    $role = $_POST['role'];
-    $shift = $_POST['shift'];
+    $nama = $_POST['nama'];
+    $value = $_POST['value'];
+
+    var_dump($nama);
+    var_dump($value);
 
     // Lakukan operasi yang diperlukan, misalnya simpan data ke basis data
     // Contoh: Simpan data ke basis data menggunakan PDO
     // Ganti informasi koneksi dengan yang sesuai
-    $host = 'localhost';
-    $db = 'nama_database';
-    $user = 'nama_pengguna';
-    $pass = 'password';
+    // $host = 'localhost';
+    // $db = 'nama_database';
+    // $user = 'nama_pengguna';
+    // $pass = 'password';
 
-    try {
-        $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // try {
+    //     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Lakukan operasi simpan data ke dalam tabel tertentu
-        // Contoh: Simpan data ke dalam tabel jadwal
-        $stmt = $conn->prepare("INSERT INTO jadwal (employ, tanggal, role, shift) VALUES (:employ, :tanggal, :role, :shift)");
-        $stmt->bindParam(':employ', $employ);
-        $stmt->bindParam(':tanggal', $tanggal);
-        $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':shift', $shift);
-        $stmt->execute();
+    //     // Lakukan operasi simpan data ke dalam tabel tertentu
+    //     // Contoh: Simpan data ke dalam tabel jadwal
+    //     $stmt = $conn->prepare("INSERT INTO jadwal (employ, tanggal, role, shift) VALUES (:employ, :tanggal, :role, :shift)");
+    //     $stmt->bindParam(':employ', $employ);
+    //     $stmt->bindParam(':tanggal', $tanggal);
+    //     $stmt->bindParam(':role', $role);
+    //     $stmt->bindParam(':shift', $shift);
+    //     $stmt->execute();
 
-        echo "Data berhasil disimpan"; // Kirim respon ke client
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage(); // Tangani kesalahan jika terjadi
-    }
+    //     echo "Data berhasil disimpan"; // Kirim respon ke client
+    // } catch(PDOException $e) {
+    //     echo "Error: " . $e->getMessage(); // Tangani kesalahan jika terjadi
+    // }
 }
 
 
