@@ -1,163 +1,275 @@
 <?php
 session_start();
 // Apabila user belum login
-if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
-	echo "<script>alert('Untuk mengakses modul, Anda harus login dulu.'); window.location = '../../index.php'</script>";
-}
-// Apabila user sudah login dengan benar, maka terbentuklah session
-else{
-  $aksi = "modul/mod_jadwal/aksi_jadwal.php";
-  require __DIR__ . "/../../config/fungsi_kalender.php";
-  require __DIR__ . "/aksi_jadwal.php";
-  $waktu = explode("-", date("m-Y"));
-  $roles2 = getRole();
-  $shifts2 = getShift();
-  $schedules = getJadwal($waktu);
-//   var_dump($waktu);
-//   print_r($schedules);
-//   echo json_encode($schedules, JSON_PRETTY_PRINT);
+if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
+    echo "<script>alert('Untuk mengakses modul, Anda harus login dulu.'); window.location = '../../index.php'</script>";
+} // Apabila user sudah login dengan benar, maka terbentuklah session
+else {
+    $aksi = "modul/mod_jadwal/aksi_jadwal.php";
+    require __DIR__ . "/../../config/fungsi_kalender.php";
+    require __DIR__ . "/aksi_jadwal.php";
 
-  // mengatasi variabel yang belum di definisikan (notice undefined index)
-  $act = isset($_GET['act']) ? $_GET['act'] : ''; print_r($act);
-  $mod=$_GET['module']; 
-?>
-<section class="content-header">
-	<h1 class="page-header">
-		<font style="vertical-align: inherit;">Data Jadwal</font>
-		<small>
-			<font style="vertical-align: inherit;"></font>
-		</small>
-	</h1>
-	<ol class="breadcrumb">
-		<li>
-			<a href="<?php echo $base_url; ?>">
-				<i class="fa fa-home"></i>
-				<font style="vertical-align: inherit;">Home </font>
-			</a>
-		</li>
-		<li class="active"><font style="vertical-align: inherit;">Manajemen Jadwal</font></li>
-		<li class="active"><font style="vertical-align: inherit;"><?php echo $mod; ?> </font></li>
-	</ol>
-</section>
-<!-- Main content -->
-<section class="content">
-	<div class="row">
-		<div class="col-xs-12">
+    if (empty($_GET['bulan'] and $_GET['tahun'])) {
+        $waktu = explode("-", date("m-Y"));
+    } else {
+        $waktu = explode("-", $_GET['bulan'] . '-' . $_GET['tahun']);
+    }
+
+    // Inisialisasi variabel bulan dan tahun default
+    $currentMonth = date('n'); // n untuk mendapatkan bulan dalam format angka (1-12)
+    $currentYear = date('Y'); // Y untuk mendapatkan tahun dalam format 4 digit
+
+    // Cek apakah ada data yang dikirimkan melalui POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Ambil nilai bulan dan tahun dari formulir
+        $waktu[0] = $_POST['month'];
+        $waktu[1] = $_POST['year'];
+    } else {
+        // Jika tidak ada data POST, gunakan bulan dan tahun terkini
+        $waktu[0] = $currentMonth;
+        $waktu[1] = $currentYear;
+    }
+
+    var_dump($_SERVER['REQUEST_METHOD']);
+    // Menghitung bulan dan tahun sebelumnya
+    $prevMonth = ($waktu[0] == 1) ? 12 : ($waktu[0] - 1);
+    $prevYear = ($waktu[0] == 1) ? ($waktu[1] - 1) : $waktu[1];
+
+    // Menghitung bulan dan tahun sesudahnya
+    $nextMonth = ($waktu[0] == 12) ? 1 : ($waktu[0] + 1);
+    $nextYear = ($waktu[0] == 12) ? ($waktu[1] + 1) : $waktu[1];
+
+    echo "<h2 style='text-align: center; margin-top: 20px;'>" . date('F Y', mktime(0, 0, 0, $waktu[0], 1, $waktu[1])) . "</h2>";
+
+    $roles2 = getRole();
+    $shifts2 = getShift();
+    $schedules = getJadwal($waktu);
+    var_dump($waktu);
+    //print_r($schedules);
+    //echo json_encode($schedules, JSON_PRETTY_PRINT);
+
+
+    // mengatasi variabel yang belum di definisikan (notice undefined index)
+    $act = isset($_GET['act']) ? $_GET['act'] : '';
+    $mod = $_GET['module'];
+    ?>
+    <section class="content-header">
+        <h1 class="page-header">
+            <span style="vertical-align: inherit;">Data Jadwal</span>
+            <small>
+                <span style="vertical-align: inherit;"></span>
+            </small>
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="<?php echo $base_url; ?>">
+                    <i class="fa fa-home"></i>
+                    <span style="vertical-align: inherit;">Home </span>
+                </a>
+            </li>
+            <li class="active"><span style="vertical-align: inherit;">Manajemen Jadwal</span></li>
+            <li class="active"><span style="vertical-align: inherit;"><?php echo $mod; ?> </span></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
                 <div class="box box-warning">
-				<section class="content-header">
-                    <div class="row border">
-                        <div class="col-md-11 border">
-                            <h1>Jadwal <?= date("M Y") ?></h1>
-                        </div>
-                        <div class="col-md-1">
-                            <div class="button-group pull-right">
-                                <button class="btn">prev</button>
-                                <button class="btn">next</button>
+                    <section class="content-header">
+                        <div class="row border">
+                            <div class="col-md-11 border">
+                                <h1>Jadwal <?php
+                                    $tanggal = date('M Y', strtotime("$waktu[1]-$waktu[0]-01"));
+                                    echo $tanggal ?></h1>
+                            </div>
+                            <div class="col-md-auto">
+                                <div class="button-group pull-right me-5">
+                                    <form action="" method="POST">
+                                    <input type="hidden" name="month" value="<?= $waktu[0] ?>">
+                                    <input type="hidden" name="year" value="<?= $waktu[1] ?>">
+                                    <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i
+                                                class="fa fa-arrow-left"></i>
+                                        Prev
+                                    </button>
+                                    <button type="submit" name="next" class="btn btn-primary" onclick="nextMonth()">Next <i
+                                                class="fa fa-arrow-right"></i></button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
 
-					
-					
-					<!-- debuging -->
-				</section>
-				<hr>
 
-				<div class="box-body">
+                        <!-- debuging -->
+                    </section>
+                    <hr>
 
-                <table id="" class="table table-bordered table-hover table-striped">
-                <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <?php
-                            // Generate column headers for dates from 1 to 30
-                            for ($date = 1; $date <= $dates; $date++) {
-                                echo '<th>' . $date . '</th>';
-                            }
-                            ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Iterate over the array of names and their schedules
-                        foreach ($schedules as $nama => $jadwal) { ?>
+                    <div class="box-body  table-responsive">
+
+                        <table id="" class="table table-bordered table-striped">
+                            <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
+                            <thead>
                             <tr>
-                            <td><?= $nama ?></td>
-
-                            <!-- // Generate cells for each date from 1 to 30 -->
-                            <?php for ($date = 1; $date <= $dates; $date++) {
-                                $tanggal = date('Y-m') . '-' . sprintf("%02d", $date); // Format tanggal
-
-                                // Check if the date exists in the schedule
-                                if (isset($jadwal[$tanggal])) { ?>
-                                    <!-- If data exists for this date, display it -->
-                                    <?php if ($jadwal[$tanggal] !== null) { 
-                                        foreach ($jadwal[$tanggal] as $item) { ?>
-                                            <td style="text-align: left; vertical-align: middle;">
-                                                <div class="d-flex flex-column">
-
-                                                    <span class=""><?= date("d", strtotime($tanggal)) ?></span>
-                                                    <select name="role.<?= $tanggal . '.' . $item['pegawai_id'] ?>" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>" style="border:none;" >
-                                                        <?php  foreach($roles2 as $role) { ?>
-                                                            <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> > <?= $role['kode'] ?> </option>
-                                                        <?php } ?>
-                                                    </select> <br>   
-                                                    <select name="shift.<?= $tanggal . '.' . $item['pegawai_id'] ?>" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>" style="border:none;" >
-                                                        <?php  foreach($shifts2 as $shift) { ?>
-                                                            <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> > <?= $shift['nama'] ?> </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                <?php  } 
-                                    } 
-                                } 
-                            } ?>
-
+                                <th>Nama</th>
+                                <?php
+                                // Generate column headers for dates from 1 to 30
+                                for ($date = 1; $date <= $dates; $date++) {
+                                    echo '<th>' . $date . '</th>';
+                                }
+                                ?>
                             </tr>
-                        <?php }
-                        ?>
-                    </tbody>
-                </table>
-				</div><!-- /.box-body -->
-			</div><!-- /.box -->
+                            </thead>
+                            <tbody>
+                            <?php
+                            // Iterate over the array of names and their schedules
+                            foreach ($schedules as $nama => $jadwal) { ?>
+                                <tr>
+                                    <td><?= $nama ?></td>
 
+                                    <!-- // Generate cells for each date from 1 to 30 -->
+                                    <?php
+                                    for ($date = 1; $date <= $dates; $date++) {
+                                        $tanggal = $waktu[1] . '-' . sprintf("%02d", $waktu[0]) . '-' . sprintf("%02d", $date); // Format tanggal
+                                        ?>
+                                        <!-- If data exists for this date, display it -->
+                                        <?php if ($jadwal[$tanggal] !== null) {
+                                            foreach ($jadwal[$tanggal] as $item) { ?>
+                                                <td style="text-align: left; vertical-align: middle;">
 
-	    </div><!-- /.col -->
-	</div>
-</section>
-<?php
+                                                    <div class="d-flex flex-column">
+                                                        <select id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                style="border:none;">
+                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?>>
+                                                                -
+                                                            </option>
+                                                            <?php foreach ($roles2 as $role) { ?>
+                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> > <?= $role['kode'] ?> </option>
+                                                            <?php } ?>
+                                                        </select> <br>
+                                                        <select id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                style="border:none;">
+                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?>>
+                                                                -
+                                                            </option>
+                                                            <?php foreach ($shifts2 as $shift) { ?>
+                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> > <?= $shift['nama'] ?> </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <br/>
+                                                    <button class="btn btn-danger"
+                                                            onclick="hapusJadwal('<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>')">
+                                                        X
+                                                    </button>
+                                                </td>
+                                            <?php }
+                                        }
+                                    } ?>
+
+                                </tr>
+                            <?php }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div>
+    </section>
+    <?php
 }
 ?>
 
 <script>
-    $(document).ready(function(){
-        $('table').on('change', 'select', function(){
-            var selectName = $(this).attr('name');
-            var selectValue = $(this).val();
-            var aksi = '<?= $aksi ?>';
-            console.log(selectName);
-            console.log(selectValue);
-            console.log(aksi);
+    function prevMonth() {
+        const bulanSelected = <?= $waktu[0] ?>;
+        const tahunSelected = <?= $waktu[1] ?>;
 
-            $.ajax({
-                url: aksi,
-                type: 'POST',
-                data: {
-                    nama: selectName,
-                    value: selectValue
-                },
-                success: function(response) {
-                    // Handle success response (if needed)
-                    console.log('Data updated successfully!');
-                },
-                error: function(xhr, status, error) {
-                    // Handle error response (if needed)
-                    console.error('Error updating data:', error);
-                }
+        if (bulanSelected === 1) {
+            window.location.href = '<?= $base_url ?>jadwal?bulan=12&tahun=' + (tahunSelected - 1);
+        } else {
+            window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected - 1) + '&tahun=' + tahunSelected;
+        }
+    }
+
+    function nextMonth() {
+        const bulanSelected = <?= $waktu[0] ?>;
+        const tahunSelected = <?= $waktu[1] ?>;
+
+        if (bulanSelected === 12) {
+            window.location.href = '<?= $base_url ?>jadwal?bulan=1&tahun=' + (tahunSelected + 1);
+        } else {
+            window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected + 1) + '&tahun=' + tahunSelected;
+        }
+    }
+    function hapusJadwal(id) {
+        const values = id.split('.'); // Memisahkan string menjadi array
+        const tanggal = values[0];
+        const pegawaiId = values[1];
+
+        $.ajax({
+            url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=hapus',
+            type: 'POST',
+            data: {
+                tanggal: tanggal,
+                pegawai_id: pegawaiId
+            },
+            success: function (response) {
+                //change select to value null
+                const selectRole = document.getElementById(`role.${tanggal}.${pegawaiId}`);
+                const selectShift = document.getElementById(`shift.${tanggal}.${pegawaiId}`);
+                selectRole.value = '';
+                selectShift.value = '';
+
+                alert(response);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('table').on('change', 'select', function () {
+            var selectId = $(this).attr('id');
+            const values = selectId.split('.'); // Memisahkan string menjadi array
+
+            // Mengambil tiga nilai
+            const kolom = values[0];
+            const tanggal = values[1];
+            const pegawaiId = values[2];
+
+            if (kolom === 'role') {
+                const roleId = $(this).val();
+                $.ajax({
+                    url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=update-role',
+                    type: 'POST',
+                    data: {
+                        tanggal: tanggal,
+                        pegawai_id: pegawaiId,
+                        role_id: roleId
+                    },
+                    success: function (response) {
+                        alert(response);
+                    }
                 });
+            } else if (kolom === 'shift') {
+                const shiftId = $(this).val();
+                $.ajax({
+                    url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=update-shift',
+                    type: 'POST',
+                    data: {
+                        tanggal: tanggal,
+                        pegawai_id: pegawaiId,
+                        shift_id: shiftId
+                    },
+                    success: function (response) {
+                        alert(response);
+                    }
+                });
+
+            }
+
+            //save to database
+
+
         });
     });
 </script>
