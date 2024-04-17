@@ -9,42 +9,18 @@ else {
     require __DIR__ . "/../../config/fungsi_kalender.php";
     require __DIR__ . "/aksi_jadwal.php";
 
-    if (empty($_GET['bulan'] and $_GET['tahun'])) {
+    if (empty($_SESSION['waktu'])) {
         $waktu = explode("-", date("m-Y"));
     } else {
-        $waktu = explode("-", $_GET['bulan'] . '-' . $_GET['tahun']);
+        $waktu = $_SESSION['waktu'];
     }
-
-    // Inisialisasi variabel bulan dan tahun default
-    $currentMonth = date('n'); // n untuk mendapatkan bulan dalam format angka (1-12)
-    $currentYear = date('Y'); // Y untuk mendapatkan tahun dalam format 4 digit
-
-    // Cek apakah ada data yang dikirimkan melalui POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Ambil nilai bulan dan tahun dari formulir
-        $waktu[0] = $_POST['month'];
-        $waktu[1] = $_POST['year'];
-    } else {
-        // Jika tidak ada data POST, gunakan bulan dan tahun terkini
-        $waktu[0] = $currentMonth;
-        $waktu[1] = $currentYear;
-    }
-
-    var_dump($_SERVER['REQUEST_METHOD']);
-    // Menghitung bulan dan tahun sebelumnya
-    $prevMonth = ($waktu[0] == 1) ? 12 : ($waktu[0] - 1);
-    $prevYear = ($waktu[0] == 1) ? ($waktu[1] - 1) : $waktu[1];
-
-    // Menghitung bulan dan tahun sesudahnya
-    $nextMonth = ($waktu[0] == 12) ? 1 : ($waktu[0] + 1);
-    $nextYear = ($waktu[0] == 12) ? ($waktu[1] + 1) : $waktu[1];
-
-    echo "<h2 style='text-align: center; margin-top: 20px;'>" . date('F Y', mktime(0, 0, 0, $waktu[0], 1, $waktu[1])) . "</h2>";
 
     $roles2 = getRole();
     $shifts2 = getShift();
     $schedules = getJadwal($waktu);
-    var_dump($waktu);
+    $otoritas = cekOto($_SESSION['namauser']);
+    // print_r($otoritas['level']);
+    // var_dump($_SESSION['waktu']);
     //print_r($schedules);
     //echo json_encode($schedules, JSON_PRETTY_PRINT);
 
@@ -84,17 +60,12 @@ else {
                                     echo $tanggal ?></h1>
                             </div>
                             <div class="col-md-auto">
-                                <div class="button-group pull-right me-5">
-                                    <form action="" method="POST">
-                                    <input type="hidden" name="month" value="<?= $waktu[0] ?>">
-                                    <input type="hidden" name="year" value="<?= $waktu[1] ?>">
-                                    <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i
-                                                class="fa fa-arrow-left"></i>
+                                <div class="button-group pull-right me-5 border">
+                                    <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i class="fa fa-arrow-left"></i>
                                         Prev
                                     </button>
-                                    <button type="submit" name="next" class="btn btn-primary" onclick="nextMonth()">Next <i
-                                                class="fa fa-arrow-right"></i></button>
-                                    </form>
+                                    <button type="submit" name="next" class="btn btn-primary" onclick="nextMonth()">Next <i class="fa fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -137,30 +108,28 @@ else {
                                                 <td style="text-align: left; vertical-align: middle;">
 
                                                     <div class="d-flex flex-column">
-                                                        <select id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                style="border:none;">
-                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?>>
+                                                        <select class="form-control" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
                                                             <?php foreach ($roles2 as $role) { ?>
-                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> > <?= $role['kode'] ?> </option>
+                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
                                                             <?php } ?>
                                                         </select> <br>
-                                                        <select id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                style="border:none;">
-                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?>>
+                                                        <select class="form-control" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
                                                             <?php foreach ($shifts2 as $shift) { ?>
-                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> > <?= $shift['nama'] ?> </option>
+                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled  ' ?> > <?= $shift['nama'] ?> </option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
                                                     <br/>
-                                                    <button class="btn btn-danger"
-                                                            onclick="hapusJadwal('<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>')">
-                                                        X
-                                                    </button>
+                                                    <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
+                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
                                                 </td>
                                             <?php }
                                         }
@@ -186,10 +155,29 @@ else {
         const tahunSelected = <?= $waktu[1] ?>;
 
         if (bulanSelected === 1) {
-            window.location.href = '<?= $base_url ?>jadwal?bulan=12&tahun=' + (tahunSelected - 1);
+            // window.location.href = '<?= $base_url ?>jadwal?bulan=12&tahun=' + (tahunSelected - 1);
+            var bulan = 12;
+            var tahun = (tahunSelected - 1);
         } else {
-            window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected - 1) + '&tahun=' + tahunSelected;
+            // window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected - 1) + '&tahun=' + tahunSelected;
+            var bulan = (bulanSelected - 1);
+            var tahun = tahunSelected;
         }
+        $.ajax({
+            url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=nav',
+            type: 'POST',
+            data: {
+                bulan: bulan,
+                tahun: tahun
+            },
+            success: function (response) {
+                //change select to value null
+                
+                alert(response);
+            }
+        });
+
+        location.reload();
     }
 
     function nextMonth() {
@@ -197,10 +185,30 @@ else {
         const tahunSelected = <?= $waktu[1] ?>;
 
         if (bulanSelected === 12) {
-            window.location.href = '<?= $base_url ?>jadwal?bulan=1&tahun=' + (tahunSelected + 1);
+            // window.location.href = '<?= $base_url ?>jadwal?bulan=1&tahun=' + (tahunSelected + 1);
+            var bulan = 1;
+            var tahun = (tahunSelected + 1);
         } else {
-            window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected + 1) + '&tahun=' + tahunSelected;
+            // window.location.href = '<?= $base_url ?>jadwal?bulan=' + (bulanSelected + 1) + '&tahun=' + tahunSelected;
+            var bulan = (bulanSelected + 1);
+            var tahun = tahunSelected;
         }
+
+        $.ajax({
+            url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=nav',
+            type: 'POST',
+            data: {
+                bulan: bulan,
+                tahun: tahun
+            },
+            success: function (response) {
+                //change select to value null
+                
+                alert(response);
+            }
+        });
+
+        location.reload();
     }
     function hapusJadwal(id) {
         const values = id.split('.'); // Memisahkan string menjadi array
@@ -235,6 +243,8 @@ else {
             const kolom = values[0];
             const tanggal = values[1];
             const pegawaiId = values[2];
+            const user = '<?= $_SESSION['namauser'] ?>';
+            console.log(user);
 
             if (kolom === 'role') {
                 const roleId = $(this).val();
@@ -244,7 +254,8 @@ else {
                     data: {
                         tanggal: tanggal,
                         pegawai_id: pegawaiId,
-                        role_id: roleId
+                        role_id: roleId,
+                        user: user
                     },
                     success: function (response) {
                         alert(response);
@@ -258,7 +269,8 @@ else {
                     data: {
                         tanggal: tanggal,
                         pegawai_id: pegawaiId,
-                        shift_id: shiftId
+                        shift_id: shiftId,
+                        user: user
                     },
                     success: function (response) {
                         alert(response);

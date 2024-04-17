@@ -31,6 +31,17 @@ else {
         return $roles;
     }
 
+    // cek otoritas
+    function cekOto($username){
+        global $konek;
+        $otor = "select * from users where username like '%$username%'";
+        $exec = mysqli_query($konek, $otor);
+        $hasil = mysqli_fetch_array($exec);
+
+        return $hasil;
+
+    }
+
     function getShift()
     {
         global $konek;
@@ -151,6 +162,7 @@ else {
         $tanggal = $_POST['tanggal'];
         $pegawai_id = $_POST['pegawai_id'];
         $role_id = $_POST['role_id'];
+        $user = $_POST['user'];
 
         $query = "SELECT * FROM schedules WHERE employ_id = '$pegawai_id' AND date = '$tanggal'";
         $result = mysqli_query($konek, $query);
@@ -158,9 +170,16 @@ else {
         if ($result->num_rows > 0) {
             $update = "UPDATE schedules SET role_id = '$role_id' WHERE employ_id = '$pegawai_id' AND date = '$tanggal'";
             mysqli_query($konek, $update);
+            
+
+            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'update data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
+            mysqli_query($konek, $log);
         } else {
             $insert = "INSERT INTO schedules (employ_id, role_id, date) VALUES ('$pegawai_id', '$role_id', '$tanggal')";
             mysqli_query($konek, $insert);
+            
+            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'insert data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
+            mysqli_query($konek, $log);
         }
 
         echo "Data berhasil disimpan";
@@ -170,6 +189,7 @@ else {
         $tanggal = $_POST['tanggal'];
         $pegawai_id = $_POST['pegawai_id'];
         $shift_id = $_POST['shift_id'];
+        $user = $_POST['user'];
 
         $query = "SELECT * FROM schedules WHERE employ_id = '$pegawai_id' AND date = '$tanggal'";
         $result = mysqli_query($konek, $query);
@@ -177,9 +197,15 @@ else {
         if ($result->num_rows > 0) {
             $update = "UPDATE schedules SET shift_id = '$shift_id' WHERE employ_id = '$pegawai_id' AND date = '$tanggal'";
             mysqli_query($konek, $update);
+
+            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'update data shift pegawai: $pegawai_id, tanggal : $tanggal, shift: $shift_id')";
+            mysqli_query($konek, $log);
         } else {
             $insert = "INSERT INTO schedules (employ_id, shift_id, date) VALUES ('$pegawai_id', '$shift_id', '$tanggal')";
             mysqli_query($konek, $insert);
+            
+            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'insert data shift pegawai: $pegawai_id, tanggal : $tanggal, shift: $shift_id')";
+            mysqli_query($konek, $log);
         }
 
         echo "Data berhasil disimpan";
@@ -194,5 +220,18 @@ else {
         mysqli_query($konek, $hapus);
 
         echo "Data berhasil dihapus";
+    }
+
+    // next / prev bulan 
+    if($module == 'jadwal' and $act == 'nav') {
+        $bulan = $_POST['bulan'];
+        $tahun = $_POST['tahun'];
+        $waktu = array("$bulan", "$tahun");
+
+        session_start();
+        $_SESSION['waktu'] = $waktu;
+
+        header("Location: modul/mod_jadwal/jadwal.php");
+        exit;
     }
 } 
