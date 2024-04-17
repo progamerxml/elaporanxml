@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 02, 2024 at 07:47 AM
+-- Generation Time: Apr 17, 2024 at 08:48 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -228,6 +228,34 @@ INSERT INTO `kinerja` (`id`, `nama_pegawai`, `uraian_kegiatan`, `waktu`, `waktu_
 (34, '654321', '10', '2023-02-11 13:00:00', '2023-02-11 14:00:00'),
 (35, '654321', '10', '2023-02-11 13:00:00', '2023-02-11 14:00:00'),
 (36, '654321', '7', '2023-02-18 02:00:00', '2023-02-18 02:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL,
+  `aksi` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`id`, `user`, `aksi`) VALUES
+(5, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-05, shift: 2'),
+(6, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-06, shift: 2'),
+(7, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-02-07, role: 1'),
+(8, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-07, shift: 4'),
+(9, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-02-06, role: 3'),
+(10, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-02-06, shift: 2'),
+(11, 'irfanem', 'insert data role pegawai: 63, tanggal : 2024-02-04, role: 1'),
+(12, 'irfanem', 'update data shift pegawai: 63, tanggal : 2024-02-04, shift: 3'),
+(13, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-06, role: 3'),
+(14, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-06, shift: 2');
 
 -- --------------------------------------------------------
 
@@ -817,7 +845,43 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (9, 80, 11, 3, '2024-04-01 13:06:23', NULL, '2024-04-03'),
 (10, 80, 1, 3, '2024-04-01 13:06:23', NULL, '2024-04-04'),
 (11, 94, 11, 3, '2024-04-01 13:17:43', NULL, '2024-04-03'),
-(12, 94, 11, 1, '2024-04-01 13:17:43', NULL, '2024-04-04');
+(12, 94, 11, 1, '2024-04-01 13:17:43', NULL, '2024-04-04'),
+(13, 94, 1, 3, NULL, NULL, '2024-04-01'),
+(14, 94, 6, NULL, NULL, NULL, '2024-04-05'),
+(15, 80, 4, 2, NULL, NULL, '2024-04-01'),
+(16, 73, 7, NULL, NULL, NULL, '2024-04-05'),
+(18, 94, 2, 2, NULL, NULL, '2024-04-08'),
+(20, 73, 2, 2, NULL, NULL, '2024-04-01'),
+(21, 73, 9, 1, NULL, NULL, '2024-04-02'),
+(22, 104, 3, 3, NULL, NULL, '2024-04-01'),
+(23, 73, 4, 3, NULL, NULL, '2024-04-03'),
+(24, 80, 3, 2, NULL, NULL, '2024-04-30'),
+(25, 80, 3, 3, NULL, NULL, '2024-04-05'),
+(26, 73, 3, 3, NULL, NULL, '2024-04-10'),
+(27, 73, 3, NULL, NULL, NULL, '2024-04-11'),
+(28, 73, 5, 2, NULL, NULL, '2024-04-12'),
+(29, 73, 1, NULL, NULL, NULL, '2024-04-08'),
+(30, 94, NULL, 3, NULL, NULL, '2024-04-07'),
+(32, 73, 1, 3, NULL, NULL, '2024-04-24'),
+(33, 73, 2, 3, NULL, NULL, '2024-04-14'),
+(34, 73, 4, 3, NULL, NULL, '2024-04-04'),
+(35, 73, 2, 2, NULL, NULL, '2024-05-04'),
+(36, 104, 3, 3, NULL, NULL, '2024-05-05'),
+(37, 73, 2, 3, NULL, NULL, '2024-05-03'),
+(38, 73, 1, 3, NULL, NULL, '2024-05-02'),
+(39, 73, 1, 1, NULL, NULL, '2024-05-01'),
+(40, 73, 4, 2, NULL, NULL, '2024-05-05'),
+(41, 73, 1, 3, NULL, NULL, '2024-03-01'),
+(42, 73, 3, 3, NULL, NULL, '2024-02-01'),
+(43, 73, 1, 3, NULL, NULL, '2024-02-02'),
+(44, 73, 4, 1, NULL, NULL, '2024-02-03'),
+(45, 73, 1, 2, NULL, NULL, '2024-02-04'),
+(46, 73, 2, 2, NULL, NULL, '2024-02-05'),
+(47, 73, 1, 2, NULL, NULL, '2024-02-06'),
+(48, 73, 1, 4, NULL, NULL, '2024-02-07'),
+(49, 94, 3, 2, NULL, NULL, '2024-02-06'),
+(50, 63, 1, 3, NULL, NULL, '2024-02-04'),
+(51, 73, 3, 2, NULL, NULL, '2024-05-06');
 
 -- --------------------------------------------------------
 
@@ -1045,6 +1109,12 @@ ALTER TABLE `kinerja`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
@@ -1161,6 +1231,12 @@ ALTER TABLE `kinerja`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
+-- AUTO_INCREMENT for table `log`
+--
+ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
@@ -1194,7 +1270,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `shifts`
