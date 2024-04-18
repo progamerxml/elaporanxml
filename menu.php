@@ -61,7 +61,7 @@ else{
 						</ul>
 					</li>
 					
-					<li class="treeview <?php if($module=="jadwal") echo "active"; ?>">
+					<li class="treeview <?php if($module=="jadwal" || $module=="log_jadwal") echo "active"; ?>">
 						<a href="#">
 							<i class="fa fa-check-square-o"></i>
 								<span><b>Jadwal</b></span>
@@ -69,6 +69,7 @@ else{
 						</a>
 						<ul class="treeview-menu">
 							<li class="<?php if($module=="jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>jadwal"><i class="fa fa-list-ol"></i> <span>Jadwal</span></a></li>
+							<li class="<?php if($module=="log_jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>log_jadwal"><i class="fa fa-list-ol"></i> <span>Log Jadwal</span></a></li>
 						</ul>
 					</li>
 					<li>

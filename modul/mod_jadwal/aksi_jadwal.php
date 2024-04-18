@@ -158,6 +158,24 @@ else {
         return $total_hari;
     }
 
+    function getLogJadwal()
+    {
+        global $konek;
+        $log = "SELECT * FROM log";
+        $exec = mysqli_query($konek, $log);
+        $logs = [];
+        if (mysqli_num_rows($exec) > 0) {
+            while ($log = mysqli_fetch_assoc($exec)) {
+                $logs[] = [
+                    'username' => $log['user'],
+                    'aksi' => $log['aksi'],
+                    'waktu' => $log['created_at']
+                ];
+            }
+        }
+        return $logs;
+
+    }
     if ($module == 'jadwal' and $act == 'update-role') {
         $tanggal = $_POST['tanggal'];
         $pegawai_id = $_POST['pegawai_id'];

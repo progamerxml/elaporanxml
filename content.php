@@ -30,6 +30,11 @@ else{
     include "modul/mod_jadwal/jadwal.php";
   }
 
+    elseif ($_GET['module']=='log_jadwal'){               
+   
+      include "modul/mod_jadwal/log_jadwal.php";
+    }
+
   //rekap_report
   elseif ($_GET['module']=='rekap_report'){               
     
