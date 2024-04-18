@@ -25,7 +25,7 @@ else{
 				{ ?>
 					<!-- echo "superadmin"; -->
 
-					<li class="treeview <?php if($module=="pegawai" || $module=="jabatan" || $module=="gaji" || $module=="user") echo "active"; ?>">
+					<li class="treeview <?php if($module=="pegawai" || $module=="jabatan" || $module=="gaji" || $module=="user" || $module=="role" || $module=="shift") echo "active"; ?>">
 						<a href="#">
 							<i class="fa fa-database"></i>
 							<span><b>Manajemen Data</b></span>
@@ -34,6 +34,8 @@ else{
 						<ul class="treeview-menu">
 							<li class="<?php if($module=="pegawai") echo "active"; ?>"><a href="<?php echo $base_url;?>pegawai"><i class="fa fa-users"></i> <span>Pegawai</span></a></li>		
 							<li class="<?php if($module=="jabatan") echo "active"; ?>"><a href="<?php echo $base_url;?>jabatan"><i class="fa fa-flag"></i> <span>Jabatan</span></a></li>
+							<li class="<?php if($module=="role") echo "active"; ?>"><a href="<?php echo $base_url;?>role"><i class="fa fa-flag"></i> <span>Role</span></a></li>
+							<li class="<?php if($module=="shift") echo "active"; ?>"><a href="<?php echo $base_url;?>shift"><i class="fa fa-flag"></i> <span>Shift</span></a></li>
 							<li class="<?php if($module=="gaji") echo "active"; ?>"><a href="<?php echo $base_url;?>gaji"><i class="fa fa-money"></i> <span>Gaji</span></a></li>
 							<li class="<?php if($module=="user") echo "active"; ?>"><a href="<?php echo $base_url;?>user"><i class="fa fa-user"></i> <span>Manajemen User</span></a></li>
 							
