@@ -110,20 +110,20 @@ else {
                                                     <div class="d-flex flex-column">
                                                         <select class="form-control" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                                 style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> >
+                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
                                                             <?php foreach ($roles2 as $role) { ?>
-                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
+                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
                                                             <?php } ?>
                                                         </select> <br>
                                                         <select class="form-control" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                                 style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled' ?> >
+                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
                                                             <?php foreach ($shifts2 as $shift) { ?>
-                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= $otoritas['level'] == 'superadmin' ? '' : 'disabled  ' ?> > <?= $shift['nama'] ?> </option>
+                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>

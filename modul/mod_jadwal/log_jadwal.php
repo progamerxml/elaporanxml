@@ -52,7 +52,7 @@ else {
 
                     <div class="box-body  table-responsive">
 
-                        <table id="" class="table table-bordered table-striped">
+                        <table id="datatemplates" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th style="width: 3%;" >No</th>
