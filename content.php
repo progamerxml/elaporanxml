@@ -30,10 +30,22 @@ else{
     include "modul/mod_jadwal/jadwal.php";
   }
 
-    elseif ($_GET['module']=='log_jadwal'){               
+  elseif ($_GET['module']=='log_jadwal'){               
    
       include "modul/mod_jadwal/log_jadwal.php";
     }
+
+  //role
+  elseif ($_GET['module']=='role'){               
+   
+    include "modul/mod_role/role.php";
+  }
+
+  //shift
+  elseif ($_GET['module']=='shift'){               
+   
+    include "modul/mod_shift/shift.php";
+  }
 
   //rekap_report
   elseif ($_GET['module']=='rekap_report'){               
