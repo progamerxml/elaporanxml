@@ -84,7 +84,7 @@ else {
                               FROM pegawai p
                               LEFT JOIN schedules sc ON p.id = sc.employ_id
                               LEFT JOIN roles r ON sc.role_id = r.id
-                              LEFT JOIN shifts s ON sc.shift_id = s.id"
+                              LEFT JOIN shifts s ON sc.shift_id = s.id WHERE p.id in(73,80,94)"
         );
 
         // Membuat array untuk menyimpan data jadwal untuk setiap karyawan
@@ -176,6 +176,56 @@ else {
         return $logs;
 
     }
+
+    function getJadwalKini($data){
+        global $konek;
+        $query = "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
+                            r.id AS role_id, r.nama AS nama_role, 
+                            s.id AS shift_id, s.nama AS nama_shift, 
+                            sc.id AS schedule_id, sc.date
+                    FROM pegawai p
+                    LEFT JOIN schedules sc ON p.id = sc.employ_id
+                    LEFT JOIN roles r ON sc.role_id = r.id
+                    LEFT JOIN shifts s ON sc.shift_id = s.id 
+                    WHERE p.id = $data[id] and sc.`date` = '$data[tanggal]'";
+        $exec = mysqli_query($konek, $query);
+        $jadwalKini = mysqli_fetch_array($exec);
+        return $jadwalKini;
+    }
+
+    // cek jadwal
+    if($module == 'jadwal' and $act == 'cek-jadwal') {
+        $bulan = $_POST['bulan'];
+        $tahun = $_POST['tahun'];
+        $waktu = array("$bulan", "$tahun");
+
+        $datas = getJadwal($waktu);
+        $shift = getShift();
+        $role = getRole();
+
+        // Ambil semua id shift yang ada dalam data array $schedules
+        $existingShiftIds = [];
+        foreach ($datas as $nama => $jadwal) {
+            foreach ($jadwal as $tanggal => $items) {
+                foreach ($items as $item) {
+                    if (isset($item['shift_id'])) {
+                        $existingShiftIds[$item['shift_id']] = true;
+                    }
+                }
+            }
+        }
+
+        // Filter data array $shift untuk mendapatkan shift yang tidak ada pada $existingShiftIds
+        $missingShifts = array_filter($shift, function($item) use ($existingShiftIds) {
+            return !isset($existingShiftIds[$item['id']]);
+        });
+
+        // Output array shift yang tidak ada pada $schedules
+        print_r($missingShifts);
+
+    }
+
+    // update role
     if ($module == 'jadwal' and $act == 'update-role') {
         $tanggal = $_POST['tanggal'];
         $pegawai_id = $_POST['pegawai_id'];
