@@ -21,9 +21,9 @@ else {
         $waktu = $_SESSION['waktu'];
     }
 
-    $roles2 = getRole(); print_r(json_encode($roles2)). "<br>";
-    $shifts2 = getShift(); // print_r($shifts2);
-    $schedules = getJadwal($waktu);
+    $roles2 = getRole();  // print_r(json_encode($roles2['nama'])). "<br>";
+    $shifts2 = getShift(); // print_r($shifts2['nama']);
+    $schedules = getJadwal($waktu);  //  print_r($schedules);
     $otoritas = cekOto($_SESSION['namauser']);
     
     // print_r($otoritas['level']);
@@ -79,7 +79,7 @@ else {
                     </section>
                     <hr>
 
-                    <div class="box-body" style="max-width: 100%  important!; overflow-x: auto important!;">
+                    <div class="box-body" style="max-width: 100%; overflow-x: auto;">
 
                         <table id="" class="table table-bordered table-striped">
                             <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
@@ -89,7 +89,7 @@ else {
                                 <?php
                                 // Generate column headers for dates from 1 to 30
                                 for ($date = 1; $date <= $dates; $date++) { ?>
-                                    <th style="width: fit-content;"> <?= $date ?> </th>
+                                    <th style="max-width: 100%;"> <?= $date ?> </th>
                                 <?php } ?>
                             </tr>
                             </thead>
@@ -274,7 +274,7 @@ else {
                 tahun: waktu[1]
             },
             success: function (response) {
-                console.log(response);
+                alert(response);
             }
         });
     }
@@ -302,7 +302,7 @@ else {
                         user: user
                     },
                     success: function (response) {
-                        alert(response);
+                        console.log(response);
                     }
                 });
             } else if (kolom === 'shift') {
@@ -317,7 +317,7 @@ else {
                         user: user
                     },
                     success: function (response) {
-                        alert(response);
+                        console.log(response);
                     }
                 });
 

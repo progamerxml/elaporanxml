@@ -77,6 +77,7 @@ else {
     function getJadwal($waktu)
     {
         global $konek;
+        $where = " WHERE p.id in(73,80,94)";
         $qjdwl = mysqli_query($konek, "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
                                     r.id AS role_id, r.nama AS nama_role, 
                                     s.id AS shift_id, s.nama AS nama_shift, 
@@ -84,7 +85,7 @@ else {
                               FROM pegawai p
                               LEFT JOIN schedules sc ON p.id = sc.employ_id
                               LEFT JOIN roles r ON sc.role_id = r.id
-                              LEFT JOIN shifts s ON sc.shift_id = s.id WHERE p.id in(73,80,94)"
+                              LEFT JOIN shifts s ON sc.shift_id = s.id"
         );
 
         // Membuat array untuk menyimpan data jadwal untuk setiap karyawan
@@ -199,30 +200,80 @@ else {
         $tahun = $_POST['tahun'];
         $waktu = array("$bulan", "$tahun");
 
-        $datas = getJadwal($waktu);
-        $shift = getShift();
-        $role = getRole();
+        $schedules = getJadwal($waktu);
+        $shifts = getShift();
+        $roles = getRole();
 
-        // Ambil semua id shift yang ada dalam data array $schedules
-        $existingShiftIds = [];
-        foreach ($datas as $nama => $jadwal) {
-            foreach ($jadwal as $tanggal => $items) {
-                foreach ($items as $item) {
-                    if (isset($item['shift_id'])) {
-                        $existingShiftIds[$item['shift_id']] = true;
-                    }
+        $newArrays = [];
+
+        // Mengaitkan setiap role dengan tiga shift (pagi, siang, malam)
+        foreach ($roles as $role) {
+            $roleName = $role['nama'];
+
+            foreach($shifts as $shift){
+                if($shift['id'] == 1 || $shift['id'] == 2 || $shift['id'] == 3){
+                    $shiftName = $shift['nama'];
+                }
+
+                $newArrays [] = [
+                    $roleName => $shiftName
+                ];
+            }
+        }
+        
+        $newArray = [];
+
+        foreach ($schedules as $nama => $schedules) {
+            foreach ($schedules as $tanggal => $details) {
+                foreach ($details as $schedule) {
+                    $role_id = $schedule['role_id'];
+                    $shift_id = $schedule['shift_id'];
+                    $nama_role = $schedule['nama_role'];
+                    $nama_shift = $schedule['nama_shift'];
+
+                    // $newArray[] = [
+                    //     'role_id' => $role_id,
+                    //     'shift_id' => $shift_id,
+                    //     'nama_role' => $nama_role,
+                    //     'nama_shift' => $nama_shift
+                    // ];
+
+                    $newArray[] = [
+                        $nama_role => $nama_shift
+                    ];
                 }
             }
         }
 
-        // Filter data array $shift untuk mendapatkan shift yang tidak ada pada $existingShiftIds
-        $missingShifts = array_filter($shift, function($item) use ($existingShiftIds) {
-            return !isset($existingShiftIds[$item['id']]);
+        // Menghapus elemen duplikat dari $newArray
+        $newArray = array_unique($newArray, SORT_REGULAR);
+
+        // Mengindeks ulang array setelah menghapus duplikat
+        $newArray = array_values($newArray);
+        
+        // Mengonversi array
+        foreach ($newArray as $item) {
+            // Mengambil kunci (role) dan nilai (shift) dari setiap elemen dalam array
+            $role = key($item);
+            $shift = current($item);
+
+            // Memasukkan data ke dalam array asosiatif dengan role sebagai kunci dan shift sebagai nilai
+            $transformedArray[$role] = $shift;
+        }
+
+        // Mengambil nilai data B yang tidak ada di data A
+        $filteredArrayB = array_filter($newArrays, function ($itemB) use ($newArray) {
+            foreach ($newArray as $itemA) {
+                // Jika ada item pada data B yang sama dengan data A, maka filter
+                if ($itemA == $itemB) {
+                    return false;
+                }
+            }
+            return true;
         });
 
-        // Output array shift yang tidak ada pada $schedules
-        print_r($missingShifts);
-
+        // Output array yang telah diubah
+        print_r($filteredArrayB);
     }
 
     // update role
