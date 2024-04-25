@@ -118,7 +118,7 @@ else {
                                                 <td style="text-align: left; vertical-align: middle; width: 10em;">
 
                                                     <div class="d-flex flex-column">
-                                                        <select class="form-control" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                        <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                                 <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
@@ -127,7 +127,7 @@ else {
                                                                 <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
                                                             <?php } ?>
                                                         </select> <br>
-                                                        <select class="form-control" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                        <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                                 <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
@@ -160,6 +160,11 @@ else {
 ?>
 
 <script>
+
+    const status = '<?= $otoritas['level'] ?>';
+    if (status !== "superadmin" && status !== "admin") {
+        console.log(status); // Outputkan status jika tidak sama dengan "superadmin" atau "admin"
+    }
     function prevMonth() {
         const bulanSelected = <?= $waktu[0] ?>;
         const tahunSelected = <?= $waktu[1] ?>;
