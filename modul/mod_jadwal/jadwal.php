@@ -64,7 +64,9 @@ else {
                             </div>
                             <div class="col-md-auto">
                                 <div class="button-group pull-right me-5 border">
-                                    <button type="submit" name="cek" class="btn btn-success" onclick="cekJadwalKosong()">Cek Jadwal</button>
+                                <?php $btn = " <button type=\"submit\" name=\"cek\" class=\"btn btn-success\" onclick=\"cekJadwalKosong()\">Cek Jadwal</button>"; ?>
+                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
+                                   
                                     <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i class="fa fa-arrow-left"></i>
                                         Prev
                                     </button>

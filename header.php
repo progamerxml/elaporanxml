@@ -14,7 +14,7 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 
 else{
-  require_once __DIR__ . "/modul/mod_jadwal/aksi_jadwal.php";
+  require __DIR__ . "/modul/mod_jadwal/aksi_jadwal.php";
 
   
 ?>
