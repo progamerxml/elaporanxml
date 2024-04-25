@@ -272,8 +272,27 @@ else {
             return true;
         });
 
-        // Output array yang telah diubah
-        print_r($filteredArrayB);
+        echo '<div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Daftar Role dan Shift Kosong : </h3>
+            </div>
+
+            <div class="box-body">
+                <ol>';
+                    // Perulangan untuk setiap elemen dalam array $data
+                    foreach ($filteredArrayB as $key => $value) {
+                        // Mendapatkan role (kunci array dalam $value)
+                        $role = key($value);
+                        // Mendapatkan shift (nilai array dalam $value)
+                        $shift = reset($value);
+
+                        // Membuat item list HTML untuk setiap role dan shift
+                        echo '<li>' . $role . ' - ' . $shift . '</li>';
+                    }
+                echo '<ol>
+            </div>
+
+        </div>';
     }
 
     // update role

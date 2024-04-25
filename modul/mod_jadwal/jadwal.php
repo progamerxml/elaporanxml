@@ -79,6 +79,11 @@ else {
                     </section>
                     <hr>
 
+                    <!-- section hasil cek role dan shift -->
+                    <section id="hasil-cek" class=" box-body">
+                    </section>
+
+                    <!-- section div untuk table -->
                     <div class="box-body" style="max-width: 100%; overflow-x: auto;">
 
                         <table id="" class="table table-bordered table-striped">
@@ -274,7 +279,12 @@ else {
                 tahun: waktu[1]
             },
             success: function (response) {
-                alert(response);
+                console.log(response);
+
+                var hasilFilter = document.getElementById('hasil-cek');
+
+                // Menetapkan isi dari variabel response ke dalam elemen HTML hasilFilter
+                hasilFilter.innerHTML = response;
             }
         });
     }
