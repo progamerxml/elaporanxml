@@ -30,6 +30,18 @@ else{
     include "modul/mod_jadwal/jadwal.php";
   }
 
+    //kpi
+    elseif ($_GET['module']=='kpi'){               
+   
+      include "modul/mod_kpi/kpi.php";
+    }
+
+    //kpi
+    elseif ($_GET['module']=='input_kpi'){               
+   
+      include "modul/mod_kpi/input_kpi.php";
+    }
+
   elseif ($_GET['module']=='log_jadwal'){               
    
       include "modul/mod_jadwal/log_jadwal.php";
