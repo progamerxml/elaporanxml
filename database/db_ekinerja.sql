@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 23, 2024 at 08:03 AM
+-- Generation Time: Apr 29, 2024 at 08:49 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -78,6 +78,23 @@ INSERT INTO `bidang` (`id`, `nama_bidang`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `flash_sale_sdp_dan_ph`
+--
+
+CREATE TABLE `flash_sale_sdp_dan_ph` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `masa_berlaku` varchar(255) DEFAULT NULL,
+  `produk` varchar(255) DEFAULT NULL,
+  `harga_promo` varchar(255) DEFAULT NULL,
+  `harga_normal` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `gaji`
 --
 
@@ -113,6 +130,55 @@ CREATE TABLE `gaji_test` (
   `bonus` int(11) DEFAULT NULL,
   `potongan` int(11) DEFAULT NULL,
   `gaji_bersih` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `giveaway`
+--
+
+CREATE TABLE `giveaway` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `hari_dan_tanggal` varchar(255) DEFAULT NULL,
+  `final_giveaway` varchar(255) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ide_konten_sdp_dan_ph`
+--
+
+CREATE TABLE `ide_konten_sdp_dan_ph` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `nama_program` varchar(255) DEFAULT NULL,
+  `hari_dan_tanggal_rilis` varchar(255) DEFAULT NULL,
+  `final_program` varchar(255) DEFAULT NULL,
+  `keterangan_` varchar(255) DEFAULT NULL,
+  `jumlah` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `input_kpi`
+--
+
+CREATE TABLE `input_kpi` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `indikator_kpi` text,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -162,6 +228,40 @@ INSERT INTO `jabatan` (`id`, `nama_jabatan`) VALUES
 (40, 'CS  Voucher '),
 (41, 'Operator & CS SSB '),
 (42, 'SPV Marketing Area');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jumlah_deal_follow_up_produk_member_h2h_emonney`
+--
+
+CREATE TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
+  `jam_transaksi` varchar(255) DEFAULT NULL,
+  `agen_id` varchar(255) DEFAULT NULL,
+  `jumlah` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jumlah_deal_follow_up_produk_reguler_member_h2h`
+--
+
+CREATE TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
+  `jam_transaksi` varchar(255) DEFAULT NULL,
+  `agen_id` varchar(255) DEFAULT NULL,
+  `jumlah` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -228,6 +328,64 @@ INSERT INTO `kinerja` (`id`, `nama_pegawai`, `uraian_kegiatan`, `waktu`, `waktu_
 (34, '654321', '10', '2023-02-11 13:00:00', '2023-02-11 14:00:00'),
 (35, '654321', '10', '2023-02-11 13:00:00', '2023-02-11 14:00:00'),
 (36, '654321', '7', '2023-02-18 02:00:00', '2023-02-18 02:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kinerja_kpi`
+--
+
+CREATE TABLE `kinerja_kpi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `recap` varchar(55) NOT NULL,
+  `target` int(11) NOT NULL,
+  `bobot` decimal(10,2) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `tipe` varchar(255) NOT NULL,
+  `param_indikator` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kinerja_kpi`
+--
+
+INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, `tipe`, `param_indikator`) VALUES
+(3, 'Giveaway', 'GA', 2, '0.05', 3, 'kuantitatif', 'nama,hari_dan_tanggal,final_giveaway,keterangan'),
+(6, 'Flash Sale SDP dan PH', 'Konten', 8, '0.05', 1, 'kuantitatif', 'masa_berlaku,produk,harga_promo,harga_normal'),
+(7, 'IDE Konten SDP dan PH', 'Konten', 8, '0.10', 3, 'kuantitatif', 'nama_program,hari_dan_tanggal_rilis,final_program,keterangan_,jumlah'),
+(8, 'Jumlah deal follow up produk reguler member H2H', 'DealH2hR', 40, '0.10', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_transaksi,agen_id,jumlah'),
+(9, 'jumlah_deal_follow_up_produk_member_h2h_emonney', 'DealH2hE', 60, '0.10', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_transaksi,agen_id,jumlah');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kinerja_kuantitatif`
+--
+
+CREATE TABLE `kinerja_kuantitatif` (
+  `id` int(11) NOT NULL,
+  `indikator` varchar(255) DEFAULT NULL,
+  `recap` varchar(255) DEFAULT NULL,
+  `target` int(11) DEFAULT NULL,
+  `pencapaian` int(11) DEFAULT NULL,
+  `persentase` decimal(5,2) DEFAULT NULL,
+  `bobot` decimal(5,2) DEFAULT NULL,
+  `score` decimal(10,2) DEFAULT NULL,
+  `final_score` decimal(10,2) DEFAULT NULL,
+  `param_indikator` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kinerja_kuantitatif`
+--
+
+INSERT INTO `kinerja_kuantitatif` (`id`, `indikator`, `recap`, `target`, `pencapaian`, `persentase`, `bobot`, `score`, `final_score`, `param_indikator`) VALUES
+(1, 'Giveaway (2)', 'GA', 2, NULL, NULL, NULL, NULL, NULL, ''),
+(2, 'IDE Konten SDP dan PH (20)', 'Konten', 20, NULL, NULL, NULL, NULL, NULL, ''),
+(3, 'Flash Sale SDP & PH (8)', 'FS', 8, NULL, NULL, NULL, NULL, NULL, ''),
+(4, 'Jumlah deal follow up produk reguler member H2H', 'DealH2hR', 40, NULL, NULL, NULL, NULL, NULL, ''),
+(8, 'Testing', 'TST', 77, NULL, NULL, NULL, NULL, NULL, 'test_1,test_dua,test3');
 
 -- --------------------------------------------------------
 
@@ -429,7 +587,8 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 (184, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-07, role: 2', '2024-04-23 07:08:16'),
 (185, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-07, shift: 4', '2024-04-23 07:08:17'),
 (186, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-08, role: 2', '2024-04-23 07:08:19'),
-(187, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-08, shift: 4', '2024-04-23 07:08:21');
+(187, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-08, shift: 4', '2024-04-23 07:08:21'),
+(188, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-14, shift: 5', '2024-04-25 07:20:54');
 
 -- --------------------------------------------------------
 
@@ -1123,7 +1282,7 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (116, 94, 6, 3, NULL, NULL, '2024-04-17'),
 (117, 94, 2, 1, NULL, NULL, '2024-04-16'),
 (118, 94, 4, 3, NULL, NULL, '2024-04-15'),
-(119, 94, 3, 2, NULL, NULL, '2024-04-14'),
+(119, 94, 3, 5, NULL, NULL, '2024-04-14'),
 (120, 94, 2, 2, NULL, NULL, '2024-04-13'),
 (121, 94, 3, 3, NULL, NULL, '2024-04-12'),
 (122, 94, 2, 2, NULL, NULL, '2024-04-11'),
@@ -1335,6 +1494,12 @@ ALTER TABLE `bidang`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `flash_sale_sdp_dan_ph`
+--
+ALTER TABLE `flash_sale_sdp_dan_ph`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `gaji`
 --
 ALTER TABLE `gaji`
@@ -1347,9 +1512,39 @@ ALTER TABLE `gaji_test`
   ADD PRIMARY KEY (`no`);
 
 --
+-- Indexes for table `giveaway`
+--
+ALTER TABLE `giveaway`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ide_konten_sdp_dan_ph`
+--
+ALTER TABLE `ide_konten_sdp_dan_ph`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `input_kpi`
+--
+ALTER TABLE `input_kpi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jabatan`
 --
 ALTER TABLE `jabatan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jumlah_deal_follow_up_produk_member_h2h_emonney`
+--
+ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jumlah_deal_follow_up_produk_reguler_member_h2h`
+--
+ALTER TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1362,6 +1557,19 @@ ALTER TABLE `kegiatan`
 -- Indexes for table `kinerja`
 --
 ALTER TABLE `kinerja`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kinerja_kpi`
+--
+ALTER TABLE `kinerja_kpi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- Indexes for table `kinerja_kuantitatif`
+--
+ALTER TABLE `kinerja_kuantitatif`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1457,6 +1665,12 @@ ALTER TABLE `bidang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `flash_sale_sdp_dan_ph`
+--
+ALTER TABLE `flash_sale_sdp_dan_ph`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `gaji`
 --
 ALTER TABLE `gaji`
@@ -1469,10 +1683,40 @@ ALTER TABLE `gaji_test`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `giveaway`
+--
+ALTER TABLE `giveaway`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ide_konten_sdp_dan_ph`
+--
+ALTER TABLE `ide_konten_sdp_dan_ph`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `input_kpi`
+--
+ALTER TABLE `input_kpi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_emonney`
+--
+ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_reguler_member_h2h`
+--
+ALTER TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kegiatan`
@@ -1487,10 +1731,22 @@ ALTER TABLE `kinerja`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
+-- AUTO_INCREMENT for table `kinerja_kpi`
+--
+ALTER TABLE `kinerja_kpi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `kinerja_kuantitatif`
+--
+ALTER TABLE `kinerja_kuantitatif`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -1555,6 +1811,12 @@ ALTER TABLE `user_level`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `kinerja_kpi`
+--
+ALTER TABLE `kinerja_kpi`
+  ADD CONSTRAINT `kinerja_kpi_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 
 --
 -- Constraints for table `schedules`

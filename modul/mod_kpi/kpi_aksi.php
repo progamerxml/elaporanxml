@@ -13,7 +13,7 @@ else{
     
     // Hapus templates
     if ($module=='kpi' AND $act=='hapus'){
-        mysqli_query($konek, "DELETE FROM kpis WHERE id='$_GET[id]'");
+        mysqli_query($konek, "DELETE FROM kinerja_kuantitatif WHERE id='$_GET[id]'");
         header("location:".$base_url.$module);
     }  
 
@@ -36,58 +36,72 @@ else{
         return $cleaned;
     }
 
-  // Input templates
+  // Input templates 
     if ($module=='kpi' AND $act=='input'){
-        $indikator = $_POST['indikator'];
-        $recap = $_POST['recap'];
-        $target = $_POST['target'];
-        $param_indikator = explode(",", cleanString($_POST['param_indikator']));
+        $nama = htmlspecialchars($_POST['nama']);
+        $recap = htmlspecialchars($_POST['recap']);
+        $target = htmlspecialchars($_POST['target']);
+        $bobot = $_POST['bobot'];
+        $role_id = $_POST['role_id'];
+        $tipe  = htmlspecialchars($_POST['tipe']);
+        $teks_param_indik = cleanString($_POST['param_indikator']);
+        $param_indikator = explode(",", cleanString($teks_param_indik));
+
+        $table_name = cleanString($nama); //var_dump($table_name);
 
         // var_dump(count($param_indikator));
 
-        $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kuantitatif WHERE indikator = '$indikator'"));
-        var_dump($cek);
+        $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
-            mysqli_query($konek, "insert into kinerja_kuantitatif (indikator, recap, target, param_indikator) Values ('$indikator', '$recap', $target, '" . cleanString($_POST['param_indikator']) . "')");
-            $create_table = "create table $indikator ( id INT(11) AUTO_INCREMENT PRIMARY KEY, tanggal DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP)";
+            mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
+            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, tanggal DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP)";
             mysqli_query($konek, $create_table);
 
             for($i = 0; $i < count($param_indikator); $i++){
-                $alter_table = "ALTER table $indikator ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
+                $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
                 mysqli_query($konek, $alter_table);
             }
         }
-
-        // header("location:".$base_url.$module);
+        session_start();
+        $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
+        header("location:".$base_url.$module);
     }  
 
   // Update templates
     elseif ($module=='kpi' AND $act=='update'){
         $id				= $_POST['id'];
-        $indikator      = $_POST['indikator'];
-        $recap          = $_POST['recap'];
-        $target         = $_POST['target'];
-        mysqli_query($konek, "update kinerja_kuantitatif set indikator = '$indikator', recap = '$recap', target = '$target' WHERE id = $id");
-        header("location:".$base_url.$module);
+        $nama = htmlspecialchars($_POST['nama']);
+        $recap = htmlspecialchars($_POST['recap']);
+        $target = htmlspecialchars($_POST['target']);
+        $bobot = $_POST['bobot'];
+        $role_id = $_POST['role_id'];
+        $tipe  = htmlspecialchars($_POST['tipe']);
+        $teks_param_indik = cleanString($_POST['param_indikator']);
+        $param_indikator = explode(",", cleanString($teks_param_indik));
+
+        $table_name = cleanString($nama); //var_dump($table_name);
+
+        $hasil = mysqli_query($konek, "update kinerja_kpi set nama = '$table_name', recap = '$recap', target = '$target', bobot = $bobot, role_id = $role_id, tipe = '$tipe', param_indikator = '$teks_param_indik' WHERE id = $id");
+        var_dump ($hasil);
+        // header("location:".$base_url.$module);
     }
 
     function getKinerja()
     {
         global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kuantitatif");
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi");
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
                 $kinerja2[] = [
                     'id' => $kinerja['id'],
-                    'indikator' => $kinerja['indikator'],
+                    'nama' => $kinerja['nama'],
                     'recap' => $kinerja['recap'],
                     'target' => $kinerja['target'],
-                    'pencapaian' => $kinerja['pencapaian'],
-                    'presentase' => $kinerja['presentase'],
                     'bobot' => $kinerja['bobot'],
-                    'score' => $kinerja['score'],
-                    'final_score' => $kinerja['final_score'],
+                    'tipe' => $kinerja['tipe'],
+                    'role_id' => $kinerja['role_id'],
+                    'param_indikator' => $kinerja['param_indikator']
                 ];
             }
         }
