@@ -74,7 +74,7 @@ else{
 							<li class="<?php if($module=="log_jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>log_jadwal"><i class="fa fa-list-ol"></i> <span>Log Jadwal</span></a></li>
 						</ul>
 					</li>
-					<li class="treeview <?php if($module=="kpi") echo "active"; ?>" >
+					<li class="treeview <?php if($module=="kpi" || $module=="input_kpi") echo "active"; ?>" >
 						<a href="#">
 							<i class="fa fa-check-square-o"></i>
 								<span><b>KPI</b></span>

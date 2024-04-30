@@ -39,7 +39,7 @@ else {
 
                 <!-- bagian alert -->
                 <?php 
-                    $alert = "<div class=\"alert alert-success alert-dismissible\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button> <h4><i class=\"icon fa fa-check\"></i> Sukses!</h4> Berhasil menambahkan data.</div>"; 
+                    $alert = "<div class=\"alert alert-success alert-dismissible\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button> <h4><i class=\"icon fa fa-check\"></i> Sukses!</h4>". $_SESSION['error']  . "</div>"; 
                     if(isset ($_SESSION['error'])) {
                         echo $alert;
                     }

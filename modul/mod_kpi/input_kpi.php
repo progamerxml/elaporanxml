@@ -52,7 +52,28 @@ else {
                     <hr>
 
                     <div class="box-body  table-responsive">
-
+                        <!-- lakukan perulangan terhadap data kinerja_kpi -->
+                        <?php foreach($kinerja2 as $kkpi) { ?>
+                            <h3><?= $kkpi['nama'] ?></h3>
+                            <table id="datatemplates" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>no</th>
+                                        <th>parameter</th>
+                                        <th>parameter</th>
+                                        <th>parameter</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@</td>
+                                        <td>nilai</td>
+                                        <td>nilai</td>
+                                        <td>nilai</td>
+                                    </tr>
+                                </tbody>
+                            </table> <br>
+                        <?php } ?>
                         <table id="datatemplates" class="table table-bordered table-striped">
                             <thead>
                             <tr>

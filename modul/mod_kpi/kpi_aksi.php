@@ -36,6 +36,29 @@ else{
         return $cleaned;
     }
 
+    // function getTableAsal
+    function getTableAsal($id){
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT nama FROM kinerja_kpi WHERE id = $id");
+        if(mysqli_num_rows($exec) != 0){
+            $row = mysqli_fetch_assoc($exec);
+            $hasil = $row['nama'];
+        }
+        return $hasil;
+    }
+
+    if($module == "kpi" && $act == "hapus"){
+        $id = $_GET['id'];
+        $table = getTableAsal($id);
+        $dropTabel = mysqli_query($konek, "DROP TABLE $table");
+        if($dropTabel === true){
+            $hapus = mysqli_query($konek, "DELETE FROM kinerja_kpi WHERE id = $id");
+        }
+
+        $_SESSION['error'] = "Berhasil Menghapus Data dan tabel indikator.";
+        header("location:".$base_url.$module);
+    }
+
   // Input templates 
     if ($module=='kpi' AND $act=='input'){
         $nama = htmlspecialchars($_POST['nama']);
@@ -79,11 +102,20 @@ else{
         $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
 
-        $table_name = cleanString($nama); //var_dump($table_name);
+        $table_name = cleanString($nama); // var_dump($table_name);
+        $table_asal = getTableAsal($id); // var_dump($table_asal);
 
         $hasil = mysqli_query($konek, "update kinerja_kpi set nama = '$table_name', recap = '$recap', target = '$target', bobot = $bobot, role_id = $role_id, tipe = '$tipe', param_indikator = '$teks_param_indik' WHERE id = $id");
-        var_dump ($hasil);
-        // header("location:".$base_url.$module);
+        // var_dump ($hasil);
+        if($hasil === true){
+            $alter = "ALTER TABLE $table_asal RENAME TO $table_name";
+            $alterH = mysqli_query($konek, $alter);
+            if($alterH === true){
+                session_start();
+                $_SESSION["error"] = "Nama Table berhasil diubah";
+            }
+        }
+        header("location:".$base_url.$module);
     }
 
     function getKinerja()
@@ -108,6 +140,5 @@ else{
         return $kinerja2;
     }
 
-    
 }
 ?>
