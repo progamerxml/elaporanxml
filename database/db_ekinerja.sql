@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 29, 2024 at 08:49 AM
+-- Generation Time: Apr 30, 2024 at 08:59 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -266,6 +266,22 @@ CREATE TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `jumlah_follow_up_per_bulan_member_ph`
+--
+
+CREATE TABLE `jumlah_follow_up_per_bulan_member_ph` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `agen_id_member` varchar(255) DEFAULT NULL,
+  `alasan_tidak_aktif` varchar(255) DEFAULT NULL,
+  `hasil_follow_up` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kegiatan`
 --
 
@@ -355,7 +371,9 @@ INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, 
 (6, 'Flash Sale SDP dan PH', 'Konten', 8, '0.05', 1, 'kuantitatif', 'masa_berlaku,produk,harga_promo,harga_normal'),
 (7, 'IDE Konten SDP dan PH', 'Konten', 8, '0.10', 3, 'kuantitatif', 'nama_program,hari_dan_tanggal_rilis,final_program,keterangan_,jumlah'),
 (8, 'Jumlah deal follow up produk reguler member H2H', 'DealH2hR', 40, '0.10', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_transaksi,agen_id,jumlah'),
-(9, 'jumlah_deal_follow_up_produk_member_h2h_emonney', 'DealH2hE', 60, '0.10', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_transaksi,agen_id,jumlah');
+(9, 'jumlah_deal_follow_up_produk_member_h2h_emonney', 'DealH2hE', 60, '0.10', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_transaksi,agen_id,jumlah'),
+(10, 'penambahan_member_ph0001_dan_id_pribadi', 'RegPH', 10, '0.03', 1, 'kuantitatif', 'agen_id_member,tanggal,deposit_awal,keterangan,jumlah'),
+(13, 'jumlah_follow_up_per_bulan_member_ph', '1', 30, '0.05', 1, 'kuantitatif', 'agen_id_member,alasan_tidak_aktif,hasil_follow_up');
 
 -- --------------------------------------------------------
 
@@ -1010,6 +1028,23 @@ INSERT INTO `pekerjaan` (`id`, `tanggal`, `karyawan`, `pekerjaan`, `tgl`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `penambahan_member_ph0001_dan_id_pribadi`
+--
+
+CREATE TABLE `penambahan_member_ph0001_dan_id_pribadi` (
+  `id` int(11) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `agen_id_member` varchar(255) DEFAULT NULL,
+  `deposit_awal` varchar(255) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL,
+  `jumlah` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penggajian_test`
 --
 
@@ -1548,6 +1583,12 @@ ALTER TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jumlah_follow_up_per_bulan_member_ph`
+--
+ALTER TABLE `jumlah_follow_up_per_bulan_member_ph`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
@@ -1588,6 +1629,12 @@ ALTER TABLE `pegawai`
 -- Indexes for table `pekerjaan`
 --
 ALTER TABLE `pekerjaan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `penambahan_member_ph0001_dan_id_pribadi`
+--
+ALTER TABLE `penambahan_member_ph0001_dan_id_pribadi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1719,6 +1766,12 @@ ALTER TABLE `jumlah_deal_follow_up_produk_reguler_member_h2h`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `jumlah_follow_up_per_bulan_member_ph`
+--
+ALTER TABLE `jumlah_follow_up_per_bulan_member_ph`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
@@ -1734,7 +1787,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
@@ -1759,6 +1812,12 @@ ALTER TABLE `pegawai`
 --
 ALTER TABLE `pekerjaan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
+
+--
+-- AUTO_INCREMENT for table `penambahan_member_ph0001_dan_id_pribadi`
+--
+ALTER TABLE `penambahan_member_ph0001_dan_id_pribadi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `penggajian_test`
