@@ -12,7 +12,8 @@ else {
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
 
-    $kinerja2 = getKinerja();
+    $kinerja2 = getKinerjaKpi(1);
+    //var_dump($kinerja2);
 
     ?>
     <section class="content-header">
@@ -73,46 +74,10 @@ else {
                                     </tr>
                                 </tbody>
                             </table> <br>
+
+                            <?php //var_dump($kkpi['param_indikator']) ?>
                         <?php } ?>
-                        <table id="datatemplates" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th style="width: 3%;" >No</th>
-                                <th>Indikator</th>
-                                <th>Recap</th>
-                                <th>Target</th>
-                                <th>Pencapaian</th>
-                                <th>Persentase</th>
-                                <th>Bobot</th>
-                                <th>Score</th>
-                                <th>Final Score</th>
-                                <th style="width: 6%;">Aksi</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    $no = 1;
-                                    foreach($kinerja2 as $kinerja){
-                                ?>
-                                    <tr>
-                                        <td><?= $no ?></td>
-                                        <td><?= $kinerja['indikator'] ?></td>
-                                        <td><?= $kinerja['recap'] ?></td>
-                                        <td><?= $kinerja['target'] ?></td>
-                                        <td><?= $kinerja['pencapaian'] ?></td>
-                                        <td><?= $kinerja['presentase'] ?></td>
-                                        <td><?= $kinerja['bobot'] ?></td>
-                                        <td><?= $kinerja['score'] ?></td>
-                                        <td><?= $kinerja['final_score'] ?></td>
-                                        <td align="center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-update" onclick="getDataKr(<?=$kinerja['id']?>, '<?=$kinerja['indikator']?>','<?=$kinerja['recap']?>', <?= $kinerja['target'] ?>);"><i class="fa fa-pencil"></i></button>
-                			                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus&id=" . $kinerja['id'] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
-                                            <i class="fa fa-trash"></i></a> &nbsp; 
-	                    	            </td>
-                                    </tr>
-                                <?php $no++; } ?>
-                            </tbody>
-                        </table>
+                        
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->
             </div><!-- /.col -->
@@ -130,26 +95,21 @@ else {
                     </div>
                     <div class="modal-body">
                         
-                    <form role="form" id="updateForm" action="<?=$aksi?>?module=kpi&act=update" method="POST">
+                    <form role="form" id="updateForm" action="<?=$aksi?>?module=kpi&act=update_kpi" method="POST">
                     <div class="box-body">
                         <div class="form-group">
                             <input type="hidden" name="id" id="id">
-                            <label for="id">
+                            <label for="indikator">
                                 Indikator
                             </label>
-                            <input type="text" class="form-control" id="indikator" name="indikator" placeholder="Indikator">
-                            <br>
-                            <label for="recap"> 
-                                Recap
-                            </label>
-                            <input type="text" class="form-control" id="recap" name="recap" placeholder="Recap">
-                            <br>
-                            <label for="target">
-                                Target
-                            </label>
-                            <input type="number" class="form-control" id="target" name="target" placeholder="Target">
-                            <br>
+                            <select name="indikator" id="indikator" class="form-control">
+                                <option value="">-- pili indikator --</option>
+                                <?php foreach($kinerja2 as $inputkpi) { ?>
+                                    <option value="<?= $inputkpi['id'] . "-" . $inputkpi['nama'] ?>"> <?= $inputkpi['nama'] ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
+                        <div class="form-group" id="isi"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
@@ -184,6 +144,27 @@ else {
     function switchModal()
     {
         $('.modal-title').text("Tambah Indikator");
-        $('#updateForm').attr('action','modul/mod_kpi/kpi_aksi.php?module=kpi&act=input');
+        $('#updateForm').attr('action','modul/mod_kpi/kpi_aksi.php?module=kpi&act=input_kpi');
     }
+
+    $(document).ready(function(){
+    $('select').on('change', function () {
+        var selectedID = $(this).val(); 
+        $.ajax({
+            url: 'modul/mod_kpi/kpi_aksi.php?module=kpi&act=get-param-indikator',
+            type: 'POST',
+            data: {
+                id: selectedID
+            },
+            success: function (response) {
+                
+                // console.log(response);
+
+                var form = document.getElementById('isi');
+                form.innerHTML = response;
+            }
+        });
+    });
+});
+
 </script>

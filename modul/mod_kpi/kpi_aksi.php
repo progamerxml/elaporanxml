@@ -47,6 +47,61 @@ else{
         return $hasil;
     }
 
+    // function untuk mengambil semua data kinerja kpi
+    function getKinerja()
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi");
+        $kinerja2 = array();
+        if (mysqli_num_rows($exec) > 0) {
+            while ($kinerja = mysqli_fetch_assoc($exec)) {
+                $kinerja2[] = [
+                    'id' => $kinerja['id'],
+                    'nama' => $kinerja['nama'],
+                    'recap' => $kinerja['recap'],
+                    'target' => $kinerja['target'],
+                    'bobot' => $kinerja['bobot'],
+                    'tipe' => $kinerja['tipe'],
+                    'role_id' => $kinerja['role_id'],
+                    'param_indikator' => $kinerja['param_indikator']
+                ];
+            }
+        }
+        return $kinerja2;
+    }
+
+    // function untuk mengambil data kinerja kpi berdasarkan role
+    function getKinerjaKpi($role)
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi where role_id = $role");
+        $kinerja2 = array();
+        if (mysqli_num_rows($exec) > 0) {
+            while ($kinerja = mysqli_fetch_assoc($exec)) {
+                $kinerja2[] = [
+                    'id' => $kinerja['id'],
+                    'nama' => $kinerja['nama'],
+                    'recap' => $kinerja['recap'],
+                    'target' => $kinerja['target'],
+                    'bobot' => $kinerja['bobot'],
+                    'tipe' => $kinerja['tipe'],
+                    'role_id' => $kinerja['role_id'],
+                    'param_indikator' => $kinerja['param_indikator']
+                ];
+            }
+        }
+        return $kinerja2;
+    }
+
+    // function untuk mendapatkan parameter indikator berdasarkan id
+    function getParamIndById($id){
+        global $konek;
+        $ex = mysqli_query($konek, "select param_indikator from kinerja_kpi where id = $id");
+        $hasil = mysqli_fetch_assoc($ex);
+        $param = explode(",", $hasil['param_indikator']);
+        return $param;
+    }
+
     if($module == "kpi" && $act == "hapus"){
         $id = $_GET['id'];
         $table = getTableAsal($id);
@@ -118,26 +173,35 @@ else{
         header("location:".$base_url.$module);
     }
 
-    function getKinerja()
-    {
-        global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi");
-        $kinerja2 = array();
-        if (mysqli_num_rows($exec) > 0) {
-            while ($kinerja = mysqli_fetch_assoc($exec)) {
-                $kinerja2[] = [
-                    'id' => $kinerja['id'],
-                    'nama' => $kinerja['nama'],
-                    'recap' => $kinerja['recap'],
-                    'target' => $kinerja['target'],
-                    'bobot' => $kinerja['bobot'],
-                    'tipe' => $kinerja['tipe'],
-                    'role_id' => $kinerja['role_id'],
-                    'param_indikator' => $kinerja['param_indikator']
-                ];
-            }
+    elseif ($module=="kpi" AND $act=="get-param-indikator"){
+        $id = explode("-",$_POST['id']);
+        $hasil = mysqli_query($konek, "select param_indikator from kinerja_kpi where id = $id[0]");
+        $row = mysqli_fetch_assoc($hasil);
+        $param = explode(",", $row['param_indikator']);
+        // print_r(count($param));
+        
+        for($i=0; $i<count($param); $i++){
+            echo "<label for='".$param[$i]."'> ".$param[$i]."</label> <input type='text' class='form-control' id='".$param[$i]."' name='".$param[$i]."' placeholder='".$param[$i]."'> <br>";
         }
-        return $kinerja2;
+    }
+
+    elseif($module=="kpi" AND $act=="input_kpi"){
+
+        $idTable = (explode("-",$_POST['indikator']));
+        $hasil = getParamIndById($idTable[0]);
+        $tgl = date("Y-m-d");
+        
+        $kolom = "tanggal";
+        $nilai = "'$tgl'";
+        for ($i = 0; $i < count($hasil); $i++){
+            $a = $hasil[$i];
+            $kolom .= ", $a";
+            $nilai .= ", '$_POST[$a]'";
+        }
+
+        $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
+        echo $ex ? "sukses" : "gagal";
+
     }
 
 }

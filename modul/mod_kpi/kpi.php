@@ -22,13 +22,13 @@ else {
         <h1 class="page-header">
             <ol class="breadcrumb">
                 <li>
-                    <a href="<?php echo $base_url; ?>">
+                    <a href="<?= $base_url; ?>">
                         <i class="fa fa-home"></i>
                         <span style="vertical-align: inherit;">Home </span>
                     </a>
                 </li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?php echo $mod; ?></span></li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?php echo $mod; ?> </span></li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= $mod; ?></span></li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?= $mod; ?> </span></li>
             </ol>
         </h1>
     </section>
@@ -50,11 +50,11 @@ else {
                     <section class="content-header">
                         <div class="row border">
                             <div class="col-md-11 border">
-                                <h1 class="text-capitalize fw-bolder">Data <?php echo $mod; ?></h1>
+                                <h1 class="text-capitalize fw-bolder">Data <?= $mod; ?></h1>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
-                                    Tambah <?php echo $mod; ?>
+                                    Tambah <?= $mod; ?>
                                 </button>
                             </div>
                         </div>
