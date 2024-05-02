@@ -69,7 +69,8 @@ else{
         }
         return $kinerja2;
     }
-
+    
+    
     // function untuk mengambil data kinerja kpi berdasarkan role
     function getKinerjaKpi($role)
     {
@@ -92,6 +93,70 @@ else{
         }
         return $kinerja2;
     }
+    
+    // buat function untuk table yang di hasilkan dari input indikator
+    $names = getKinerja();
+    $functs = array();
+    foreach($names as $name){
+        $functs[] = $name['nama'];
+    }
+
+    $array = array(
+        'giveaway',
+        'ide_konten_sdp_dan_ph',
+        'flash_sale_sdp_dan_ph',
+        'jumlah_deal_followup_produk_reguler_member_h2h',
+        'jumlah_deal_followup_produk_member_h2h_emoney',
+        'penambahan_member_h2h',
+        'jumlah_follow_up_deal_perbulan_member_ph',
+        'penambahan_member_ph_dan_id_pribadi',
+        'penambahan_member_sdp_dan_id_pribadi',
+        'jumlah_followup_deal_perbulan_member_sdp',
+        'report_iklan_menggunakan_sosmed_pribadi',
+        'komentar_postingan',
+        'menjalankan_iklan_atau_ads_di_fb_instagram_dan_google'
+    );
+
+    // Membuat fungsi-fungsi dinamis berdasarkan data array
+    foreach ($array as $func_name) {
+        // Gunakan variabel variabel untuk membuat fungsi dengan nama dari data array
+        $$func_name = function () use ($func_name) {
+            global $konek;
+            $resultFunc = array();
+
+            // Eksekusi query
+            $exec = mysqli_query($konek, "SELECT * FROM $func_name");
+
+            // Mengambil data dengan mysqli_fetch_row()
+            if (mysqli_num_rows($exec) > 0) {
+                while ($rowFunc = mysqli_fetch_row($exec)) {
+                    // Tambahkan data ke dalam array $result
+                    $resultFunc[] = $rowFunc;
+                }
+            }
+
+            return $resultFunc;
+        };
+    }
+
+    // testing 
+    function test1(){
+        global $konek;
+        $resultFunc = array();
+
+        // Eksekusi query
+        $exec = mysqli_query($konek, "SELECT * FROM giveaway");
+
+        // Mengambil data dengan mysqli_fetch_row()
+        if (mysqli_num_rows($exec) > 0) {
+            while ($rowFunc = mysqli_fetch_row($exec)) {
+                // Tambahkan data ke dalam array $result
+                $resultFunc[] = $rowFunc;
+            }
+        }
+
+        return $resultFunc;
+    };
 
     // function untuk mendapatkan parameter indikator berdasarkan id
     function getParamIndById($id){
@@ -132,7 +197,7 @@ else{
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
             mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
-            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, tanggal DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP)";
+            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
             mysqli_query($konek, $create_table);
 
             for($i = 0; $i < count($param_indikator); $i++){
@@ -187,20 +252,31 @@ else{
 
     elseif($module=="kpi" AND $act=="input_kpi"){
 
+        $module = "input_kpi";
         $idTable = (explode("-",$_POST['indikator']));
         $hasil = getParamIndById($idTable[0]);
-        $tgl = date("Y-m-d");
+        $tgl = $_POST['date'];
         
-        $kolom = "tanggal";
-        $nilai = "'$tgl'";
+        $kolom = "date, jumlah";
+        $nilai = "'$tgl', 1";
         for ($i = 0; $i < count($hasil); $i++){
             $a = $hasil[$i];
             $kolom .= ", $a";
             $nilai .= ", '$_POST[$a]'";
         }
 
+        // untuk debug output syntax query
+        // echo "insert into $idTable[1] ($kolom) values ($nilai)";
+
+        // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
+
+        // menampilkan pesan exec query
         echo $ex ? "sukses" : "gagal";
+
+        session_start();
+        $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
+        header("location:".$base_url.$module);
 
     }
 
