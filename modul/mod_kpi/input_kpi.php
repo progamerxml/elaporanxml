@@ -13,7 +13,7 @@ else {
     $mod = $_GET['module'];
 
     $kinerja2 = getKinerjaKpi(1);
-    $names = test1();
+    $names =  giveaway();
     var_dump($names);
 
 

@@ -122,41 +122,41 @@ else{
         // Gunakan variabel variabel untuk membuat fungsi dengan nama dari data array
         $$func_name = function () use ($func_name) {
             global $konek;
-            $resultFunc = array();
-
+            $result = array();
+    
             // Eksekusi query
             $exec = mysqli_query($konek, "SELECT * FROM $func_name");
-
-            // Mengambil data dengan mysqli_fetch_row()
-            if (mysqli_num_rows($exec) > 0) {
-                while ($rowFunc = mysqli_fetch_row($exec)) {
+    
+            // Mengambil data dengan mysqli_fetch_row() untuk indeks numerik
+            if ($exec && mysqli_num_rows($exec) > 0) {
+                while ($row = mysqli_fetch_row($exec)) {
                     // Tambahkan data ke dalam array $result
-                    $resultFunc[] = $rowFunc;
+                    $result[] = $row;
                 }
             }
-
-            return $resultFunc;
+    
+            return $result;
         };
     }
 
     // testing 
-    function test1(){
-        global $konek;
-        $resultFunc = array();
+    // function test1(){
+    //     global $konek;
+    //     $resultFunc = array();
 
-        // Eksekusi query
-        $exec = mysqli_query($konek, "SELECT * FROM giveaway");
+    //     // Eksekusi query
+    //     $exec = mysqli_query($konek, "SELECT * FROM giveaway");
 
-        // Mengambil data dengan mysqli_fetch_row()
-        if (mysqli_num_rows($exec) > 0) {
-            while ($rowFunc = mysqli_fetch_row($exec)) {
-                // Tambahkan data ke dalam array $result
-                $resultFunc[] = $rowFunc;
-            }
-        }
+    //     // Mengambil data dengan mysqli_fetch_row()
+    //     if (mysqli_num_rows($exec) > 0) {
+    //         while ($rowFunc = mysqli_fetch_row($exec)) {
+    //             // Tambahkan data ke dalam array $result
+    //             $resultFunc[] = $rowFunc;
+    //         }
+    //     }
 
-        return $resultFunc;
-    };
+    //     return $resultFunc;
+    // };
 
     // function untuk mendapatkan parameter indikator berdasarkan id
     function getParamIndById($id){
