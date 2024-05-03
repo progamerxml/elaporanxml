@@ -96,67 +96,58 @@ else{
     
     // buat function untuk table yang di hasilkan dari input indikator
     $names = getKinerja();
-    $functs = array();
     foreach($names as $name){
-        $functs[] = $name['nama'];
-    }
-
-    $array = array(
-        'giveaway',
-        'ide_konten_sdp_dan_ph',
-        'flash_sale_sdp_dan_ph',
-        'jumlah_deal_followup_produk_reguler_member_h2h',
-        'jumlah_deal_followup_produk_member_h2h_emoney',
-        'penambahan_member_h2h',
-        'jumlah_follow_up_deal_perbulan_member_ph',
-        'penambahan_member_ph_dan_id_pribadi',
-        'penambahan_member_sdp_dan_id_pribadi',
-        'jumlah_followup_deal_perbulan_member_sdp',
-        'report_iklan_menggunakan_sosmed_pribadi',
-        'komentar_postingan',
-        'menjalankan_iklan_atau_ads_di_fb_instagram_dan_google'
-    );
-
-    // Membuat fungsi-fungsi dinamis berdasarkan data array
-    foreach ($array as $func_name) {
-        // Gunakan variabel variabel untuk membuat fungsi dengan nama dari data array
-        $$func_name = function () use ($func_name) {
+        $nama = $name['nama'];
+        $functs = 'function '.$nama.'(){
             global $konek;
-            $result = array();
+            $resultFunc'.$nama.' = array();
     
             // Eksekusi query
-            $exec = mysqli_query($konek, "SELECT * FROM $func_name");
+            $exec'.$nama.' = mysqli_query($konek, "SELECT * FROM '.$nama.'");
     
-            // Mengambil data dengan mysqli_fetch_row() untuk indeks numerik
-            if ($exec && mysqli_num_rows($exec) > 0) {
-                while ($row = mysqli_fetch_row($exec)) {
+            // Mengambil data dengan mysqli_fetch_row()
+            if (mysqli_num_rows($exec'.$nama.') > 0) {
+                while ($rowFunc'.$nama.' = mysqli_fetch_row($exec'.$nama.')) {
                     // Tambahkan data ke dalam array $result
-                    $result[] = $row;
+                    $resultFunc'.$nama.'[] = $rowFunc'.$nama.';
                 }
+                $resultfunc'.$nama.'["column"] = mysqli_field_count($konek);
             }
     
-            return $result;
-        };
+            return $resultFunc'.$nama.';
+        };';
+
+        eval($functs);
+    }
+
+    // function rearrange table
+    function arangeColumn($arr1, $arr2){
+        $arrBeforeSecondElement = array_slice($arr1, 0, 2);
+        $arrAfterSecondElement = array_slice($arr1, 2);
+
+        $arrHasil = array_merge($arrBeforeSecondElement, $arr2, $arrAfterSecondElement);
+        return $arrHasil;
     }
 
     // testing 
-    // function test1(){
-    //     global $konek;
-    //     $resultFunc = array();
+    function test1(){
+        global $konek;
+        $resultFunc = array();
 
-    //     // Eksekusi query
-    //     $exec = mysqli_query($konek, "SELECT * FROM giveaway");
+        // Eksekusi query
+        $exec = mysqli_query($konek, "SELECT * FROM giveaway");
 
-    //     // Mengambil data dengan mysqli_fetch_row()
-    //     if (mysqli_num_rows($exec) > 0) {
-    //         while ($rowFunc = mysqli_fetch_row($exec)) {
-    //             // Tambahkan data ke dalam array $result
-    //             $resultFunc[] = $rowFunc;
-    //         }
-    //     }
+        // Mengambil data dengan mysqli_fetch_row()
+        if (mysqli_num_rows($exec) > 0) {
+            while ($rowFunc = mysqli_fetch_row($exec)) {
+                // Tambahkan data ke dalam array $result
+                $resultFunc[] = $rowFunc;
+            }
+            $resultFunc['column'] = mysqli_field_count($konek);
+        }
 
-    //     return $resultFunc;
-    // };
+        return $resultFunc;
+    };
 
     // function untuk mendapatkan parameter indikator berdasarkan id
     function getParamIndById($id){

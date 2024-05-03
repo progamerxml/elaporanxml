@@ -13,9 +13,8 @@ else {
     $mod = $_GET['module'];
 
     $kinerja2 = getKinerjaKpi(1);
-    $names =  giveaway();
-    var_dump($names);
-
+    
+    
 
     ?>
     <section class="content-header">
@@ -71,26 +70,29 @@ else {
                             <?php 
                                 $name = $kkpi['nama'];
                                 $result = call_user_func($name);
-                                var_dump($result);
+                                $defColumn = ['no', 'date', 'created_at', 'updated_at', 'ket', 'jumlah'];
+                                $param = getParamIndById($kkpi['id']);
+                                $columns = array_merge($defColumn, $param);
                                 
                             ?>
                             <h3><?= $kkpi['nama'] ?></h3>
                             <table id="datatemplates" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>no</th>
-                                        <th>parameter</th>
-                                        <th>parameter</th>
-                                        <th>parameter</th>
+                                        <?php
+                                            foreach($columns as $column){?>
+                                            <th><?= $column ?></th>
+                                        <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>@</td>
-                                        <td>nilai</td>
-                                        <td>nilai</td>
-                                        <td>nilai</td>
-                                    </tr>
+                                    <?php foreach($result as $r) {?>
+                                        <tr>
+                                            <?php foreach($r as $nilai) { ?>
+                                                <td><?= $n=$nilai ?? '-'  ?></td>
+                                            <?php } ?>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table> <br>
 
