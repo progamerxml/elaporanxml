@@ -172,7 +172,9 @@ else {
       $('#datagalerifoto').DataTable();
       $('#datavideo').DataTable();
       $('#datadownload').DataTable();
-
+      for(a=1; a<1000; a++){
+        $("#datatemplates_"+a).DataTable();
+      }
       //Datepicker
       $('#tgl_mulai').daterangepicker({
         singleDatePicker: true,

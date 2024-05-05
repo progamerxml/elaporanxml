@@ -76,23 +76,33 @@ else {
                                 
                             ?>
                             <h3><?= $kkpi['nama'] ?></h3>
-                            <table id="datatemplates" class="table table-bordered table-striped">
+                            <table id="datatemplates_<?= $kkpi['id'] ?>" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <?php
                                             foreach($columns as $column){?>
                                             <th><?= $column ?></th>
                                         <?php } ?>
+                                        <th>aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($result as $r) {?>
+                                    <?php $a = 1;  foreach($result as $r) {?>
                                         <tr>
-                                            <?php foreach($r as $nilai) { ?>
-                                                <td><?= $n=$nilai ?? '-'  ?></td>
+                                            <td style="width: 1%;"><?= $a ?></td>
+                                            <?php for($i=1; $i<count($r); $i++) { ?>
+                                                <td><?= $n=$r[$i] ?? '-'  ?></td>
                                             <?php } ?>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update" onclick="">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus_input&id=" . $r[0] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
+                                                    <i class="fa fa-trash"></i>
+                                                </a> &nbsp; 
+                                            </td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php $a++; } ?>
                                 </tbody>
                             </table> <br>
 
