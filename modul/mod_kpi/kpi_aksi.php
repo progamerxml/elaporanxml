@@ -36,6 +36,19 @@ else{
         return $cleaned;
     }
 
+    function camelCaseToSpace($text) {
+        // Mengganti underscore dengan spasi
+        $text = str_replace('_', ' ', $text);
+        
+        // Mengubah menjadi camel case
+        $text = ucwords($text);
+        
+        // Menghapus spasi di awal dan akhir
+        $text = trim($text);
+        
+        return $text;
+    }
+
     // function getTableAsal
     function getTableAsal($id){
         global $konek;
@@ -75,7 +88,7 @@ else{
     function getKinerjaKpi($role)
     {
         global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi where role_id = $role");
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'");
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
@@ -269,6 +282,17 @@ else{
         $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
         header("location:".$base_url.$module);
 
+    }
+
+    elseif($module == "kpi" AND $act == "hapus_input_kpi"){
+        $module = "input_kpi";
+        $table = $_GET["table"];
+        $id = $_GET['id'];
+        if(mysqli_query($konek, "DELETE FROM $table WHERE id = $id")){
+            session_start();
+            $_SESSION['error'] = "Berhasil menghapus data input KPI dari table $table.";
+            header("location:".$base_url.$module);
+        }
     }
 
 }

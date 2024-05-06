@@ -50,7 +50,7 @@ else {
                     <section class="content-header">
                         <div class="row border">
                             <div class="col-md-11 border">
-                                <h1 class="text-capitalize fw-bolder">Data <?= $mod; ?></h1>
+                                <h1 class="text-capitalize fw-bolder">Data Indikator <?= $mod; ?></h1>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">

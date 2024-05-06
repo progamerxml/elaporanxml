@@ -26,8 +26,8 @@ else {
                         <span style="vertical-align: inherit;">Home </span>
                     </a>
                 </li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?php echo $mod; ?></span></li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?php echo $mod; ?> </span></li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= camelCaseToSpace ($mod); ?></span></li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?= camelCaseToSpace($mod); ?> </span></li>
             </ol>
         </h1>
     </section>
@@ -45,27 +45,59 @@ else {
                     unset($_SESSION['error'])
                 ?>
 
-                <div class="box box-warning">
-                    <section class="content-header">
-                        <div class="row border">
-                            <div class="col-md-11 border">
-                                <h1 class="text-capitalize fw-bolder">Data <?php echo $mod; ?></h1>
-                            </div>
-                            <div class="col-md-1">
-                                <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
-                                    Tambah <?php echo $mod; ?>
-                                </button>
-                            </div>
-                        </div>
-
-
+                <div class="row border">
+                    <div class="col-md-11 border">
+                        <h1 class="text-capitalize fw-bolder"><strong>Data <?= camelCaseToSpace($mod); ?></strong></h1>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-center">
+                        <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
+                            Tambah <?= camelCaseToSpace($mod); ?>
+                        </button>
+                    </div>
+                </div> <br>
+                <!-- <div class="box box-warning">
+                    <section class="content-header"> -->
                         <!-- debuging -->
-                    </section>
-                    <hr>
+                    <!-- </section>
+                </div> -->
+                <!-- /.box -->
 
+                <?php $b = 1; foreach($kinerja2 as $kkpi) { ?>
+
+                    <!-- <div class="box box-solid">
+                        <div class="box-body">
+                        <div class="box-group" id="accordion">
+                          <div class="panel box box-success">
+                            <div class="box-header with-border">
+                              <h4 class="box-title">
+                                <a  data-toggle="collapse"  data-parent="#accordion"  href="#collapseThree"  class="collapsed"  aria-expanded="true">
+                                  Collapsible Group Success
+                                </a>
+                              </h4>
+                            </div>
+                            <div  id="collapseThree"  class="panel-collapse collapse"  aria-expanded="false">
+                              <div class="box-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life
+                                accusamus terry richardson ad squid. 3 wolf moon officia
+                                aute, non cupidatat skateboard dolor brunch. Food truck
+                                quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                sunt aliqua put a bird on it squid single-origin coffee
+                                nulla assumenda shoreditch et. Nihil anim keffiyeh
+                                helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                Leggings occaecat craft beer farm-to-table, raw denim
+                                aesthetic synth nesciunt you probably haven't heard of them
+                                accusamus labore sustainable VHS.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                    </div> -->
+
+                <div class="box box-warning">
                     <div class="box-body  table-responsive">
                         <!-- lakukan perulangan terhadap data kinerja_kpi -->
-                        <?php  foreach($kinerja2 as $kkpi) { ?>
 
                             <?php 
                                 $name = $kkpi['nama'];
@@ -75,42 +107,44 @@ else {
                                 $columns = array_merge($defColumn, $param);
                                 
                             ?>
-                            <h3><?= $kkpi['nama'] ?></h3>
-                            <table id="datatemplates_<?= $kkpi['id'] ?>" class="table table-bordered table-striped">
+                            <h3><strong><?= $b.". ".camelCaseToSpace($kkpi['nama']) ?></strong></h3>
+                            <hr>
+                            <table id="datatemplates_<?= $kkpi['id'] ?>" class="table table-borderless table-striped">
                                 <thead>
                                     <tr>
                                         <?php
                                             foreach($columns as $column){?>
                                             <th><?= $column ?></th>
                                         <?php } ?>
-                                        <th>aksi</th>
+                                        <th style="text-align: center;">aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $a = 1;  foreach($result as $r) {?>
                                         <tr>
-                                            <td style="width: 1%;"><?= $a ?></td>
+                                            <td style="width: 1%;" ><?= $a ?></td>
                                             <?php for($i=1; $i<count($r); $i++) { ?>
                                                 <td><?= $n=$r[$i] ?? '-'  ?></td>
                                             <?php } ?>
-                                            <td>
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-update" onclick="">
+                                            <td style="text-align: center;">
+                                                <!-- <button type="button" class="btn btn-warning" onclick="updateDataInputKpi();">
                                                     <i class="fa fa-pencil"></i>
-                                                </button>
-                                                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus_input&id=" . $r[0] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
+                                                </button> -->
+                                                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus_input_kpi&table=".$kkpi['nama']."&id=" . $r[0] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
                                                     <i class="fa fa-trash"></i>
                                                 </a> &nbsp; 
                                             </td>
                                         </tr>
                                     <?php $a++; } ?>
                                 </tbody>
-                            </table> <br>
-
+                            </table> 
+                            
                             <?php //var_dump($kkpi['param_indikator']) ?>
-                        <?php } ?>
-                        
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
+                            
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                    
+                <?php $b++; } ?>
             </div><!-- /.col -->
         </div>
 
@@ -162,6 +196,7 @@ else {
 ?>
 
 <script>
+
     function getDataKr(id, indikator, recap, target) {
     // Isi nilai input pada modal dengan data yang diambil dari tabel
     $('#id').val(id);
