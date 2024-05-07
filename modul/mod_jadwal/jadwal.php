@@ -21,7 +21,7 @@ else {
         $waktu = $_SESSION['waktu'];
     }
 
-    $roles2 = getRole();  // print_r(json_encode($roles2['nama'])). "<br>";
+    $roles2 = getRoleG();  // print_r($roles2). "<br>";
     $shifts2 = getShift(); // print_r($shifts2['nama']);
     $schedules = getJadwal($waktu);  //  print_r($schedules);
     $otoritas = cekOto($_SESSION['namauser']);
@@ -309,6 +309,7 @@ else {
 
             if (kolom === 'role') {
                 const roleId = $(this).val();
+                console.log(roleId);
                 $.ajax({
                     url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=update-role',
                     type: 'POST',

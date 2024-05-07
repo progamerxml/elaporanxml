@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 03, 2024 at 08:12 AM
+-- Generation Time: May 07, 2024 at 08:55 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -94,6 +94,13 @@ CREATE TABLE `flash_sale_sdp_dan_ph` (
   `harga_normal` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `flash_sale_sdp_dan_ph`
+--
+
+INSERT INTO `flash_sale_sdp_dan_ph` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `masa_berlaku`, `produk_flash_sale`, `harga_promo`, `harga_normal`) VALUES
+(2, '2024-05-22', '2024-05-06 06:18:06', NULL, NULL, 1, '3 hari', 'Indosat Promo', '9400', '9600');
+
 -- --------------------------------------------------------
 
 --
@@ -160,8 +167,7 @@ CREATE TABLE `giveaway` (
 INSERT INTO `giveaway` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_program`, `hari_dan_tanggal_program`, `final_give_away_program`, `keterangan`) VALUES
 (6, '2024-05-02', '2024-05-02 05:37:39', NULL, NULL, 1, 'Test Program 3', 'sabtu, 11 Mei 2024', 'sabtu, 18 Mei 2024', 'Keterangan Program 3'),
 (7, '2024-05-03', '2024-05-02 05:38:57', NULL, NULL, 1, 'Test Program 4', 'Senin, 13 Mei 2024', 'Senin, 21 Mei 2024', 'Keterangan Program 4'),
-(8, '2024-05-04', '2024-05-02 05:39:59', NULL, NULL, 1, 'Test Program 5', 'Senin, 13 Mei 2024', 'Senin, 21 Mei 2024', 'Keterangan Program 5'),
-(9, '2024-05-10', '2024-05-03 04:26:26', NULL, NULL, 1, 'Test Program 6', 'Senin, 20 Mei 2024', 'Senin, 28 Mei 2024', 'Keterangan Program 6');
+(8, '2024-05-04', '2024-05-02 05:39:59', NULL, NULL, 1, 'Test Program 5', 'Senin, 13 Mei 2024', 'Senin, 21 Mei 2024', 'Keterangan Program 5');
 
 -- --------------------------------------------------------
 
@@ -211,45 +217,46 @@ CREATE TABLE `input_kpi` (
 
 CREATE TABLE `jabatan` (
   `id` int(11) NOT NULL,
-  `nama_jabatan` varchar(255) DEFAULT NULL
+  `kode` varchar(255) NOT NULL,
+  `nama_jabatan` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jabatan`
 --
 
-INSERT INTO `jabatan` (`id`, `nama_jabatan`) VALUES
-(9, 'Owner Utama'),
-(12, 'Direktur Utama '),
-(13, 'Supervisor'),
-(14, 'HRD'),
-(15, 'Accounting 1'),
-(16, 'Accounting 2'),
-(17, 'IT / Progammer'),
-(18, 'Head Marketing'),
-(19, 'Marketing 2'),
-(20, 'Marketing Area'),
-(21, 'Konten Kreator'),
-(22, 'Design 1'),
-(23, 'Design 2'),
-(24, 'Operator H2H'),
-(25, 'Support H2H'),
-(26, 'CS H2H'),
-(27, 'ADM H2H'),
-(28, 'Admin Voucher'),
-(29, 'Operator XML Mobile'),
-(30, 'CS XML Mobile'),
-(31, 'ADM XML Mobile'),
-(32, 'Operator & CS PH'),
-(33, 'Operator & CS SDP'),
-(34, 'Operator & CS PG'),
-(35, 'Support 2'),
-(36, ' 	Owner Utama'),
-(38, 'Support 3'),
-(39, 'Marketing Online'),
-(40, 'CS  Voucher '),
-(41, 'Operator & CS SSB '),
-(42, 'SPV Marketing Area');
+INSERT INTO `jabatan` (`id`, `kode`, `nama_jabatan`, `status`) VALUES
+(9, 'OWN', 'Owner Utama', 0),
+(12, 'DIR', 'Direktur Utama ', 0),
+(13, 'SPV', 'Supervisor', 0),
+(14, 'HR', 'HRD', 0),
+(15, 'ACC1', 'Accounting 1', 0),
+(16, 'ACC2', 'Accounting 2', 0),
+(17, 'PRG', 'IT / Progammer', 0),
+(18, 'MARKET1', 'Head Marketing', 1),
+(19, 'MARKET2', 'Marketing 2', 1),
+(20, 'SALES', 'Marketing Area', 0),
+(21, 'CC', 'Konten Kreator', 0),
+(22, 'DSGN', 'Design 1', 0),
+(23, 'DSGN2', 'Design 2', 0),
+(24, 'OPR', 'Operator H2H', 1),
+(25, 'SP', 'Support H2H', 1),
+(26, 'CS', 'CS H2H', 1),
+(27, 'ADM', 'ADM H2H', 1),
+(28, 'ADM', 'Admin Voucher', 1),
+(29, 'OPR', 'Operator XML Mobile', 1),
+(30, 'XML', 'CS XML Mobile', 1),
+(31, 'ADM', 'ADM XML Mobile', 1),
+(32, 'PH', 'Operator & CS PH', 1),
+(33, 'SDP', 'Operator & CS SDP', 1),
+(34, 'PG', 'Operator & CS PG', 1),
+(35, 'SP', 'Support 2', 1),
+(38, 'SP', 'Support 3', 1),
+(39, 'MO', 'Marketing Online', 0),
+(40, 'CV', 'CS  Voucher ', 1),
+(41, 'SSB', 'Operator & CS SSB ', 1),
+(42, 'SPVM', 'SPV Marketing Area', 0);
 
 -- --------------------------------------------------------
 
@@ -304,6 +311,13 @@ CREATE TABLE `jumlah_followup_deal_perbulan_member_sdp` (
   `alasan_tidak_aktif` varchar(255) DEFAULT NULL,
   `hasil_follow_up` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jumlah_followup_deal_perbulan_member_sdp`
+--
+
+INSERT INTO `jumlah_followup_deal_perbulan_member_sdp` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `agen_id_member`, `alasan_tidak_aktif`, `hasil_follow_up`) VALUES
+(1, '2024-05-07', '2024-05-06 03:13:37', NULL, NULL, 1, 'xml004', 'Kurangen modal', 'lanjut bulan depan');
 
 -- --------------------------------------------------------
 
@@ -672,7 +686,36 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 (185, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-07, shift: 4', '2024-04-23 07:08:17'),
 (186, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-08, role: 2', '2024-04-23 07:08:19'),
 (187, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-08, shift: 4', '2024-04-23 07:08:21'),
-(188, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-14, shift: 5', '2024-04-25 07:20:54');
+(188, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-14, shift: 5', '2024-04-25 07:20:54'),
+(189, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-01, role: 27', '2024-05-07 06:55:49'),
+(190, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-01, role: 15', '2024-05-07 07:00:48'),
+(191, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-02, role: 13', '2024-05-07 07:00:50'),
+(192, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-02, role: 22', '2024-05-07 07:00:54'),
+(193, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-08, role: 1', '2024-05-07 07:01:20'),
+(194, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-08, shift: 3', '2024-05-07 07:01:22'),
+(195, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-09, role: 6', '2024-05-07 07:01:29'),
+(196, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-09, shift: 7', '2024-05-07 07:01:30'),
+(197, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-09, shift: 4', '2024-05-07 07:01:34'),
+(198, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-09, shift: 2', '2024-05-07 07:01:37'),
+(199, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-10, role: 7', '2024-05-07 07:01:49'),
+(200, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-10, shift: 5', '2024-05-07 07:01:51'),
+(201, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-10, role: 33', '2024-05-07 07:02:40'),
+(202, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 15', '2024-05-07 07:04:09'),
+(203, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 26', '2024-05-07 07:04:20'),
+(204, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-04, role: 30', '2024-05-07 07:04:51'),
+(205, 'irfanem', 'update data role pegawai: 94, tanggal : 2024-05-01, role: 33', '2024-05-07 07:05:28'),
+(206, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-07, role: 15', '2024-05-07 07:16:35'),
+(207, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-05, role: 31', '2024-05-07 07:16:48'),
+(208, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 14', '2024-05-07 08:01:45'),
+(209, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-01, role: 18', '2024-05-07 08:02:08'),
+(210, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-01, role: 26', '2024-05-07 08:02:12'),
+(211, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-01, shift: 2', '2024-05-07 08:02:15'),
+(212, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-02, role: 26', '2024-05-07 08:03:27'),
+(213, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-04, role: 12', '2024-05-07 08:06:02'),
+(214, 'irfanem', 'update data role pegawai: 94, tanggal : 2024-05-04, role: 21', '2024-05-07 08:06:14'),
+(215, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-04, role: 12', '2024-05-07 08:08:41'),
+(216, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 26', '2024-05-07 08:10:13'),
+(217, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 22', '2024-05-07 08:11:14');
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1368,8 @@ INSERT INTO `roles` (`id`, `kode`, `nama`) VALUES
 (8, 'PG', 'CS Pg'),
 (9, 'PH', 'CS PH'),
 (10, 'SSB', 'CS SSB'),
-(11, 'SDP', 'cs sdp');
+(11, 'SDP', 'cs sdp'),
+(13, 'MDL', 'Middle');
 
 -- --------------------------------------------------------
 
@@ -1376,8 +1420,8 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (35, 73, 2, 2, NULL, NULL, '2024-05-04'),
 (36, 104, 3, 3, NULL, NULL, '2024-05-05'),
 (37, 73, 2, 3, NULL, NULL, '2024-05-03'),
-(38, 73, 1, 3, NULL, NULL, '2024-05-02'),
-(39, 73, 1, 1, NULL, NULL, '2024-05-01'),
+(38, 73, 13, 3, NULL, NULL, '2024-05-02'),
+(39, 73, 1, 2, NULL, NULL, '2024-05-01'),
 (40, 73, 4, 2, NULL, NULL, '2024-05-05'),
 (41, 73, 1, 3, NULL, NULL, '2024-03-01'),
 (42, 73, 3, 3, NULL, NULL, '2024-02-01'),
@@ -1470,7 +1514,10 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (129, 104, 1, 2, NULL, NULL, '2024-04-05'),
 (130, 104, 2, 4, NULL, NULL, '2024-04-06'),
 (131, 104, 2, 4, NULL, NULL, '2024-04-07'),
-(132, 104, 2, 4, NULL, NULL, '2024-04-08');
+(132, 104, 2, 4, NULL, NULL, '2024-04-08'),
+(133, 73, 1, 3, NULL, NULL, '2024-05-08'),
+(134, 73, 6, 2, NULL, NULL, '2024-05-09'),
+(135, 73, 7, 5, NULL, NULL, '2024-05-10');
 
 -- --------------------------------------------------------
 
@@ -1488,11 +1535,13 @@ CREATE TABLE `shifts` (
 --
 
 INSERT INTO `shifts` (`id`, `nama`) VALUES
-(1, 'Enjing'),
+(1, 'Pagi'),
 (2, 'Siang'),
-(3, 'Ndalu'),
+(3, 'Malam'),
 (4, 'Middle'),
-(5, 'Libur');
+(5, 'Libur'),
+(7, 'Sakit'),
+(8, 'Tukar Libur');
 
 -- --------------------------------------------------------
 
@@ -1891,7 +1940,7 @@ ALTER TABLE `bidang`
 -- AUTO_INCREMENT for table `flash_sale_sdp_dan_ph`
 --
 ALTER TABLE `flash_sale_sdp_dan_ph`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gaji`
@@ -1945,7 +1994,7 @@ ALTER TABLE `jumlah_deal_followup_produk_reguler_member_h2h`
 -- AUTO_INCREMENT for table `jumlah_followup_deal_perbulan_member_sdp`
 --
 ALTER TABLE `jumlah_followup_deal_perbulan_member_sdp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `jumlah_follow_up_deal_perbulan_member_ph`
@@ -1987,7 +2036,7 @@ ALTER TABLE `komentar_postingan`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
 
 --
 -- AUTO_INCREMENT for table `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
@@ -2047,19 +2096,19 @@ ALTER TABLE `report_iklan_menggunakan_sosmed_pribadi`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `shifts`
 --
 ALTER TABLE `shifts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `task`

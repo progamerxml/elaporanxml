@@ -30,6 +30,27 @@ else {
 
         return $roles;
     }
+    
+    function getRoleG()
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM jabatan");
+        $jabatan2 = array();
+        if(mysqli_num_rows($exec) > 0){
+            while($hasil = mysqli_fetch_assoc($exec)){
+                $jabatan2[] = [
+                    'id' => $hasil['id'],
+                    'kode' => $hasil['kode'],
+                    'jabatan' => $hasil['nama_jabatan'],
+                    'status' => $hasil['status']
+                ];
+            }
+        }else{
+            return $jabatan2 = array();
+        }
+
+        return $jabatan2;
+    }
 
     // cek otoritas
     function cekOto($username){
@@ -307,20 +328,21 @@ else {
 
         if ($result->num_rows > 0) {
             $update = "UPDATE schedules SET role_id = '$role_id' WHERE employ_id = '$pegawai_id' AND date = '$tanggal'";
-            mysqli_query($konek, $update);
+        //     mysqli_query($konek, $update);
             
 
-            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'update data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
-            mysqli_query($konek, $log);
-        } else {
+        //     $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'update data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
+        //     mysqli_query($konek, $log);
+        // } else {
             $insert = "INSERT INTO schedules (employ_id, role_id, date) VALUES ('$pegawai_id', '$role_id', '$tanggal')";
-            mysqli_query($konek, $insert);
+        //     mysqli_query($konek, $insert);
             
-            $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'insert data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
-            mysqli_query($konek, $log);
+        //     $log = "INSERT INTO log (user, aksi) VALUES ('$user', 'insert data role pegawai: $pegawai_id, tanggal : $tanggal, role: $role_id')";
+        //     mysqli_query($konek, $log);
         }
 
-        echo "Data berhasil disimpan";
+        // echo "Data berhasil disimpan";
+        echo $insert;
     }
 
     if ($module == 'jadwal' and $act == 'update-shift') {

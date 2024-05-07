@@ -130,8 +130,8 @@ else {
                                                 <!-- <button type="button" class="btn btn-warning" onclick="updateDataInputKpi();">
                                                     <i class="fa fa-pencil"></i>
                                                 </button> -->
-                                                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus_input_kpi&table=".$kkpi['nama']."&id=" . $r[0] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
-                                                    <i class="fa fa-trash"></i>
+                                                <a href="<?= $aksi . "?module=kpi&act=hapus_input_kpi&table=".$kkpi['nama']."&id=" . $r[0] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
+                                                    <i class="fa fa-trash text-red"></i>
                                                 </a> &nbsp; 
                                             </td>
                                         </tr>
