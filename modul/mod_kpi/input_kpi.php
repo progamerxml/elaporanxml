@@ -7,13 +7,15 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 else {
     $aksi = "modul/mod_kpi/kpi_aksi.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
+    require __DIR__ . "/../mod_pegawai/aksi_pegawai.php";
     require __DIR__ . "/kpi_aksi.php";
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
-    $golongan = getGolKpyByKar($nmpgw['jabatan']);
+    $level = $_SESSION['leveluser'];
+    $golongan = ($level == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']);
     $kinerja2 = getKinerjaKpi($golongan);
-    
+    print_r($nmpgw['id']);
     
 
     ?>
@@ -50,9 +52,14 @@ else {
                         <h1 class="text-capitalize fw-bolder"><strong>Data <?= camelCaseToSpace($mod); ?></strong></h1>
                     </div>
                     <div class="col-md-1 d-flex align-items-center">
-                        <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
-                            Tambah <?= camelCaseToSpace($mod); ?>
-                        </button>
+                        <?php 
+                            $addBtn = "<button type=\"button\" class=\"btn btn-success pull-right text-capitalize\" data-toggle=\"modal\" data-target=\"#modal-update\" onclick=\"switchModal();\">
+                                Tambah <?= camelCaseToSpace($mod); ?>
+                            </button>"; 
+
+                            echo $levUsr = ($level == 'superadmin') ?'':$addBtn;
+                        ?>
+                        
                     </div>
                 </div> <br>
                 <!-- <div class="box box-warning">
@@ -168,11 +175,12 @@ else {
                                 Indikator
                             </label>
                             <select name="indikator" id="indikator" class="form-control">
-                                <option value="">-- pili indikator --</option>
+                                <option value="">-- pilih indikator --</option>
                                 <?php foreach($kinerja2 as $inputkpi) { ?>
                                     <option value="<?= $inputkpi['id'] . "-" . $inputkpi['nama'] ?>"> <?= $inputkpi['nama'] ?></option>
                                 <?php } ?>
                             </select>
+                            <input type="hidden" name="pegId" value="<?= $nmpgw['id'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="date">

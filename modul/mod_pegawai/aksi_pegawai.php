@@ -11,6 +11,13 @@ else{
   $module = $_GET['module'];
   $act    = $_GET['act'];
 
+  function getDataKaryawanByUser($username){
+    global $konek;
+    $exec = mysqli_query($konek, "SELECT p.id, p.nama, p.jabatan, u.username, u.level, u.nama_lengkap FROM pegawai p, users u INNER JOIN users ON p.id = u.nama_lengkap WHERE u.username ='$username'");
+
+    return $exec;
+  }
+
   // Hapus templates
   if ($module=='pegawai' AND $act=='hapus'){
     $hapus = "DELETE FROM pegawai WHERE id='$_GET[id]'";

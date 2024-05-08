@@ -112,10 +112,11 @@ else{
     
     
     // function untuk mengambil data kinerja kpi berdasarkan role
-    function getKinerjaKpi($role)
+    function getKinerjaKpi($role = null)
     {
         global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'");
+        $query = ($role == null) ? "SELECT * FROM kinerja_kpi where tipe = 'kuantitatif'" : "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'";
+        $exec = mysqli_query($konek,$query );
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
@@ -284,6 +285,7 @@ else{
     elseif($module=="kpi" AND $act=="input_kpi"){
 
         $module = "input_kpi";
+        $idPgw = $_POST["pegId"];
         $idTable = (explode("-",$_POST['indikator']));
         $hasil = getParamIndById($idTable[0]);
         $tgl = $_POST['date'];
