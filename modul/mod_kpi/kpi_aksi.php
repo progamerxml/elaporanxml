@@ -17,6 +17,33 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan data jabatan.
+    function getGolKpi(){
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM golongan_kpi");
+        $jabatan2 = array();
+        if (mysqli_num_rows($exec) > 0) {
+            while ($jabatan = mysqli_fetch_assoc($exec)) {
+                $jabatan2[] = [
+                    'id' => $jabatan['id'],
+                    'golongan' => $jabatan['golongan']
+                ];
+            }
+        }
+        return $jabatan2;
+    }
+
+    // function untuk mendapatkan data golongan kpi berdasarkan karyawan yang login
+    function getGolKpyByKar($id){
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM jabatan WHERE id = $id");
+        if(mysqli_num_rows($exec) != 0){
+            $row = mysqli_fetch_assoc($exec);
+            $hasil = $row['gol_kpi'];
+        }
+        return $hasil;
+    }
+
     function cleanString($input) {
         // Menghapus spasi di awal dan akhir baris
         $cleaned = trim($input);
@@ -189,7 +216,7 @@ else{
         $recap = htmlspecialchars($_POST['recap']);
         $target = htmlspecialchars($_POST['target']);
         $bobot = $_POST['bobot'];
-        $role_id = $_POST['role_id'];
+        $role_id = $_POST['gol_kpi'];
         $tipe  = htmlspecialchars($_POST['tipe']);
         $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
@@ -274,6 +301,8 @@ else{
 
         // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
+
+        // $pencapaian = mysqli_query()
 
         // menampilkan pesan exec query
         echo $ex ? "sukses" : "gagal";

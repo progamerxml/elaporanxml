@@ -21,7 +21,7 @@ else {
         $waktu = $_SESSION['waktu'];
     }
 
-    $roles2 = getRoleG();  // print_r($roles2). "<br>";
+    $roles2 = getRole();  // print_r($roles2). "<br>";
     $shifts2 = getShift(); // print_r($shifts2['nama']);
     $schedules = getJadwal($waktu);  //  print_r($schedules);
     $otoritas = cekOto($_SESSION['namauser']);

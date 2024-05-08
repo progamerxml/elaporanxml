@@ -14,6 +14,7 @@ else {
 
     $kinerja2 = getKinerja();
     $roles = getRole();
+    $gol_kpi2 = getGolKpi(); // print_r($gol_kpi2);
 
 
     //$hasil = getRoleId(3); var_dump($hasil);
@@ -223,7 +224,7 @@ else {
                     <!-- pembungkus table -->
                     <div class="box-body  table-responsive">
 
-                        <table id="datatemplates" class="table table-bordered table-striped">
+                        <table id="datatemplates" class="table table-borderless table-hover table-striped">
                             <thead>
                             <tr>
                                 <th style="width: 3%;" >No</th>
@@ -301,12 +302,21 @@ else {
                                 <label for="bobotIndikator">Bobot</label>
                                 <input type="number" class="form-control" id="bobotIndikator" name="bobot" placeholder="Bobot Indikator" step="0.01" min="0" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="role_id">Role</label>
                                 <select class="form-control" id="role_id" name="role_id" required>
                                     <option value="">-- Pilih Role--</option>
                                     <?php foreach($roles as $role) { ?>
                                     <option value="<?= $role['id'] ?>"><?= $role['nama'] . " ( " . $role['kode'] . " )" ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="role_id">Role</label>
+                                <select class="form-control" id="gol_kpi" name="gol_kpi" required>
+                                    <option value="">-- Pilih Role--</option>
+                                    <?php foreach($gol_kpi2 as $gol_kpi) { ?>
+                                    <option value="<?= $gol_kpi['id'] ?>"><?= $gol_kpi['golongan'] ?></option>
                                     <?php } ?>
                                 </select>
                             </div>

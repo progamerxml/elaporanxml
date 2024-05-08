@@ -11,8 +11,8 @@ else {
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
-
-    $kinerja2 = getKinerjaKpi(1);
+    $golongan = getGolKpyByKar($nmpgw['jabatan']);
+    $kinerja2 = getKinerjaKpi($golongan);
     
     
 
