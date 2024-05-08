@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2024 at 08:55 AM
+-- Generation Time: May 08, 2024 at 11:14 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -172,6 +172,32 @@ INSERT INTO `giveaway` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `golongan_kpi`
+--
+
+CREATE TABLE `golongan_kpi` (
+  `id` int(11) NOT NULL,
+  `golongan` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `golongan_kpi`
+--
+
+INSERT INTO `golongan_kpi` (`id`, `golongan`) VALUES
+(1, 'marketing'),
+(2, 'operator_h2h'),
+(3, 'support'),
+(4, 'cs'),
+(5, 'data_voucher'),
+(6, 'retail'),
+(7, 'operator'),
+(8, 'support'),
+(9, 'non_kpi');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ide_konten_sdp_dan_ph`
 --
 
@@ -219,44 +245,45 @@ CREATE TABLE `jabatan` (
   `id` int(11) NOT NULL,
   `kode` varchar(255) NOT NULL,
   `nama_jabatan` varchar(255) DEFAULT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+  `gol_kpi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `jabatan`
 --
 
-INSERT INTO `jabatan` (`id`, `kode`, `nama_jabatan`, `status`) VALUES
-(9, 'OWN', 'Owner Utama', 0),
-(12, 'DIR', 'Direktur Utama ', 0),
-(13, 'SPV', 'Supervisor', 0),
-(14, 'HR', 'HRD', 0),
-(15, 'ACC1', 'Accounting 1', 0),
-(16, 'ACC2', 'Accounting 2', 0),
-(17, 'PRG', 'IT / Progammer', 0),
-(18, 'MARKET1', 'Head Marketing', 1),
-(19, 'MARKET2', 'Marketing 2', 1),
-(20, 'SALES', 'Marketing Area', 0),
-(21, 'CC', 'Konten Kreator', 0),
-(22, 'DSGN', 'Design 1', 0),
-(23, 'DSGN2', 'Design 2', 0),
-(24, 'OPR', 'Operator H2H', 1),
-(25, 'SP', 'Support H2H', 1),
-(26, 'CS', 'CS H2H', 1),
-(27, 'ADM', 'ADM H2H', 1),
-(28, 'ADM', 'Admin Voucher', 1),
-(29, 'OPR', 'Operator XML Mobile', 1),
-(30, 'XML', 'CS XML Mobile', 1),
-(31, 'ADM', 'ADM XML Mobile', 1),
-(32, 'PH', 'Operator & CS PH', 1),
-(33, 'SDP', 'Operator & CS SDP', 1),
-(34, 'PG', 'Operator & CS PG', 1),
-(35, 'SP', 'Support 2', 1),
-(38, 'SP', 'Support 3', 1),
-(39, 'MO', 'Marketing Online', 0),
-(40, 'CV', 'CS  Voucher ', 1),
-(41, 'SSB', 'Operator & CS SSB ', 1),
-(42, 'SPVM', 'SPV Marketing Area', 0);
+INSERT INTO `jabatan` (`id`, `kode`, `nama_jabatan`, `status`, `gol_kpi`) VALUES
+(9, 'OWN', 'Owner Utama', 0, 9),
+(12, 'DIR', 'Direktur Utama ', 0, 9),
+(13, 'SPV', 'Supervisor', 0, 9),
+(14, 'HR', 'HRD', 0, 9),
+(15, 'ACC1', 'Accounting 1', 0, 9),
+(16, 'ACC2', 'Accounting 2', 0, 9),
+(17, 'PRG', 'IT / Progammer', 0, 9),
+(18, 'MARKET1', 'Head Marketing', 1, 1),
+(19, 'MARKET2', 'Marketing 2', 1, 1),
+(20, 'SALES', 'Marketing Area', 0, 9),
+(21, 'CC', 'Konten Kreator', 0, 9),
+(22, 'DSGN', 'Design 1', 0, 9),
+(23, 'DSGN2', 'Design 2', 0, 9),
+(24, 'OPR', 'Operator H2H', 1, 2),
+(25, 'SP', 'Support H2H', 1, 8),
+(26, 'CS', 'CS H2H', 1, 4),
+(27, 'ADM', 'ADM H2H', 1, 9),
+(28, 'ADM', 'Admin Voucher', 1, 5),
+(29, 'OPR', 'Operator XML Mobile', 1, 7),
+(30, 'XML', 'CS XML Mobile', 1, 4),
+(31, 'ADM', 'ADM XML Mobile', 1, 9),
+(32, 'PH', 'Operator & CS PH', 1, 7),
+(33, 'SDP', 'Operator & CS SDP', 1, 7),
+(34, 'PG', 'Operator & CS PG', 1, 7),
+(35, 'SP', 'Support 2', 1, 8),
+(38, 'SP', 'Support 3', 1, 8),
+(39, 'MO', 'Marketing Online', 0, 9),
+(40, 'CV', 'CS  Voucher ', 1, 5),
+(41, 'SSB', 'Operator & CS SSB ', 1, 7),
+(42, 'SPVM', 'SPV Marketing Area', 0, 9);
 
 -- --------------------------------------------------------
 
@@ -293,6 +320,31 @@ CREATE TABLE `jumlah_deal_followup_produk_reguler_member_h2h` (
   `jam_transaksi` varchar(255) DEFAULT NULL,
   `agen_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jumlah_deal_perbulan_produk_reguler`
+--
+
+CREATE TABLE `jumlah_deal_perbulan_produk_reguler` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
+  `jam_penarikan_produk` varchar(255) DEFAULT NULL,
+  `id_deal_member` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jumlah_deal_perbulan_produk_reguler`
+--
+
+INSERT INTO `jumlah_deal_perbulan_produk_reguler` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `produk_yang_ditawarkan`, `jam_penarikan_produk`, `id_deal_member`) VALUES
+(1, '2024-05-08', '2024-05-08 03:32:28', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002');
 
 -- --------------------------------------------------------
 
@@ -437,7 +489,9 @@ INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, 
 (25, 'jumlah_followup_deal_perbulan_member_sdp', 'FollowSDP', 20, '0.05', 1, 'kuantitatif', 'agen_id_member,alasan_tidak_aktif,hasil_follow_up'),
 (26, 'report_iklan_menggunakan_sosmed_pribadi', 'Iklan', 10, '0.05', 1, 'kuantitatif', 'nama_program,tanggal_mulai,isi_konten,jam_tayang'),
 (27, 'komentar_postingan', 'Interaksi', 10, '0.05', 1, 'kuantitatif', 'isi_komentar,postingan_siapa_,link'),
-(30, 'menjalankan_iklan_atau_ads_di_fb_instagram_dan_google', 'FBads', 4, '0.05', 1, 'kuantitatif', 'tanggal_mulai,isi_konten,biaya_yang_dikeluarkan');
+(30, 'menjalankan_iklan_atau_ads_di_fb_instagram_dan_google', 'FBads', 4, '0.05', 1, 'kuantitatif', 'tanggal_mulai,isi_konten,biaya_yang_dikeluarkan'),
+(33, 'jumlah_deal_perbulan_produk_reguler', 'DEAL1', 30, '0.15', 7, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
+(34, 'komentar_postingan_cs_h2h', 'Interaksi', 10, '0.05', 2, 'kuantitatif', 'isi_komentar,postingan_siapa_,link');
 
 -- --------------------------------------------------------
 
@@ -484,6 +538,31 @@ CREATE TABLE `komentar_postingan` (
   `postingan_siapa_` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `komentar_postingan_cs_h2h`
+--
+
+CREATE TABLE `komentar_postingan_cs_h2h` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `isi_komentar` varchar(255) DEFAULT NULL,
+  `postingan_siapa_` varchar(255) DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `komentar_postingan_cs_h2h`
+--
+
+INSERT INTO `komentar_postingan_cs_h2h` (`id`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `isi_komentar`, `postingan_siapa_`, `link`) VALUES
+(1, '2024-05-08', '2024-05-08 03:45:16', NULL, NULL, 1, 'aplikasi yang sangad mantabbbbbbbbb', 'Angga dong', 'https://lingbiru.com/link');
 
 -- --------------------------------------------------------
 
@@ -715,7 +794,8 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 (214, 'irfanem', 'update data role pegawai: 94, tanggal : 2024-05-04, role: 21', '2024-05-07 08:06:14'),
 (215, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-04, role: 12', '2024-05-07 08:08:41'),
 (216, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 26', '2024-05-07 08:10:13'),
-(217, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 22', '2024-05-07 08:11:14');
+(217, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 22', '2024-05-07 08:11:14'),
+(218, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-10, role: 4', '2024-05-08 00:57:28');
 
 -- --------------------------------------------------------
 
@@ -733,6 +813,22 @@ CREATE TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google` (
   `tanggal_mulai` varchar(255) DEFAULT NULL,
   `isi_konten` varchar(255) DEFAULT NULL,
   `biaya_yang_dikeluarkan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai_kpi`
+--
+
+CREATE TABLE `nilai_kpi` (
+  `id` int(11) NOT NULL,
+  `pegawai_id` int(11) NOT NULL,
+  `indikator_id` int(11) NOT NULL,
+  `pencapaian` int(11) NOT NULL DEFAULT '0',
+  `persen` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `score` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `final_score` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1517,7 +1613,7 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (132, 104, 2, 4, NULL, NULL, '2024-04-08'),
 (133, 73, 1, 3, NULL, NULL, '2024-05-08'),
 (134, 73, 6, 2, NULL, NULL, '2024-05-09'),
-(135, 73, 7, 5, NULL, NULL, '2024-05-10');
+(135, 73, 4, 5, NULL, NULL, '2024-05-10');
 
 -- --------------------------------------------------------
 
@@ -1628,7 +1724,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `blokir`, `level`, `nama_leng
 (911, 'siska050321', 'cdd773039f5b1a8f41949a1fccd0768f', 'N', 'karyawan', '56', NULL),
 (912, 'test300423', 'pABqPM85KNZ1zA==', 'N', 'user', '57', NULL),
 (913, 'wildan110116', 'cdd773039f5b1a8f41949a1fccd0768f', 'N', 'karyawan', '58', NULL),
-(914, 'giovani051216', 'cdd773039f5b1a8f41949a1fccd0768f', 'N', 'karyawan', '59', NULL),
+(914, 'giovani051216', 'twx2Pp1ncdJyzqagEg==', 'N', 'user', '59', NULL),
 (915, 'muji010222', '6e3b39c67c722762134cd083e381efed', 'N', 'karyawan', '60', NULL),
 (916, 'eko010323', 'bf5ea26e27d6d1c04a4631316a399766', 'N', 'karyawan', '61', NULL),
 (917, 'abdul090123', 'de43117a1c559f11925e9596300aabb0', 'N', 'karyawan', '62', NULL),
@@ -1640,7 +1736,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `blokir`, `level`, `nama_leng
 (960, 'ambar020623', 'sQh7KY45KtJxzac=', 'N', 'user', '104', NULL),
 (924, 'cholid231115', 'd7c4a340669d019453d021fc6f09578f', 'N', 'karyawan', '69', NULL),
 (925, 'ramdita290816', 'e3cdf70a99c1d6890c54ad56bd4a5de1', 'N', 'admin', '70', NULL),
-(926, 'erlangga081018', 'd5a9f8c21814ab89d10bca12e49c77d6', 'N', 'karyawan', '71', NULL),
+(926, 'erlangga081018', 'tRd1KZJuf4N3x6WhFbk=', 'N', 'user', '71', NULL),
 (927, 'silvia010914', '73707d40eb891d665ac6c62b8c78d859', 'N', 'karyawan', '72', NULL),
 (928, 'novita121216', 'ac43faa3ae5b2aca6f41314025094c50', 'N', 'karyawan', '73', NULL),
 (929, 'mulyani060818', '584dd91e4dd7cd794d723d2c93a1239b', 'N', 'karyawan', '74', NULL),
@@ -1650,7 +1746,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `blokir`, `level`, `nama_leng
 (933, 'widi011119', 'f9469bec7b2fb3eb5e8daa9320796ce7', 'N', 'karyawan', '78', NULL),
 (934, 'tiara170220', '239e47b8dc5a06b746e32ac30e76be54', 'N', 'karyawan', '79', NULL),
 (935, 'akmal201021', 'b3e72e513dc46683118f10cf3c34a6cb', 'N', 'karyawan', '80', NULL),
-(936, 'andi081018', 'da9265dfbb2278e8fec04a5ec4325c0c', 'N', 'karyawan', '81', NULL),
+(936, 'andi081018', 'sQt9IcwxKdJ2xw==', 'N', 'user', '81', NULL),
 (937, 'rizki010519', '87215330e692d971e64eedfb72f23438', 'N', 'karyawan', '82', NULL),
 (938, 'dhwi160123', '27800a8e6ca7120877e989c71ad6ab39', 'N', 'karyawan', '83', NULL),
 (939, 'novia030122', '092e59aeacccc569556b1dfdde69a4e4', 'N', 'karyawan', '84', NULL),
@@ -1742,6 +1838,12 @@ ALTER TABLE `giveaway`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `golongan_kpi`
+--
+ALTER TABLE `golongan_kpi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ide_konten_sdp_dan_ph`
 --
 ALTER TABLE `ide_konten_sdp_dan_ph`
@@ -1757,7 +1859,8 @@ ALTER TABLE `input_kpi`
 -- Indexes for table `jabatan`
 --
 ALTER TABLE `jabatan`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_gol_kpi` (`gol_kpi`);
 
 --
 -- Indexes for table `jumlah_deal_followup_produk_member_h2h_emoney`
@@ -1769,6 +1872,12 @@ ALTER TABLE `jumlah_deal_followup_produk_member_h2h_emoney`
 -- Indexes for table `jumlah_deal_followup_produk_reguler_member_h2h`
 --
 ALTER TABLE `jumlah_deal_followup_produk_reguler_member_h2h`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jumlah_deal_perbulan_produk_reguler`
+--
+ALTER TABLE `jumlah_deal_perbulan_produk_reguler`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1815,6 +1924,12 @@ ALTER TABLE `komentar_postingan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `komentar_postingan_cs_h2h`
+--
+ALTER TABLE `komentar_postingan_cs_h2h`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
@@ -1824,6 +1939,12 @@ ALTER TABLE `log`
 -- Indexes for table `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
 --
 ALTER TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nilai_kpi`
+--
+ALTER TABLE `nilai_kpi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1961,6 +2082,12 @@ ALTER TABLE `giveaway`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `golongan_kpi`
+--
+ALTER TABLE `golongan_kpi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `ide_konten_sdp_dan_ph`
 --
 ALTER TABLE `ide_konten_sdp_dan_ph`
@@ -1991,6 +2118,12 @@ ALTER TABLE `jumlah_deal_followup_produk_reguler_member_h2h`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `jumlah_deal_perbulan_produk_reguler`
+--
+ALTER TABLE `jumlah_deal_perbulan_produk_reguler`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `jumlah_followup_deal_perbulan_member_sdp`
 --
 ALTER TABLE `jumlah_followup_deal_perbulan_member_sdp`
@@ -2018,7 +2151,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
@@ -2033,15 +2166,27 @@ ALTER TABLE `komentar_postingan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `komentar_postingan_cs_h2h`
+--
+ALTER TABLE `komentar_postingan_cs_h2h`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT for table `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
 --
 ALTER TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `nilai_kpi`
+--
+ALTER TABLE `nilai_kpi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -2131,6 +2276,12 @@ ALTER TABLE `user_level`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  ADD CONSTRAINT `fk_gol_kpi` FOREIGN KEY (`gol_kpi`) REFERENCES `golongan_kpi` (`id`);
 
 --
 -- Constraints for table `kinerja_kpi`
