@@ -7,6 +7,7 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
     include "../../config/koneksi.php";  
+    // require_once __DIR__ . "/../mod_pegawai/aksi_pegawai.php";
     
     $module = $_GET['module'];
     $act    = $_GET['act'];  
@@ -16,6 +17,26 @@ else{
         mysqli_query($konek, "DELETE FROM kinerja_kuantitatif WHERE id='$_GET[id]'");
         header("location:".$base_url.$module);
     }  
+
+    // function input / update nilai_kpi
+    function setNilaiKpi($data){
+        global $konek;
+        $query = ($data['cek']) ? "UPDATE $data[table] set pencapaian = $data[pencapaian]" : "INSERT INTO $data[table] (pencapaian) VALUES ($data[pencapaian])";
+        $ex = mysqli_query($konek, $query);
+
+    }
+
+    // function cek nilai_kpi
+    function cekNilaiKpi($data){
+        global $konek;
+        $hsl = true;
+        $ex = mysqli_query($konek, "SELECT * FROM nilai_kpi WHERE pegawai_id = $data[pegawai_id] AND indikator_id = $data[indikator_id]");
+        if(mysqli_num_rows($ex) == 0){
+            $hsl = false;
+        }
+
+        return $hsl;
+    }
 
     // function untuk mendapatkan data jabatan.
     function getGolKpi(){
@@ -229,7 +250,7 @@ else{
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
             mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
-            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
+            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
             mysqli_query($konek, $create_table);
 
             for($i = 0; $i < count($param_indikator); $i++){
@@ -290,8 +311,8 @@ else{
         $hasil = getParamIndById($idTable[0]);
         $tgl = $_POST['date'];
         
-        $kolom = "date, jumlah";
-        $nilai = "'$tgl', 1";
+        $kolom = "id_pgw, date, jumlah";
+        $nilai = "$idPgw, '$tgl', 1";
         for ($i = 0; $i < count($hasil); $i++){
             $a = $hasil[$i];
             $kolom .= ", $a";
@@ -304,14 +325,19 @@ else{
         // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
 
-        // $pencapaian = mysqli_query()
-
+        $ex_penc = mysqli_query($konek, "SELECT COUNT(id) as total FROM $idTable[1] WHERE id_pgw = $idPgw");
+        $pencapaian = mysqli_fetch_assoc($ex_penc);
         // menampilkan pesan exec query
         echo $ex ? "sukses" : "gagal";
+        print_r($pencapaian['total']);
+        print_r($idTable[0]);
 
-        session_start();
-        $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
-        header("location:".$base_url.$module);
+        $data = ["pegawai_id" => $idPgw, "indikator_id" => $idTable[0]];
+        $cek = cekNilaiKpi($data);
+
+        // session_start();
+        // $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
+        // header("location:".$base_url.$module);
 
     }
 

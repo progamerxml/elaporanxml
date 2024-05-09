@@ -18,6 +18,23 @@ else{
     return $exec;
   }
 
+  function getDataKaryawanById($id){
+    global $konek;
+    $ex = mysqli_query($konek, "SELECT * FROM pegawai WHERE id = $id");
+    $dataKry = array();
+    if(mysqli_num_rows($ex) > 0){
+      while($row = mysqli_fetch_assoc($ex)){
+        $dataKry = [
+          "id" => $row['id'],
+          "nama" => $row['nama'],
+          "jabatan" => $row['jabatan']
+        ];
+      }
+    }
+
+    return $dataKry;
+  }
+
   // Hapus templates
   if ($module=='pegawai' AND $act=='hapus'){
     $hapus = "DELETE FROM pegawai WHERE id='$_GET[id]'";

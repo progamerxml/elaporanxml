@@ -13,9 +13,9 @@ else {
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
     $level = $_SESSION['leveluser'];
-    $golongan = ($level == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']);
+    $golongan = ($level == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']); print_r($golongan);
     $kinerja2 = getKinerjaKpi($golongan);
-    print_r($nmpgw['id']);
+    // print_r($nmpgw['id']);
     
 
     ?>
@@ -109,7 +109,7 @@ else {
                             <?php 
                                 $name = $kkpi['nama'];
                                 $result = call_user_func($name);
-                                $defColumn = ['no', 'date', 'created_at', 'updated_at', 'ket', 'jumlah'];
+                                $defColumn = ['no', 'id_pegawai', 'date', 'created_at', 'updated_at', 'ket', 'jumlah'];
                                 $param = getParamIndById($kkpi['id']);
                                 $columns = array_merge($defColumn, $param);
                                 
