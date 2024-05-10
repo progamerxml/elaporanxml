@@ -270,10 +270,8 @@ else{
         $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
 
-        $table_name = cleanString($nama); //var_dump($table_name);
-
-        // var_dump(count($param_indikator));
-
+        $table_name = cleanString($nama);
+        
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
             mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
@@ -301,12 +299,11 @@ else{
         $tipe  = htmlspecialchars($_POST['tipe']);
         $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
-
-        $table_name = cleanString($nama); // var_dump($table_name);
-        $table_asal = getTableAsal($id); // var_dump($table_asal);
+        $table_name = cleanString($nama);
+        $table_asal = getTableAsal($id);
 
         $hasil = mysqli_query($konek, "update kinerja_kpi set nama = '$table_name', recap = '$recap', target = '$target', bobot = $bobot, role_id = $role_id, tipe = '$tipe', param_indikator = '$teks_param_indik' WHERE id = $id");
-        // var_dump ($hasil);
+
         if($hasil === true){
             $alter = "ALTER TABLE $table_asal RENAME TO $table_name";
             $alterH = mysqli_query($konek, $alter);
@@ -323,7 +320,6 @@ else{
         $hasil = mysqli_query($konek, "select param_indikator from kinerja_kpi where id = $id[0]");
         $row = mysqli_fetch_assoc($hasil);
         $param = explode(",", $row['param_indikator']);
-        // print_r(count($param));
         
         for($i=0; $i<count($param); $i++){
             echo "<label for='".$param[$i]."'> ".$param[$i]."</label> <input type='text' class='form-control' id='".$param[$i]."' name='".$param[$i]."' placeholder='".$param[$i]."'> <br>";
@@ -346,10 +342,6 @@ else{
             $nilai .= ", '$_POST[$a]'";
         }
 
-        // untuk debug output syntax query
-        // echo "insert into $idTable[1] ($kolom) values ($nilai)";
-
-        // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
 
         $dataInputNilai = array(
