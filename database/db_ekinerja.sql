@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 09, 2024 at 08:46 AM
+-- Generation Time: May 10, 2024 at 08:16 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -100,7 +100,9 @@ CREATE TABLE `follow_up_member_retail_xmltronik` (
 
 INSERT INTO `follow_up_member_retail_xmltronik` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `id_agen_tidak_aktif`, `alasan_tidak_aktif`, `hasil_follow_up`) VALUES
 (1, 58, '2024-05-09', '2024-05-09 03:17:15', NULL, NULL, 1, 'XML_004', 'modal habis', 'nunggu modal'),
-(2, 58, '2024-05-23', '2024-05-09 07:54:26', NULL, NULL, 1, 'XML_004', 'modal habis', 'nunggu modal');
+(2, 58, '2024-05-23', '2024-05-09 07:54:26', NULL, NULL, 1, 'XML_004', 'modal habis', 'nunggu modal'),
+(3, 58, '2024-05-24', '2024-05-10 02:15:34', NULL, NULL, 1, 'XML_009', 'modal habis', 'nunggu modal'),
+(4, 58, '2024-05-25', '2024-05-10 02:33:08', NULL, NULL, 1, 'XML_00921', 'modal habis', 'nunggu modal');
 
 -- --------------------------------------------------------
 
@@ -167,9 +169,7 @@ CREATE TABLE `giveaway` (
 --
 
 INSERT INTO `giveaway` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_program`, `hari_dan_tanggal_program`, `final_giveaway_program`, `hasil_pencapaian`) VALUES
-(1, 58, '2024-05-09', '2024-05-09 03:15:44', NULL, NULL, 1, 'Giveaway Kenaikan ISA Al Masih', 'kamis, 9 mei 2024', 'kamis, 16 mei 2024', 'josss gandos'),
-(2, 58, '2024-05-09', '2024-05-09 04:37:12', NULL, NULL, 1, 'Giveaway Kenaikan Isro Miroj', 'kamis, 9 mei 2024', 'kamis, 16 mei 2024', 'josss gandos mbleddossss'),
-(3, 58, '2024-05-10', '2024-05-09 06:32:23', NULL, NULL, 1, 'Giveaway Kenaikan Idul Fitri', 'kamis, 9 mei 2024', 'kamis, 16 mei 2024', 'josss gandos mbleddossss');
+(1, 58, '2024-05-09', '2024-05-09 03:15:44', NULL, NULL, 1, 'Giveaway Kenaikan ISA Al Masih', 'kamis, 9 mei 2024', 'kamis, 16 mei 2024', 'josss gandos');
 
 -- --------------------------------------------------------
 
@@ -284,7 +284,11 @@ CREATE TABLE `jumlah_deal_followup_produk_member_h2h_support` (
 --
 
 INSERT INTO `jumlah_deal_followup_produk_member_h2h_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `produk_yang_ditawarkan`, `jam_penarikan_produk`, `id_deal_member`) VALUES
-(1, 80, '2024-05-10', '2024-05-09 03:10:22', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002');
+(1, 80, '2024-05-10', '2024-05-09 03:10:22', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002'),
+(2, 80, '2024-05-17', '2024-05-10 04:23:27', NULL, NULL, 1, 'Indosat Promo', '08:24', 'XML0023'),
+(5, 80, '2024-05-17', '2024-05-10 04:28:35', NULL, NULL, 1, 'Indosat Promo', '08:29', 'XML0023'),
+(7, 80, '2024-05-15', '2024-05-10 06:21:05', NULL, NULL, 1, 'XML Promo', '08:24', 'XML0028'),
+(8, 80, '2024-05-30', '2024-05-10 06:22:45', NULL, NULL, 1, 'XML Promo', '08:29', 'XML0023');
 
 -- --------------------------------------------------------
 
@@ -329,7 +333,8 @@ CREATE TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_support` (
 --
 
 INSERT INTO `jumlah_deal_follow_up_produk_member_h2h_emonney_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `produk_yang_ditawarkan`, `jam_penarikan_produk`, `id_deal_member`) VALUES
-(1, 80, '2024-05-09', '2024-05-09 03:11:14', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002');
+(1, 80, '2024-05-09', '2024-05-09 03:11:14', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002'),
+(2, 80, '2024-05-16', '2024-05-10 02:43:27', NULL, NULL, 1, '', '08:20', 'XML002');
 
 -- --------------------------------------------------------
 
@@ -446,7 +451,8 @@ INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, 
 (42, 'follow_up_member_retail_xmltronik', 'FollowXML', 30, '0.05', 1, 'kuantitatif', 'id_agen_tidak_aktif,alasan_tidak_aktif,hasil_follow_up'),
 (43, 'jumlah_deal_follow_up_produk_member_h2h_opr', 'DEAL', 20, '0.25', 7, 'kuantitatif', 'produk_yang_di_tawarkan,jam_penarikan_produk,deal_member_nama_id'),
 (44, 'jumlah_deal_follow_up_produk_member_h2h_emonney_opr', 'DEAL2', 55, '0.20', 7, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,deal_member_nama_id'),
-(45, 'negoisasi_harga_supplier_baru_atau_lama_opr', 'NEGO', 20, '0.15', 7, 'kuantitatif', 'nama_supplier,produk_yang_dinego,harga_sebelumnya,harga_sesudah');
+(45, 'negoisasi_harga_supplier_baru_atau_lama_opr', 'NEGO', 20, '0.15', 7, 'kuantitatif', 'nama_supplier,produk_yang_dinego,harga_sebelumnya,harga_sesudah'),
+(46, 'menihilkan_saldo_suplier_passif_support', 'DONE', 3, '0.15', 8, 'kuantitatif', 'nama_suplier,sisa_saldo_sebelumnya,sisa_saldo_sekarang,keterangan');
 
 -- --------------------------------------------------------
 
@@ -712,6 +718,33 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menihilkan_saldo_suplier_passif_support`
+--
+
+CREATE TABLE `menihilkan_saldo_suplier_passif_support` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `nama_suplier` varchar(255) DEFAULT NULL,
+  `sisa_saldo_sebelumnya` varchar(255) DEFAULT NULL,
+  `sisa_saldo_sekarang` varchar(255) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menihilkan_saldo_suplier_passif_support`
+--
+
+INSERT INTO `menihilkan_saldo_suplier_passif_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_suplier`, `sisa_saldo_sebelumnya`, `sisa_saldo_sekarang`, `keterangan`) VALUES
+(5, 80, '2024-05-11', '2024-05-10 06:50:52', NULL, NULL, 1, 'xml-339', '4546565', '67698879', 'hgfhfdgfsd');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `negoisasi_harga_supplier_baru_atau_lama_opr`
 --
 
@@ -744,6 +777,17 @@ CREATE TABLE `nilai_kpi` (
   `score` decimal(10,2) NOT NULL DEFAULT '0.00',
   `final_score` decimal(10,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `nilai_kpi`
+--
+
+INSERT INTO `nilai_kpi` (`id`, `pegawai_id`, `indikator_id`, `pencapaian`, `persen`, `score`, `final_score`) VALUES
+(1, 58, 40, 4, '0.00', '0.00', '0.00'),
+(2, 80, 39, 2, '0.00', '0.00', '0.00'),
+(3, 80, 37, 4, '0.00', '0.00', '0.00'),
+(4, 80, 38, 5, '0.00', '0.00', '0.00'),
+(5, 80, 46, 1, '0.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -1186,7 +1230,10 @@ CREATE TABLE `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support` (
 --
 
 INSERT INTO `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `agen_id`, `tanggal_daftar`, `saldo_deposit`) VALUES
-(2, 80, '2024-05-09', '2024-05-09 02:05:09', NULL, NULL, 1, 'XML_003', '09/05/2024', '500000');
+(2, 80, '2024-05-09', '2024-05-09 02:05:09', NULL, NULL, 1, 'XML_003', '09/05/2024', '500000'),
+(3, 80, '2024-05-11', '2024-05-10 03:34:56', NULL, NULL, 1, 'XML_0032', '09/05/2024', '400000'),
+(4, 80, '2024-05-15', '2024-05-10 03:36:19', NULL, NULL, 1, 'XML_00323', '09/05/2024', '500000'),
+(5, 80, '2024-05-23', '2024-05-10 03:37:47', NULL, NULL, 1, 'XML_00322', '09/05/2024', '400000');
 
 -- --------------------------------------------------------
 
@@ -1809,6 +1856,12 @@ ALTER TABLE `log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `menihilkan_saldo_suplier_passif_support`
+--
+ALTER TABLE `menihilkan_saldo_suplier_passif_support`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `negoisasi_harga_supplier_baru_atau_lama_opr`
 --
 ALTER TABLE `negoisasi_harga_supplier_baru_atau_lama_opr`
@@ -1922,7 +1975,7 @@ ALTER TABLE `bidang`
 -- AUTO_INCREMENT for table `follow_up_member_retail_xmltronik`
 --
 ALTER TABLE `follow_up_member_retail_xmltronik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `gaji`
@@ -1940,7 +1993,7 @@ ALTER TABLE `gaji_test`
 -- AUTO_INCREMENT for table `giveaway`
 --
 ALTER TABLE `giveaway`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `golongan_kpi`
@@ -1964,7 +2017,7 @@ ALTER TABLE `jabatan`
 -- AUTO_INCREMENT for table `jumlah_deal_followup_produk_member_h2h_support`
 --
 ALTER TABLE `jumlah_deal_followup_produk_member_h2h_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
@@ -1976,7 +2029,7 @@ ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
 -- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
 --
 ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_opr`
@@ -2000,19 +2053,25 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
 --
 ALTER TABLE `kinerja_kuantitatif`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+
+--
+-- AUTO_INCREMENT for table `menihilkan_saldo_suplier_passif_support`
+--
+ALTER TABLE `menihilkan_saldo_suplier_passif_support`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `negoisasi_harga_supplier_baru_atau_lama_opr`
@@ -2024,7 +2083,7 @@ ALTER TABLE `negoisasi_harga_supplier_baru_atau_lama_opr`
 -- AUTO_INCREMENT for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -2042,7 +2101,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
 --
 ALTER TABLE `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `penggajian_test`
@@ -2072,7 +2131,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT for table `shifts`
