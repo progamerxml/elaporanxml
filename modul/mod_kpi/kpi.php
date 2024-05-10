@@ -12,9 +12,9 @@ else {
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
 
-    $kinerja2 = getKinerja();
+    $kinerja2 = getKinerja(); 
     $roles = getRole();
-    $gol_kpi2 = getGolKpi(); // print_r($gol_kpi2);
+    $gol_kpi2 = getGolKpi();
 
 
     //$hasil = getRoleId(3); var_dump($hasil);

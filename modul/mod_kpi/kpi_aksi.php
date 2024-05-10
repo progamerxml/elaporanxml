@@ -18,12 +18,38 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan data indikator by ID
+    function olahNilaiKpi($data, $pencapaian)
+    {
+        $persen = round($pencapaian / $data['target'], 2);
+        $score = round($persen * $data['bobot'], 2);
+        $finalScore = ($score < $data['bobot']) ? round($persen * $data['bobot'], 2) : round($data['bobot'], 2);
+        $data_nilai = [
+            "persen" => $persen,
+            "score" => $score,
+            "final_score" => $finalScore
+        ];
+        return $data_nilai;
+    }
+
     // function input / update nilai_kpi
     function setNilaiKpi($data){
         global $konek;
-        $query = ($data['cek']) ? "UPDATE $data[table] set pencapaian = $data[pencapaian]" : "INSERT INTO $data[table] (pencapaian) VALUES ($data[pencapaian])";
-        $ex = mysqli_query($konek, $query);
+        
+        $ex_penc = mysqli_query($konek, "SELECT COUNT(id) as total FROM $data[table] WHERE id_pgw = $data[pegawai_id]");
+        $pencapaian = mysqli_fetch_assoc($ex_penc);
+        
+        $dataOlah = getKinerja($data['indikator_id']);
+        $dataNilai = olahNilaiKpi($dataOlah[0], $pencapaian['total']);
 
+        $cek = cekNilaiKpi($data);
+
+        $query = ($cek) ? "UPDATE nilai_kpi set pencapaian = $pencapaian[total] WHERE indikator_id = $data[indikator_id] AND pegawai_id = $data[pegawai_id]" : "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian) VALUES ($data[pegawai_id], $data[indikator_id], $pencapaian[total])";
+        $ex = mysqli_query($konek, $query);
+        $err = mysqli_error($konek);
+        $sukses = ($ex) ? "sukses" : "gagal : $err";
+
+        return $dataNilai;
     }
 
     // function cek nilai_kpi
@@ -109,10 +135,11 @@ else{
     }
 
     // function untuk mengambil semua data kinerja kpi
-    function getKinerja()
+    function getKinerja($id = null)
     {
         global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi");
+        $query = ($id == null) ? "SELECT * FROM kinerja_kpi" : "SELECT * FROM kinerja_kpi WHERE id = $id";
+        $exec = mysqli_query($konek, $query);
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
@@ -325,27 +352,32 @@ else{
         // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
 
-        $ex_penc = mysqli_query($konek, "SELECT COUNT(id) as total FROM $idTable[1] WHERE id_pgw = $idPgw");
-        $pencapaian = mysqli_fetch_assoc($ex_penc);
-        // menampilkan pesan exec query
-        echo $ex ? "sukses" : "gagal";
-        print_r($pencapaian['total']);
-        print_r($idTable[0]);
+        $dataInputNilai = array(
+            "indikator_id" => $idTable[0],
+            "table" => $idTable[1],
+            "pegawai_id" => $idPgw
+        );
+        $inputNilai = setNilaiKpi($dataInputNilai);
 
-        $data = ["pegawai_id" => $idPgw, "indikator_id" => $idTable[0]];
-        $cek = cekNilaiKpi($data);
-
-        // session_start();
-        // $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
-        // header("location:".$base_url.$module);
+        session_start();
+        $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
+        header("location:".$base_url.$module);
 
     }
 
     elseif($module == "kpi" AND $act == "hapus_input_kpi"){
         $module = "input_kpi";
-        $table = $_GET["table"];
+        $table = explode("-",$_GET["table"]);
+        $indikator_id = $table[1];
+        $table_name = $table[0];
         $id = $_GET['id'];
-        if(mysqli_query($konek, "DELETE FROM $table WHERE id = $id")){
+        if(mysqli_query($konek, "DELETE FROM $table_name WHERE id = $id")){
+            $dataInputNilai = array(
+                "indikator_id" => $indikator_id,
+                "table" => $table_name,
+                "pegawai_id" => $_GET['pegawai_id']
+            );
+            $upNilai = setNilaiKpi($dataInputNilai);
             session_start();
             $_SESSION['error'] = "Berhasil menghapus data input KPI dari table $table.";
             header("location:".$base_url.$module);
