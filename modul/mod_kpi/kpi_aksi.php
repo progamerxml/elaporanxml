@@ -18,6 +18,24 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan data golongan KPI
+    function getDataGolKpi($id = null){
+        global $konek;
+        $query = ($id == null) ? "SELECT * FROM golongan_kpi" : "SELECT * FROM golongan kpi WHERE id = $id";
+        $ex = mysqli_query ($konek, $query);
+        $gol2 = [];
+        if(mysqli_num_rows($ex) > 0){
+            while ($row = mysqli_fetch_assoc($ex)){
+                $gol2[] = [
+                    "id" => $row['id'],
+                    "golongan" => $row['golongan']
+                ];
+            }
+        }
+
+        return $gol2;
+    }
+
     // function untuk mendapatkan data indikator by ID
     function olahNilaiKpi($data, $pencapaian)
     {
@@ -138,7 +156,7 @@ else{
     function getKinerja($id = null)
     {
         global $konek;
-        $query = ($id == null) ? "SELECT * FROM kinerja_kpi" : "SELECT * FROM kinerja_kpi WHERE id = $id";
+        $query = ($id == null) ? "SELECT * FROM kinerja_kpi ORDER BY role_id ASC" : "SELECT * FROM kinerja_kpi WHERE id = $id";
         $exec = mysqli_query($konek, $query);
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {

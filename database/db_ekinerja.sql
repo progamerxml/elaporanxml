@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 10, 2024 at 08:16 AM
+-- Generation Time: May 13, 2024 at 08:53 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -78,35 +78,6 @@ INSERT INTO `bidang` (`id`, `nama_bidang`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `follow_up_member_retail_xmltronik`
---
-
-CREATE TABLE `follow_up_member_retail_xmltronik` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `id_agen_tidak_aktif` varchar(255) DEFAULT NULL,
-  `alasan_tidak_aktif` varchar(255) DEFAULT NULL,
-  `hasil_follow_up` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `follow_up_member_retail_xmltronik`
---
-
-INSERT INTO `follow_up_member_retail_xmltronik` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `id_agen_tidak_aktif`, `alasan_tidak_aktif`, `hasil_follow_up`) VALUES
-(1, 58, '2024-05-09', '2024-05-09 03:17:15', NULL, NULL, 1, 'XML_004', 'modal habis', 'nunggu modal'),
-(2, 58, '2024-05-23', '2024-05-09 07:54:26', NULL, NULL, 1, 'XML_004', 'modal habis', 'nunggu modal'),
-(3, 58, '2024-05-24', '2024-05-10 02:15:34', NULL, NULL, 1, 'XML_009', 'modal habis', 'nunggu modal'),
-(4, 58, '2024-05-25', '2024-05-10 02:33:08', NULL, NULL, 1, 'XML_00921', 'modal habis', 'nunggu modal');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `gaji`
 --
 
@@ -160,16 +131,16 @@ CREATE TABLE `giveaway` (
   `jumlah` int(11) DEFAULT NULL,
   `nama_program` varchar(255) DEFAULT NULL,
   `hari_dan_tanggal_program` varchar(255) DEFAULT NULL,
-  `final_giveaway_program` varchar(255) DEFAULT NULL,
-  `hasil_pencapaian` varchar(255) DEFAULT NULL
+  `final_give_away_program` varchar(255) DEFAULT NULL,
+  `keterangan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `giveaway`
 --
 
-INSERT INTO `giveaway` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_program`, `hari_dan_tanggal_program`, `final_giveaway_program`, `hasil_pencapaian`) VALUES
-(1, 58, '2024-05-09', '2024-05-09 03:15:44', NULL, NULL, 1, 'Giveaway Kenaikan ISA Al Masih', 'kamis, 9 mei 2024', 'kamis, 16 mei 2024', 'josss gandos');
+INSERT INTO `giveaway` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_program`, `hari_dan_tanggal_program`, `final_give_away_program`, `keterangan`) VALUES
+(1, 58, '2024-05-14', '2024-05-13 08:34:23', NULL, NULL, 1, 'Program Test', 'Senin, 13 mei 2024', '13 juni 2024', 'Success');
 
 -- --------------------------------------------------------
 
@@ -188,13 +159,14 @@ CREATE TABLE `golongan_kpi` (
 
 INSERT INTO `golongan_kpi` (`id`, `golongan`) VALUES
 (1, 'marketing'),
-(2, 'operator_h2h'),
-(4, 'cs'),
-(5, 'data_voucher'),
-(6, 'retail'),
-(7, 'operator'),
-(8, 'support'),
-(9, 'non_kpi');
+(2, 'operator'),
+(4, 'support'),
+(5, 'sdp_ph'),
+(6, 'pg_ssb'),
+(7, 'cs_h2h'),
+(8, 'retail_xml'),
+(9, 'non_kpi'),
+(10, 'data_voucher');
 
 -- --------------------------------------------------------
 
@@ -263,82 +235,6 @@ INSERT INTO `jabatan` (`id`, `kode`, `nama_jabatan`, `status`, `gol_kpi`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jumlah_deal_followup_produk_member_h2h_support`
---
-
-CREATE TABLE `jumlah_deal_followup_produk_member_h2h_support` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
-  `jam_penarikan_produk` varchar(255) DEFAULT NULL,
-  `id_deal_member` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jumlah_deal_followup_produk_member_h2h_support`
---
-
-INSERT INTO `jumlah_deal_followup_produk_member_h2h_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `produk_yang_ditawarkan`, `jam_penarikan_produk`, `id_deal_member`) VALUES
-(1, 80, '2024-05-10', '2024-05-09 03:10:22', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002'),
-(2, 80, '2024-05-17', '2024-05-10 04:23:27', NULL, NULL, 1, 'Indosat Promo', '08:24', 'XML0023'),
-(5, 80, '2024-05-17', '2024-05-10 04:28:35', NULL, NULL, 1, 'Indosat Promo', '08:29', 'XML0023'),
-(7, 80, '2024-05-15', '2024-05-10 06:21:05', NULL, NULL, 1, 'XML Promo', '08:24', 'XML0028'),
-(8, 80, '2024-05-30', '2024-05-10 06:22:45', NULL, NULL, 1, 'XML Promo', '08:29', 'XML0023');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
---
-
-CREATE TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_opr` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
-  `jam_penarikan_produk` varchar(255) DEFAULT NULL,
-  `deal_member_nama_id` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
---
-
-CREATE TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_support` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
-  `jam_penarikan_produk` varchar(255) DEFAULT NULL,
-  `id_deal_member` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
---
-
-INSERT INTO `jumlah_deal_follow_up_produk_member_h2h_emonney_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `produk_yang_ditawarkan`, `jam_penarikan_produk`, `id_deal_member`) VALUES
-(1, 80, '2024-05-09', '2024-05-09 03:11:14', NULL, NULL, 1, 'Telkomsel Promo', '08:20', 'XML002'),
-(2, 80, '2024-05-16', '2024-05-10 02:43:27', NULL, NULL, 1, '', '08:20', 'XML002');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `jumlah_deal_follow_up_produk_member_h2h_opr`
 --
 
@@ -350,9 +246,28 @@ CREATE TABLE `jumlah_deal_follow_up_produk_member_h2h_opr` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `ket` varchar(255) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
-  `produk_yang_di_tawarkan` varchar(255) DEFAULT NULL,
+  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
   `jam_penarikan_produk` varchar(255) DEFAULT NULL,
-  `deal_member_nama_id` varchar(255) DEFAULT NULL
+  `id_deal_member` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jumlah_deal_perbulan_produk_reguler_support`
+--
+
+CREATE TABLE `jumlah_deal_perbulan_produk_reguler_support` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL,
+  `produk_yang_ditawarkan` varchar(255) DEFAULT NULL,
+  `jam_penarikan_produk` varchar(255) DEFAULT NULL,
+  `id_deal_member` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -443,16 +358,9 @@ CREATE TABLE `kinerja_kpi` (
 --
 
 INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, `tipe`, `param_indikator`) VALUES
-(37, 'penambahan_member_aktif_retail_xml_ke_akun_pribadi_support', 'NEW', 2, '0.05', 8, 'kuantitatif', 'agen_id,tanggal_daftar,saldo_deposit'),
-(38, 'jumlah_deal_followup_produk_member_h2h_support', 'DEAL1', 30, '0.15', 8, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
-(39, 'jumlah_deal_follow_up_produk_member_h2h_emonney_support', 'DEAL2', 40, '0.15', 8, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
-(40, 'giveaway', 'GA', 1, '0.05', 1, 'kuantitatif', 'nama_program,hari_dan_tanggal_program,final_giveaway_program,hasil_pencapaian'),
-(41, 'produk_flash_sale', 'FS', 4, '0.25', 1, 'kuantitatif', 'masa_berlaku_konten,produk_flash_sale,harga_promo,harga_normal'),
-(42, 'follow_up_member_retail_xmltronik', 'FollowXML', 30, '0.05', 1, 'kuantitatif', 'id_agen_tidak_aktif,alasan_tidak_aktif,hasil_follow_up'),
-(43, 'jumlah_deal_follow_up_produk_member_h2h_opr', 'DEAL', 20, '0.25', 7, 'kuantitatif', 'produk_yang_di_tawarkan,jam_penarikan_produk,deal_member_nama_id'),
-(44, 'jumlah_deal_follow_up_produk_member_h2h_emonney_opr', 'DEAL2', 55, '0.20', 7, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,deal_member_nama_id'),
-(45, 'negoisasi_harga_supplier_baru_atau_lama_opr', 'NEGO', 20, '0.15', 7, 'kuantitatif', 'nama_supplier,produk_yang_dinego,harga_sebelumnya,harga_sesudah'),
-(46, 'menihilkan_saldo_suplier_passif_support', 'DONE', 3, '0.15', 8, 'kuantitatif', 'nama_suplier,sisa_saldo_sebelumnya,sisa_saldo_sekarang,keterangan');
+(47, 'giveaway', 'GA', 1, '0.05', 1, 'kuantitatif', 'nama_program,hari_dan_tanggal_program,final_give_away_program,keterangan'),
+(48, 'jumlah_deal_follow_up_produk_member_h2h_opr', 'DEAL', 40, '0.25', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
+(49, 'jumlah_deal_perbulan_produk_reguler_support', 'DEAL1', 30, '0.15', 4, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member');
 
 -- --------------------------------------------------------
 
@@ -718,53 +626,6 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menihilkan_saldo_suplier_passif_support`
---
-
-CREATE TABLE `menihilkan_saldo_suplier_passif_support` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `nama_suplier` varchar(255) DEFAULT NULL,
-  `sisa_saldo_sebelumnya` varchar(255) DEFAULT NULL,
-  `sisa_saldo_sekarang` varchar(255) DEFAULT NULL,
-  `keterangan` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `menihilkan_saldo_suplier_passif_support`
---
-
-INSERT INTO `menihilkan_saldo_suplier_passif_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `nama_suplier`, `sisa_saldo_sebelumnya`, `sisa_saldo_sekarang`, `keterangan`) VALUES
-(5, 80, '2024-05-11', '2024-05-10 06:50:52', NULL, NULL, 1, 'xml-339', '4546565', '67698879', 'hgfhfdgfsd');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `negoisasi_harga_supplier_baru_atau_lama_opr`
---
-
-CREATE TABLE `negoisasi_harga_supplier_baru_atau_lama_opr` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `nama_supplier` varchar(255) DEFAULT NULL,
-  `produk_yang_dinego` varchar(255) DEFAULT NULL,
-  `harga_sebelumnya` varchar(255) DEFAULT NULL,
-  `harga_sesudah` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `nilai_kpi`
 --
 
@@ -787,7 +648,8 @@ INSERT INTO `nilai_kpi` (`id`, `pegawai_id`, `indikator_id`, `pencapaian`, `pers
 (2, 80, 39, 2, '0.00', '0.00', '0.00'),
 (3, 80, 37, 4, '0.00', '0.00', '0.00'),
 (4, 80, 38, 5, '0.00', '0.00', '0.00'),
-(5, 80, 46, 1, '0.00', '0.00', '0.00');
+(5, 80, 46, 1, '0.00', '0.00', '0.00'),
+(6, 58, 47, 1, '0.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -1209,35 +1071,6 @@ INSERT INTO `pekerjaan` (`id`, `tanggal`, `karyawan`, `pekerjaan`, `tgl`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
---
-
-CREATE TABLE `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `agen_id` varchar(255) DEFAULT NULL,
-  `tanggal_daftar` varchar(255) DEFAULT NULL,
-  `saldo_deposit` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
---
-
-INSERT INTO `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `agen_id`, `tanggal_daftar`, `saldo_deposit`) VALUES
-(2, 80, '2024-05-09', '2024-05-09 02:05:09', NULL, NULL, 1, 'XML_003', '09/05/2024', '500000'),
-(3, 80, '2024-05-11', '2024-05-10 03:34:56', NULL, NULL, 1, 'XML_0032', '09/05/2024', '400000'),
-(4, 80, '2024-05-15', '2024-05-10 03:36:19', NULL, NULL, 1, 'XML_00323', '09/05/2024', '500000'),
-(5, 80, '2024-05-23', '2024-05-10 03:37:47', NULL, NULL, 1, 'XML_00322', '09/05/2024', '400000');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `penggajian_test`
 --
 
@@ -1337,36 +1170,6 @@ INSERT INTO `penggajian_test` (`id`, `pegawai`, `jabatan`, `gapok`, `bonus`, `le
 (128, 'Zulfa Aulia Wibowo', 'Direktur', 0, 500000, 0, 0, 0, 350000, 0, 0, 0, 12903, 862903, 16159, 0, 5000000, 148762, 0, 0, 0, 0, -4302017, 0, 75000000, 7, 1, 'progamerxml@outlook.com', '2023-10-12 09:54:48'),
 (129, 'Cholid Qiwamudin', 'Operator', 0, 0, 0, 0, 0, 350000, 0, 0, 0, 0, 350000, 0, 431250, 5635571, 66800, 0, 0, 0, 0, -5783621, 0, 55415454, 9, 1, 'progamerxml@outlook.com', '2023-10-12 09:54:48'),
 (130, 'Wildan Faturohman', 'Marketing', 0, 310000, 0, 0, 0, 300000, 0, 0, 0, 12903, 622903, 0, 0, 0, 148762, 0, 0, 0, 0, 474142, 0, 0, 8, 1, 'progamerxml@outlook.com', '2023-10-12 09:54:48');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `produk_flash_sale`
---
-
-CREATE TABLE `produk_flash_sale` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL,
-  `masa_berlaku_konten` varchar(255) DEFAULT NULL,
-  `produk_flash_sale` varchar(255) DEFAULT NULL,
-  `harga_promo` varchar(255) DEFAULT NULL,
-  `harga_normal` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `produk_flash_sale`
---
-
-INSERT INTO `produk_flash_sale` (`id`, `id_pgw`, `date`, `created_at`, `updated_at`, `ket`, `jumlah`, `masa_berlaku_konten`, `produk_flash_sale`, `harga_promo`, `harga_normal`) VALUES
-(1, 58, '2024-05-09', '2024-05-09 03:16:34', NULL, NULL, 1, '1 minggu', 'Telkomsel Promo', '9000', '9200'),
-(2, 58, '2024-05-23', '2024-05-09 06:34:01', NULL, NULL, 1, '1 minggu', 'Telkomsel Promo', '9000', '9220'),
-(3, 58, '2024-05-16', '2024-05-09 07:14:28', NULL, NULL, 1, '1 minggu', 'Telkomsel Promo', '9000', '9200'),
-(4, 58, '2024-05-16', '2024-05-09 07:15:35', NULL, NULL, 1, '1 minggu', 'Telkomsel Promo', '9000', '9220');
 
 -- --------------------------------------------------------
 
@@ -1758,12 +1561,6 @@ ALTER TABLE `bidang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `follow_up_member_retail_xmltronik`
---
-ALTER TABLE `follow_up_member_retail_xmltronik`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `gaji`
 --
 ALTER TABLE `gaji`
@@ -1801,27 +1598,15 @@ ALTER TABLE `jabatan`
   ADD KEY `fk_gol_kpi` (`gol_kpi`);
 
 --
--- Indexes for table `jumlah_deal_followup_produk_member_h2h_support`
---
-ALTER TABLE `jumlah_deal_followup_produk_member_h2h_support`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
---
-ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
---
-ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `jumlah_deal_follow_up_produk_member_h2h_opr`
 --
 ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_opr`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jumlah_deal_perbulan_produk_reguler_support`
+--
+ALTER TABLE `jumlah_deal_perbulan_produk_reguler_support`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1856,18 +1641,6 @@ ALTER TABLE `log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menihilkan_saldo_suplier_passif_support`
---
-ALTER TABLE `menihilkan_saldo_suplier_passif_support`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `negoisasi_harga_supplier_baru_atau_lama_opr`
---
-ALTER TABLE `negoisasi_harga_supplier_baru_atau_lama_opr`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
@@ -1886,21 +1659,9 @@ ALTER TABLE `pekerjaan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
---
-ALTER TABLE `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `penggajian_test`
 --
 ALTER TABLE `penggajian_test`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `produk_flash_sale`
---
-ALTER TABLE `produk_flash_sale`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1972,12 +1733,6 @@ ALTER TABLE `bidang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `follow_up_member_retail_xmltronik`
---
-ALTER TABLE `follow_up_member_retail_xmltronik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `gaji`
 --
 ALTER TABLE `gaji`
@@ -1999,7 +1754,7 @@ ALTER TABLE `giveaway`
 -- AUTO_INCREMENT for table `golongan_kpi`
 --
 ALTER TABLE `golongan_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `input_kpi`
@@ -2014,27 +1769,15 @@ ALTER TABLE `jabatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
--- AUTO_INCREMENT for table `jumlah_deal_followup_produk_member_h2h_support`
---
-ALTER TABLE `jumlah_deal_followup_produk_member_h2h_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
---
-ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_opr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
---
-ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_emonney_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `jumlah_deal_follow_up_produk_member_h2h_opr`
 --
 ALTER TABLE `jumlah_deal_follow_up_produk_member_h2h_opr`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jumlah_deal_perbulan_produk_reguler_support`
+--
+ALTER TABLE `jumlah_deal_perbulan_produk_reguler_support`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -2053,7 +1796,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
@@ -2068,22 +1811,10 @@ ALTER TABLE `log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
--- AUTO_INCREMENT for table `menihilkan_saldo_suplier_passif_support`
---
-ALTER TABLE `menihilkan_saldo_suplier_passif_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `negoisasi_harga_supplier_baru_atau_lama_opr`
---
-ALTER TABLE `negoisasi_harga_supplier_baru_atau_lama_opr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -2098,22 +1829,10 @@ ALTER TABLE `pekerjaan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=332;
 
 --
--- AUTO_INCREMENT for table `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
---
-ALTER TABLE `penambahan_member_aktif_retail_xml_ke_akun_pribadi_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `penggajian_test`
 --
 ALTER TABLE `penggajian_test`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
-
---
--- AUTO_INCREMENT for table `produk_flash_sale`
---
-ALTER TABLE `produk_flash_sale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `rekap_report`

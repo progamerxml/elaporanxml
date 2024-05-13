@@ -8,13 +8,15 @@ else {
     $aksi = "modul/mod_kpi/kpi_aksi.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
     require __DIR__ . "/kpi_aksi.php";
+    require __DIR__ . "/../mod_jabatan/aksi_jabatan.php";
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
 
-    $kinerja2 = getKinerja(); 
+
     $roles = getRole();
     $gol_kpi2 = getGolKpi();
+    $gol2 = getDataGolKpi();
 
 
     //$hasil = getRoleId(3); var_dump($hasil);
@@ -34,24 +36,92 @@ else {
         </h1>
     </section>
     <!-- Main content -->
+    <div class="col-md-12">
+
+        <!-- bagian alert -->
+        <?php 
+            $alert = "<div class=\"alert alert-success alert-dismissible\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button> <h4><i class=\"icon fa fa-check\"></i> Sukses!</h4>". $_SESSION['error']  . "</div>"; 
+            if(isset ($_SESSION['error'])) {
+                echo $alert;
+            }
+            unset($_SESSION['error'])
+        ?>
+
+
+        <h2>Manajemen <?= $mod; ?></h2> <br>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <?php foreach($gol2 as $gol) : ?>
+                    <li class=" <?= $gol['id'] == 1 ? 'active' : '' ?>">
+                    <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
+                    </li>
+                <?php endforeach ?>
+                <li class="pull-right">
+                    <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
+                        Tambah indikator <?= $mod; ?>
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <?php foreach($gol2 as $gol) : ?>
+                    <div class="tab-pane <?= $gol['id'] == 1 ? 'active' : '' ?>" id="gol-<?= $gol['id'] ?>">
+                        <b><?= camelCaseToSpace($gol['golongan']) ?></b> <br> <hr>
+                        <div class="box-body  table-responsive mt-2">
+                            <table id="datatemplates_<?= $gol['id'] ?>" class="table table-borderless table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="width: 1%;" >No</th>
+                                    <th>Nama Indikator</th>
+                                    <th>Recap Indikator</th>
+                                    <th>Target Indikator</th>
+                                    <th>Bobot Indikator</th>
+                                    <th>Role</th>
+                                    <th>Tipe Indikator</th>
+                                    <th>Parameter Indikator</th>
+                                    <th style="width: 6%;">Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $kinerja2 = getKinerjaKpi($gol['id']);
+                                        $no = 1;
+                                        foreach($kinerja2 as $kinerja){
+                                            $role = getJabatanById($kinerja['role_id']);
+                                    ?>
+                                        <tr>
+                                            <td><?= $no ?></td>
+                                            <td><?= camelCaseToSpace($kinerja['nama']) ?></td>
+                                            <td><?= $kinerja['recap'] ?></td>
+                                            <td><?= $kinerja['target'] ?></td>
+                                            <td><?= konversiDecimalKePersen($kinerja['bobot']) ?></td>
+                                            <td><?= $role['nama_jabatan'] ?></td>
+                                            <td><?= $kinerja['tipe'] ?></td>
+                                            <td><?= $kinerja['param_indikator'] ?></td>
+                                            <td align="center">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-update" onclick="getDataKr(<?=$kinerja['id']?>, '<?=$kinerja['nama']?>','<?=$kinerja['recap']?>', <?= $kinerja['target'] ?>, <?= $kinerja['bobot'] ?>, <?= $kinerja['role_id'] ?>, '<?= $kinerja['tipe'] ?>', '<?= $kinerja['param_indikator'] ?>');"><i class="fa fa-pencil"></i></button>
+                                                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=kpi&act=hapus&id=" . $kinerja['id'] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
+                                                <i class="fa fa-trash"></i></a> &nbsp; 
+                                            </td>
+                                        </tr>
+                                    <?php $no++; } ?>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
+
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
-
-                <!-- bagian alert -->
-                <?php 
-                    $alert = "<div class=\"alert alert-success alert-dismissible\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button> <h4><i class=\"icon fa fa-check\"></i> Sukses!</h4>". $_SESSION['error']  . "</div>"; 
-                    if(isset ($_SESSION['error'])) {
-                        echo $alert;
-                    }
-                    unset($_SESSION['error'])
-                ?>
 
                 <div class="box box-warning">
                     <section class="content-header">
                         <div class="row border">
                             <div class="col-md-11 border">
-                                <h1 class="text-capitalize fw-bolder">Data Indikator <?= $mod; ?></h1>
+                                <h3 class="text-capitalize fw-bolder">Data Indikator <?= $mod; ?></h3>
                             </div>
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-success pull-right text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
@@ -242,14 +312,15 @@ else {
                                 <?php
                                     $no = 1;
                                     foreach($kinerja2 as $kinerja){
+                                        $role = getJabatanById($kinerja['role_id']);
                                 ?>
                                     <tr>
                                         <td><?= $no ?></td>
                                         <td><?= $kinerja['nama'] ?></td>
                                         <td><?= $kinerja['recap'] ?></td>
                                         <td><?= $kinerja['target'] ?></td>
-                                        <td><?= $kinerja['bobot'] ?></td>
-                                        <td><?= $kinerja['role_id'] ?></td>
+                                        <td><?= konversiDecimalKePersen($kinerja['bobot']) ?></td>
+                                        <td><?= $role['nama_jabatan'] ?></td>
                                         <td><?= $kinerja['tipe'] ?></td>
                                         <td><?= $kinerja['param_indikator'] ?></td>
                                         <td align="center">
