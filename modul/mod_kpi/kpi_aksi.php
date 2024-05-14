@@ -18,6 +18,13 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan data id jabatan dan karyawan by golongan kpi
+    function getDataIdJabPeg($id)
+    {
+        global $konek;
+        echo "";
+    }
+
     // function untuk mendapatkan data golongan KPI
     function getDataGolKpi($id = null){
         global $konek;
@@ -236,26 +243,6 @@ else{
         return $arrHasil;
     }
 
-    // testing 
-    function test1(){
-        global $konek;
-        $resultFunc = array();
-
-        // Eksekusi query
-        $exec = mysqli_query($konek, "SELECT * FROM giveaway");
-
-        // Mengambil data dengan mysqli_fetch_row()
-        if (mysqli_num_rows($exec) > 0) {
-            while ($rowFunc = mysqli_fetch_row($exec)) {
-                // Tambahkan data ke dalam array $result
-                $resultFunc[] = $rowFunc;
-            }
-            $resultFunc['column'] = mysqli_field_count($konek);
-        }
-
-        return $resultFunc;
-    };
-
     // function untuk mendapatkan parameter indikator berdasarkan id
     function getParamIndById($id){
         global $konek;
@@ -279,31 +266,41 @@ else{
 
   // Input templates 
     if ($module=='kpi' AND $act=='input'){
+
         $nama = htmlspecialchars($_POST['nama']);
         $recap = htmlspecialchars($_POST['recap']);
         $target = htmlspecialchars($_POST['target']);
         $bobot = $_POST['bobot'];
+        $pencapaian = $_POST['pencapaian'] ?? 0 ;
         $role_id = $_POST['gol_kpi'];
         $tipe  = htmlspecialchars($_POST['tipe']);
-        $teks_param_indik = cleanString($_POST['param_indikator']);
+        $param_indik = $_POST['param_indikator'] ?? NULL;
+        $teks_param_indik = cleanString($param_indik);
         $param_indikator = explode(",", cleanString($teks_param_indik));
 
         $table_name = cleanString($nama);
         
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
+            
             mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
-            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
-            mysqli_query($konek, $create_table);
-
-            for($i = 0; $i < count($param_indikator); $i++){
-                $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
-                mysqli_query($konek, $alter_table);
+            if($tipe == 'kualitatif'){
+                $idIndiKual = mysqli_insert_id($konek);
+                $dataOlah = getKinerja($idIndiKual);
+                $niali = olahNilaiKpi($dataOlah[0],$pencapaian);
+                print_r($niali);
             }
+            // $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
+            // mysqli_query($konek, $create_table);
+
+            // for($i = 0; $i < count($param_indikator); $i++){
+            //     $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
+            //     mysqli_query($konek, $alter_table);
+            // }
         }
-        session_start();
-        $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
-        header("location:".$base_url.$module);
+        // session_start();
+        // $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
+        // header("location:".$base_url.$module);
     }  
 
   // Update templates

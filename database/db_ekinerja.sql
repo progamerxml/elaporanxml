@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 13, 2024 at 08:53 AM
+-- Generation Time: May 14, 2024 at 09:50 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -360,7 +360,8 @@ CREATE TABLE `kinerja_kpi` (
 INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, `tipe`, `param_indikator`) VALUES
 (47, 'giveaway', 'GA', 1, '0.05', 1, 'kuantitatif', 'nama_program,hari_dan_tanggal_program,final_give_away_program,keterangan'),
 (48, 'jumlah_deal_follow_up_produk_member_h2h_opr', 'DEAL', 40, '0.25', 2, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
-(49, 'jumlah_deal_perbulan_produk_reguler_support', 'DEAL1', 30, '0.15', 4, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member');
+(49, 'jumlah_deal_perbulan_produk_reguler_support', 'DEAL1', 30, '0.15', 4, 'kuantitatif', 'produk_yang_ditawarkan,jam_penarikan_produk,id_deal_member'),
+(54, 'ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail', 'Rekap Data Bulanan', 1, '0.05', 1, 'kualitatif', '');
 
 -- --------------------------------------------------------
 
@@ -1796,7 +1797,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
