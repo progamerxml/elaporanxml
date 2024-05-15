@@ -22,7 +22,25 @@ else{
     function getDataIdJabPeg($id)
     {
         global $konek;
-        echo "";
+        $query = "SELECT pegawai.id, pegawai.nama, jabatan.nama_jabatan, golongan_kpi.id
+        FROM pegawai
+        INNER JOIN jabatan ON pegawai.jabatan = jabatan.id
+        INNER JOIN golongan_kpi ON jabatan.gol_kpi = golongan_kpi.id
+        WHERE golongan_kpi.id = $id";
+        
+        $ex = mysqli_query($konek, $query);
+        $idPeg = array();
+        if(mysqli_num_rows($ex) > 0){
+            while($brs = mysqli_fetch_assoc($ex)){
+                $idPeg[] = [
+                    'id_peg' => $brs['id'],
+                    'nama_peg' => $brs['nama'],
+                    'jabatan' => $brs['nama_jabatan']
+                ];
+            }
+        }
+
+        return $idPeg;
     }
 
     // function untuk mendapatkan data golongan KPI
@@ -288,7 +306,10 @@ else{
                 $idIndiKual = mysqli_insert_id($konek);
                 $dataOlah = getKinerja($idIndiKual);
                 $niali = olahNilaiKpi($dataOlah[0],$pencapaian);
+                $dataPeg = getDataIdJabPeg($role_id);
                 print_r($niali);
+                print_r($dataPeg);
+                echo "<br>" . $role_id;
             }
             // $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
             // mysqli_query($konek, $create_table);
