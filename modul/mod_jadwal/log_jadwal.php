@@ -7,7 +7,7 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 else {
     $aksi = "modul/mod_jadwal/aksi_jadwal.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
-    require __DIR__ . "/aksi_jadwal.php";
+    // require __DIR__ . "/aksi_jadwal.php";
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];

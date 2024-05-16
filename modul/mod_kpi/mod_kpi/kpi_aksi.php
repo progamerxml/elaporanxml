@@ -7,7 +7,6 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
     include "../../config/koneksi.php";  
-    // require_once __DIR__ . "/../mod_pegawai/aksi_pegawai.php";
     
     $module = $_GET['module'];
     $act    = $_GET['act'];  
@@ -17,122 +16,6 @@ else{
         mysqli_query($konek, "DELETE FROM kinerja_kuantitatif WHERE id='$_GET[id]'");
         header("location:".$base_url.$module);
     }  
-
-    // function untuk mendapatkan data id jabatan dan karyawan by golongan kpi
-    function getDataIdJabPeg($id)
-    {
-        global $konek;
-        $query = "SELECT pegawai.id as pegId, pegawai.nama, jabatan.nama_jabatan, golongan_kpi.id
-        FROM pegawai
-        INNER JOIN jabatan ON pegawai.jabatan = jabatan.id
-        INNER JOIN golongan_kpi ON jabatan.gol_kpi = golongan_kpi.id
-        WHERE golongan_kpi.id = $id";
-        
-        $ex = mysqli_query($konek, $query);
-        $idPeg = array();
-        if(mysqli_num_rows($ex) > 0){
-            while($brs = mysqli_fetch_assoc($ex)){
-                $idPeg[] = [
-                    'id_peg' => $brs['pegId'],
-                    'nama_peg' => $brs['nama'],
-                    'jabatan' => $brs['nama_jabatan']
-                ];
-            }
-        }
-
-        return $idPeg;
-    }
-
-    // function untuk mendapatkan data golongan KPI
-    function getDataGolKpi($id = null){
-        global $konek;
-        $query = ($id == null) ? "SELECT * FROM golongan_kpi" : "SELECT * FROM golongan kpi WHERE id = $id";
-        $ex = mysqli_query ($konek, $query);
-        $gol2 = [];
-        if(mysqli_num_rows($ex) > 0){
-            while ($row = mysqli_fetch_assoc($ex)){
-                $gol2[] = [
-                    "id" => $row['id'],
-                    "golongan" => $row['golongan']
-                ];
-            }
-        }
-
-        return $gol2;
-    }
-
-    // function untuk mendapatkan data indikator by ID
-    function olahNilaiKpi($data, $pencapaian)
-    {
-        $persen = round($pencapaian / $data['target'], 2);
-        $score = round($persen * $data['bobot'], 2);
-        $finalScore = ($score < $data['bobot']) ? round($persen * $data['bobot'], 2) : round($data['bobot'], 2);
-        $data_nilai = [
-            "persen" => $persen,
-            "score" => $score,
-            "final_score" => $finalScore
-        ];
-        return $data_nilai;
-    }
-
-    // function input / update nilai_kpi
-    function setNilaiKpi($data){
-        global $konek;
-        
-        $ex_penc = mysqli_query($konek, "SELECT COUNT(id) as total FROM $data[table] WHERE id_pgw = $data[pegawai_id]");
-        $pencapaian = mysqli_fetch_assoc($ex_penc);
-        
-        $dataOlah = getKinerja($data['indikator_id']);
-        $dataNilai = olahNilaiKpi($dataOlah[0], $pencapaian['total']);
-
-        $cek = cekNilaiKpi($data);
-
-        $query = ($cek) ? "UPDATE nilai_kpi set pencapaian = $pencapaian[total] WHERE indikator_id = $data[indikator_id] AND pegawai_id = $data[pegawai_id]" : "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian) VALUES ($data[pegawai_id], $data[indikator_id], $pencapaian[total])";
-        $ex = mysqli_query($konek, $query);
-        $err = mysqli_error($konek);
-        $sukses = ($ex) ? "sukses" : "gagal : $err";
-
-        return $dataNilai;
-    }
-
-    // function cek nilai_kpi
-    function cekNilaiKpi($data){
-        global $konek;
-        $hsl = true;
-        $ex = mysqli_query($konek, "SELECT * FROM nilai_kpi WHERE pegawai_id = $data[pegawai_id] AND indikator_id = $data[indikator_id]");
-        if(mysqli_num_rows($ex) == 0){
-            $hsl = false;
-        }
-
-        return $hsl;
-    }
-
-    // function untuk mendapatkan data jabatan.
-    function getGolKpi(){
-        global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM golongan_kpi");
-        $jabatan2 = array();
-        if (mysqli_num_rows($exec) > 0) {
-            while ($jabatan = mysqli_fetch_assoc($exec)) {
-                $jabatan2[] = [
-                    'id' => $jabatan['id'],
-                    'golongan' => $jabatan['golongan']
-                ];
-            }
-        }
-        return $jabatan2;
-    }
-
-    // function untuk mendapatkan data golongan kpi berdasarkan karyawan yang login
-    function getGolKpyByKar($id){
-        global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM jabatan WHERE id = $id");
-        if(mysqli_num_rows($exec) != 0){
-            $row = mysqli_fetch_assoc($exec);
-            $hasil = $row['gol_kpi'];
-        }
-        return $hasil;
-    }
 
     function cleanString($input) {
         // Menghapus spasi di awal dan akhir baris
@@ -144,14 +27,11 @@ else{
         // Menghapus spasi yang berada setelah koma dalam string
         $cleaned = preg_replace('/,\s+/', ',', $input);
         
-        $cleaned = preg_replace('/[()]/', '', $input);
-        
         // Mengubah spasi di antara 2 kata menjadi satu spasi
         $cleaned = preg_replace('/\s+/', '_', $cleaned);
         
         // Mengubah semua huruf menjadi huruf kecil
         $cleaned = strtolower($cleaned);
-
         
         return $cleaned;
     }
@@ -181,11 +61,10 @@ else{
     }
 
     // function untuk mengambil semua data kinerja kpi
-    function getKinerja($id = null)
+    function getKinerja()
     {
         global $konek;
-        $query = ($id == null) ? "SELECT * FROM kinerja_kpi ORDER BY role_id ASC" : "SELECT * FROM kinerja_kpi WHERE id = $id";
-        $exec = mysqli_query($konek, $query);
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi");
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
@@ -206,11 +85,10 @@ else{
     
     
     // function untuk mengambil data kinerja kpi berdasarkan role
-    function getKinerjaKpi($role = null)
+    function getKinerjaKpi($role)
     {
         global $konek;
-        $query = ($role == null) ? "SELECT * FROM kinerja_kpi where tipe = 'kuantitatif'" : "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'";
-        $exec = mysqli_query($konek,$query );
+        $exec = mysqli_query($konek, "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'");
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
             while ($kinerja = mysqli_fetch_assoc($exec)) {
@@ -264,6 +142,26 @@ else{
         return $arrHasil;
     }
 
+    // testing 
+    function test1(){
+        global $konek;
+        $resultFunc = array();
+
+        // Eksekusi query
+        $exec = mysqli_query($konek, "SELECT * FROM giveaway");
+
+        // Mengambil data dengan mysqli_fetch_row()
+        if (mysqli_num_rows($exec) > 0) {
+            while ($rowFunc = mysqli_fetch_row($exec)) {
+                // Tambahkan data ke dalam array $result
+                $resultFunc[] = $rowFunc;
+            }
+            $resultFunc['column'] = mysqli_field_count($konek);
+        }
+
+        return $resultFunc;
+    };
+
     // function untuk mendapatkan parameter indikator berdasarkan id
     function getParamIndById($id){
         global $konek;
@@ -287,48 +185,33 @@ else{
 
   // Input templates 
     if ($module=='kpi' AND $act=='input'){
-
-        $nama = htmlspecialchars(cleanString($_POST['nama']));
+        $nama = htmlspecialchars($_POST['nama']);
         $recap = htmlspecialchars($_POST['recap']);
         $target = htmlspecialchars($_POST['target']);
         $bobot = $_POST['bobot'];
-        $pencapaian = $_POST['pencapaian'] ?? 0 ;
-        $role_id = $_POST['gol_kpi'];
+        $role_id = $_POST['role_id'];
         $tipe  = htmlspecialchars($_POST['tipe']);
-        $param_indik = $_POST['param_indikator'] ?? NULL;
-        $teks_param_indik = cleanString($param_indik);
+        $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
 
-        $table_name = cleanString($nama);
-        
+        $table_name = cleanString($nama); //var_dump($table_name);
+
+        // var_dump(count($param_indikator));
+
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
-            
-            // mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
-            if($tipe == 'kualitatif'){
-                $idIndiKual = mysqli_insert_id($konek);
-                $dataOlah = getKinerja($idIndiKual);
-                $nilai = olahNilaiKpi($dataOlah[0],$pencapaian);
-                $dataPeg = getDataIdJabPeg($role_id);
-                print_r($nilai); echo "<br>";
-                print_r($dataPeg); echo "<br>";
-                foreach($dataPeg as $item){
-                    $sInVal = "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian, persen, score, final_score) VALUES ($item[id_peg], $idIndiKual, $target, $nilai[persen], $nilai[score], $nilai[final_score])";
-                    $ex = mysqli_query($konek, $sInVal);
-                    echo ($ex) ? "sukses" : "gagal : ".mysqli_error($konek);
-                }
-            }
-            // $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
-            // mysqli_query($konek, $create_table);
+            mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
+            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
+            mysqli_query($konek, $create_table);
 
-            // for($i = 0; $i < count($param_indikator); $i++){
-            //     $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
-            //     mysqli_query($konek, $alter_table);
-            // }
+            for($i = 0; $i < count($param_indikator); $i++){
+                $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
+                mysqli_query($konek, $alter_table);
+            }
         }
-        // session_start();
-        // $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
-        // header("location:".$base_url.$module);
+        session_start();
+        $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
+        header("location:".$base_url.$module);
     }  
 
   // Update templates
@@ -342,11 +225,12 @@ else{
         $tipe  = htmlspecialchars($_POST['tipe']);
         $teks_param_indik = cleanString($_POST['param_indikator']);
         $param_indikator = explode(",", cleanString($teks_param_indik));
-        $table_name = cleanString($nama);
-        $table_asal = getTableAsal($id);
+
+        $table_name = cleanString($nama); // var_dump($table_name);
+        $table_asal = getTableAsal($id); // var_dump($table_asal);
 
         $hasil = mysqli_query($konek, "update kinerja_kpi set nama = '$table_name', recap = '$recap', target = '$target', bobot = $bobot, role_id = $role_id, tipe = '$tipe', param_indikator = '$teks_param_indik' WHERE id = $id");
-
+        // var_dump ($hasil);
         if($hasil === true){
             $alter = "ALTER TABLE $table_asal RENAME TO $table_name";
             $alterH = mysqli_query($konek, $alter);
@@ -363,6 +247,7 @@ else{
         $hasil = mysqli_query($konek, "select param_indikator from kinerja_kpi where id = $id[0]");
         $row = mysqli_fetch_assoc($hasil);
         $param = explode(",", $row['param_indikator']);
+        // print_r(count($param));
         
         for($i=0; $i<count($param); $i++){
             echo "<label for='".$param[$i]."'> ".$param[$i]."</label> <input type='text' class='form-control' id='".$param[$i]."' name='".$param[$i]."' placeholder='".$param[$i]."'> <br>";
@@ -372,27 +257,26 @@ else{
     elseif($module=="kpi" AND $act=="input_kpi"){
 
         $module = "input_kpi";
-        $idPgw = $_POST["pegId"];
         $idTable = (explode("-",$_POST['indikator']));
         $hasil = getParamIndById($idTable[0]);
         $tgl = $_POST['date'];
         
-        $kolom = "id_pgw, date, jumlah";
-        $nilai = "$idPgw, '$tgl', 1";
+        $kolom = "date, jumlah";
+        $nilai = "'$tgl', 1";
         for ($i = 0; $i < count($hasil); $i++){
             $a = $hasil[$i];
             $kolom .= ", $a";
             $nilai .= ", '$_POST[$a]'";
         }
 
+        // untuk debug output syntax query
+        // echo "insert into $idTable[1] ($kolom) values ($nilai)";
+
+        // exec syntax query
         $ex = mysqli_query($konek, "insert into $idTable[1] ($kolom) values ($nilai)");
 
-        $dataInputNilai = array(
-            "indikator_id" => $idTable[0],
-            "table" => $idTable[1],
-            "pegawai_id" => $idPgw
-        );
-        $inputNilai = setNilaiKpi($dataInputNilai);
+        // menampilkan pesan exec query
+        echo $ex ? "sukses" : "gagal";
 
         session_start();
         $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
@@ -402,17 +286,9 @@ else{
 
     elseif($module == "kpi" AND $act == "hapus_input_kpi"){
         $module = "input_kpi";
-        $table = explode("-",$_GET["table"]);
-        $indikator_id = $table[1];
-        $table_name = $table[0];
+        $table = $_GET["table"];
         $id = $_GET['id'];
-        if(mysqli_query($konek, "DELETE FROM $table_name WHERE id = $id")){
-            $dataInputNilai = array(
-                "indikator_id" => $indikator_id,
-                "table" => $table_name,
-                "pegawai_id" => $_GET['pegawai_id']
-            );
-            $upNilai = setNilaiKpi($dataInputNilai);
+        if(mysqli_query($konek, "DELETE FROM $table WHERE id = $id")){
             session_start();
             $_SESSION['error'] = "Berhasil menghapus data input KPI dari table $table.";
             header("location:".$base_url.$module);

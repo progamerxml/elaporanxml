@@ -6,8 +6,8 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 }
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
-    include "../../config/koneksi.php";  
-    // require_once __DIR__ . "/../mod_pegawai/aksi_pegawai.php";
+    include "../../config/koneksi.php";
+    // require __DIR__ . "/../../config/koneksi.php";
     
     $module = $_GET['module'];
     $act    = $_GET['act'];  
@@ -19,10 +19,9 @@ else{
     }  
 
     // function untuk mendapatkan data id jabatan dan karyawan by golongan kpi
-    function getDataIdJabPeg($id)
-    {
+    function getDataIdJabPeg($id){
         global $konek;
-        $query = "SELECT pegawai.id as pegId, pegawai.nama, jabatan.nama_jabatan, golongan_kpi.id
+        $query = "SELECT pegawai.id, pegawai.nama, jabatan.nama_jabatan, golongan_kpi.id
         FROM pegawai
         INNER JOIN jabatan ON pegawai.jabatan = jabatan.id
         INNER JOIN golongan_kpi ON jabatan.gol_kpi = golongan_kpi.id
@@ -33,7 +32,7 @@ else{
         if(mysqli_num_rows($ex) > 0){
             while($brs = mysqli_fetch_assoc($ex)){
                 $idPeg[] = [
-                    'id_peg' => $brs['pegId'],
+                    'id_peg' => $brs['id'],
                     'nama_peg' => $brs['nama'],
                     'jabatan' => $brs['nama_jabatan']
                 ];
@@ -44,26 +43,25 @@ else{
     }
 
     // function untuk mendapatkan data golongan KPI
-    function getDataGolKpi($id = null){
-        global $konek;
-        $query = ($id == null) ? "SELECT * FROM golongan_kpi" : "SELECT * FROM golongan kpi WHERE id = $id";
-        $ex = mysqli_query ($konek, $query);
-        $gol2 = [];
-        if(mysqli_num_rows($ex) > 0){
-            while ($row = mysqli_fetch_assoc($ex)){
-                $gol2[] = [
-                    "id" => $row['id'],
-                    "golongan" => $row['golongan']
-                ];
-            }
-        }
+    // function getDataGolKpi($id = null){
+    //     global $konek;
+    //     $query = ($id == null) ? "SELECT * FROM golongan_kpi" : "SELECT * FROM golongan kpi WHERE id = $id";
+    //     $ex = mysqli_query ($konek, $query);
+    //     $gol2 = [];
+    //     if(mysqli_num_rows($ex) > 0){
+    //         while ($row = mysqli_fetch_assoc($ex)){
+    //             $gol2[] = [
+    //                 "id" => $row['id'],
+    //                 "golongan" => $row['golongan']
+    //             ];
+    //         }
+    //     }
 
-        return $gol2;
-    }
+    //     return $gol2;
+    // }
 
     // function untuk mendapatkan data indikator by ID
-    function olahNilaiKpi($data, $pencapaian)
-    {
+    function olahNilaiKpi($data, $pencapaian){
         $persen = round($pencapaian / $data['target'], 2);
         $score = round($persen * $data['bobot'], 2);
         $finalScore = ($score < $data['bobot']) ? round($persen * $data['bobot'], 2) : round($data['bobot'], 2);
@@ -108,20 +106,20 @@ else{
     }
 
     // function untuk mendapatkan data jabatan.
-    function getGolKpi(){
-        global $konek;
-        $exec = mysqli_query($konek, "SELECT * FROM golongan_kpi");
-        $jabatan2 = array();
-        if (mysqli_num_rows($exec) > 0) {
-            while ($jabatan = mysqli_fetch_assoc($exec)) {
-                $jabatan2[] = [
-                    'id' => $jabatan['id'],
-                    'golongan' => $jabatan['golongan']
-                ];
-            }
-        }
-        return $jabatan2;
-    }
+    // function getGolKpi(){
+    //     global $konek;
+    //     $exec = mysqli_query($konek, "SELECT * FROM golongan_kpi");
+    //     $jabatan2 = array();
+    //     if (mysqli_num_rows($exec) > 0) {
+    //         while ($jabatan = mysqli_fetch_assoc($exec)) {
+    //             $jabatan2[] = [
+    //                 'id' => $jabatan['id'],
+    //                 'golongan' => $jabatan['golongan']
+    //             ];
+    //         }
+    //     }
+    //     return $jabatan2;
+    // }
 
     // function untuk mendapatkan data golongan kpi berdasarkan karyawan yang login
     function getGolKpyByKar($id){
@@ -144,14 +142,11 @@ else{
         // Menghapus spasi yang berada setelah koma dalam string
         $cleaned = preg_replace('/,\s+/', ',', $input);
         
-        $cleaned = preg_replace('/[()]/', '', $input);
-        
         // Mengubah spasi di antara 2 kata menjadi satu spasi
         $cleaned = preg_replace('/\s+/', '_', $cleaned);
         
         // Mengubah semua huruf menjadi huruf kecil
         $cleaned = strtolower($cleaned);
-
         
         return $cleaned;
     }
@@ -181,8 +176,7 @@ else{
     }
 
     // function untuk mengambil semua data kinerja kpi
-    function getKinerja($id = null)
-    {
+    function getKinerja($id = null){
         global $konek;
         $query = ($id == null) ? "SELECT * FROM kinerja_kpi ORDER BY role_id ASC" : "SELECT * FROM kinerja_kpi WHERE id = $id";
         $exec = mysqli_query($konek, $query);
@@ -206,8 +200,7 @@ else{
     
     
     // function untuk mengambil data kinerja kpi berdasarkan role
-    function getKinerjaKpi($role = null)
-    {
+    function getKinerjaKpi($role = null){
         global $konek;
         $query = ($role == null) ? "SELECT * FROM kinerja_kpi where tipe = 'kuantitatif'" : "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'";
         $exec = mysqli_query($konek,$query );
@@ -273,22 +266,10 @@ else{
         return $param;
     }
 
-    if($module == "kpi" && $act == "hapus"){
-        $id = $_GET['id'];
-        $table = getTableAsal($id);
-        $dropTabel = mysqli_query($konek, "DROP TABLE $table");
-        if($dropTabel === true){
-            $hapus = mysqli_query($konek, "DELETE FROM kinerja_kpi WHERE id = $id");
-        }
-
-        $_SESSION['error'] = "Berhasil Menghapus Data dan tabel indikator.";
-        header("location:".$base_url.$module);
-    }
-
   // Input templates 
     if ($module=='kpi' AND $act=='input'){
 
-        $nama = htmlspecialchars(cleanString($_POST['nama']));
+        $nama = htmlspecialchars($_POST['nama']);
         $recap = htmlspecialchars($_POST['recap']);
         $target = htmlspecialchars($_POST['target']);
         $bobot = $_POST['bobot'];
@@ -304,19 +285,15 @@ else{
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         if($cek['jml'] == 0){
             
-            // mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
+            mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
             if($tipe == 'kualitatif'){
                 $idIndiKual = mysqli_insert_id($konek);
                 $dataOlah = getKinerja($idIndiKual);
-                $nilai = olahNilaiKpi($dataOlah[0],$pencapaian);
-                $dataPeg = getDataIdJabPeg($role_id);
-                print_r($nilai); echo "<br>";
-                print_r($dataPeg); echo "<br>";
-                foreach($dataPeg as $item){
-                    $sInVal = "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian, persen, score, final_score) VALUES ($item[id_peg], $idIndiKual, $target, $nilai[persen], $nilai[score], $nilai[final_score])";
-                    $ex = mysqli_query($konek, $sInVal);
-                    echo ($ex) ? "sukses" : "gagal : ".mysqli_error($konek);
-                }
+                $niali = olahNilaiKpi($dataOlah[0],$pencapaian);
+                // $dataPeg = getDataIdJabPeg($role_id);
+                print_r($niali);
+                print_r($dataPeg);
+                echo "<br>" . $role_id;
             }
             // $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
             // mysqli_query($konek, $create_table);
