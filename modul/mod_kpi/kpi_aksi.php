@@ -18,6 +18,53 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan persentase, 
+    function getPersenKpi($id = null)
+    {
+        global $konek;
+        $query = ($id == null) ? "SELECT 
+                    p.nama AS nama_pegawai,
+                    COALESCE(SUM(nk.persen), 0) AS total_persen,
+                    COALESCE(SUM(nk.score), 0) AS total_score,
+                    COALESCE(SUM(nk.final_score), 0) AS total_final_score
+                FROM 
+                    pegawai p
+                JOIN 
+                    jabatan j ON p.jabatan = j.id
+                JOIN 
+                    golongan_kpi gk ON j.gol_kpi = gk.id
+                LEFT JOIN 
+                    nilai_kpi nk ON p.id = nk.pegawai_id
+                LEFT JOIN 
+                    kinerja_kpi kk ON nk.indikator_id = kk.id
+                WHERE 
+                    j.gol_kpi != 9
+                GROUP BY 
+                    p.nama
+                ORDER BY 
+                    p.nama" : "SELECT 
+                    p.nama AS nama_pegawai,
+                    COALESCE(SUM(nk.persen), 0) AS total_persen,
+                    COALESCE(SUM(nk.score), 0) AS total_score,
+                    COALESCE(SUM(nk.final_score), 0) AS total_final_score
+                FROM 
+                    pegawai p
+                JOIN 
+                    jabatan j ON p.jabatan = j.id
+                JOIN 
+                    golongan_kpi gk ON j.gol_kpi = gk.id
+                LEFT JOIN 
+                    nilai_kpi nk ON p.id = nk.pegawai_id
+                LEFT JOIN 
+                    kinerja_kpi kk ON nk.indikator_id = kk.id
+                WHERE 
+                    j.gol_kpi != 9 AND p.id = $id
+                GROUP BY 
+                    p.nama
+                ORDER BY 
+                    p.nama";
+    }
+
     // function untuk mendapatkan data id jabatan dan karyawan by golongan kpi
     function getDataIdJabPeg($id)
     {
@@ -66,7 +113,7 @@ else{
     {
         $persen = round($pencapaian / $data['target'], 2);
         $score = round($persen * $data['bobot'], 2);
-        $finalScore = ($score < $data['bobot']) ? round($persen * $data['bobot'], 2) : round($data['bobot'], 2);
+        $finalScore = ($score <= $data['bobot']) ? round($persen * $data['bobot'], 2) : round($data['bobot'], 2);
         $data_nilai = [
             "persen" => $persen,
             "score" => $score,
@@ -87,7 +134,7 @@ else{
 
         $cek = cekNilaiKpi($data);
 
-        $query = ($cek) ? "UPDATE nilai_kpi set pencapaian = $pencapaian[total] WHERE indikator_id = $data[indikator_id] AND pegawai_id = $data[pegawai_id]" : "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian) VALUES ($data[pegawai_id], $data[indikator_id], $pencapaian[total])";
+        $query = ($cek) ? "UPDATE nilai_kpi set pencapaian = $pencapaian[total], persen = $dataNilai[persen], score = $dataNilai[score], final_score = $dataNilai[final_score] WHERE indikator_id = $data[indikator_id] AND pegawai_id = $data[pegawai_id]" : "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian, persen, score, final_score) VALUES ($data[pegawai_id], $data[indikator_id], $pencapaian[total], $dataNilai[persen], $dataNilai[score], $dataNilai[final_score])";
         $ex = mysqli_query($konek, $query);
         $err = mysqli_error($konek);
         $sukses = ($ex) ? "sukses" : "gagal : $err";
@@ -137,14 +184,21 @@ else{
     function cleanString($input) {
         // Menghapus spasi di awal dan akhir baris
         $cleaned = trim($input);
-    
-        // Menghapus spasi di akhir baris
-        $cleaned = preg_replace('/\s+$/m', '', $input);
 
         // Menghapus spasi yang berada setelah koma dalam string
-        $cleaned = preg_replace('/,\s+/', ',', $input);
+        $cleaned = preg_replace('/,\s+/', ',', $cleaned);
+    
+        // buang tanda strip dari indikator
+        $cleaned = preg_replace('/-/', '', $cleaned);
+
+        // buang tanda slash
+        $cleaned = preg_replace('/\//', '', $cleaned);
+
+        // Menghapus spasi di akhir baris
+        $cleaned = preg_replace('/\s+$/m', '', $cleaned);
         
-        $cleaned = preg_replace('/[()]/', '', $input);
+        // menghapus tanda kurung
+        $cleaned = preg_replace('/[()]/', '', $cleaned);
         
         // Mengubah spasi di antara 2 kata menjadi satu spasi
         $cleaned = preg_replace('/\s+/', '_', $cleaned);
@@ -209,7 +263,7 @@ else{
     function getKinerjaKpi($role = null)
     {
         global $konek;
-        $query = ($role == null) ? "SELECT * FROM kinerja_kpi where tipe = 'kuantitatif'" : "SELECT * FROM kinerja_kpi where role_id = $role and tipe = 'kuantitatif'";
+        $query = ($role == null) ? "SELECT * FROM kinerja_kpi ORDER BY role_id" : "SELECT * FROM kinerja_kpi where role_id = $role ORDER BY role_id";
         $exec = mysqli_query($konek,$query );
         $kinerja2 = array();
         if (mysqli_num_rows($exec) > 0) {
@@ -302,33 +356,32 @@ else{
         $table_name = cleanString($nama);
         
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
+        mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
         if($cek['jml'] == 0){
             
-            // mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");
             if($tipe == 'kualitatif'){
                 $idIndiKual = mysqli_insert_id($konek);
                 $dataOlah = getKinerja($idIndiKual);
                 $nilai = olahNilaiKpi($dataOlah[0],$pencapaian);
                 $dataPeg = getDataIdJabPeg($role_id);
-                print_r($nilai); echo "<br>";
-                print_r($dataPeg); echo "<br>";
+                
                 foreach($dataPeg as $item){
                     $sInVal = "INSERT INTO nilai_kpi (pegawai_id, indikator_id, pencapaian, persen, score, final_score) VALUES ($item[id_peg], $idIndiKual, $target, $nilai[persen], $nilai[score], $nilai[final_score])";
                     $ex = mysqli_query($konek, $sInVal);
                     echo ($ex) ? "sukses" : "gagal : ".mysqli_error($konek);
                 }
             }
-            // $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
-            // mysqli_query($konek, $create_table);
+            $create_table = "create table $table_name ( id INT(11) AUTO_INCREMENT PRIMARY KEY, id_pgw INT(11) NOT NULL, date DATE, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP, ket Varchar(255) Default Null, jumlah INT(11) default NULL )";
+            mysqli_query($konek, $create_table);
 
-            // for($i = 0; $i < count($param_indikator); $i++){
-            //     $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
-            //     mysqli_query($konek, $alter_table);
-            // }
+            for($i = 0; $i < count($param_indikator); $i++){
+                $alter_table = "ALTER table $table_name ADD COLUMN $param_indikator[$i] VARCHAR(255) DEFAULT NULL";
+                mysqli_query($konek, $alter_table);
+            }
         }
-        // session_start();
-        // $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
-        // header("location:".$base_url.$module);
+        session_start();
+        $_SESSION['error'] = "Berhasil menambahkan dan membuat table $table_name";
+        header("location:".$base_url.$module);
     }  
 
   // Update templates
@@ -397,7 +450,6 @@ else{
         session_start();
         $_SESSION['error'] = "Berhasil menambahkan menambahkan data KPI";
         header("location:".$base_url.$module);
-
     }
 
     elseif($module == "kpi" AND $act == "hapus_input_kpi"){

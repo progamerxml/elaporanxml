@@ -12,11 +12,9 @@ else {
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
-    $level = $_SESSION['leveluser'];
-    $golongan = ($level == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']); print_r($golongan);
+    $leveluser = $_SESSION['leveluser'];
+    $golongan = ($leveluser == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']);
     $kinerja2 = getKinerjaKpi($golongan);
-    // print_r($nmpgw['id']);
-    
 
     ?>
     <section class="content-header">
@@ -57,7 +55,7 @@ else {
                                 Tambah <?= camelCaseToSpace($mod); ?>
                             </button>"; 
 
-                            echo $levUsr = ($level == 'superadmin') ?'':$addBtn;
+                            echo $levUsr = ($leveluser == 'superadmin') ?'':$addBtn;
                         ?>
                         
                     </div>
@@ -69,7 +67,12 @@ else {
                 </div> -->
                 <!-- /.box -->
 
-                <?php $b = 1; foreach($kinerja2 as $kkpi) { ?>
+                <?php $b = 1; foreach($kinerja2 as $kkpi) { 
+                    // Tambahkan kondisi untuk memeriksa tipe kualitatif dan level user
+                    if ($kkpi['tipe'] == 'kualitatif' && !in_array($leveluser, ['superadmin', 'admin'])) {
+                        continue;
+                    }
+                    ?>
 
                     <!-- <div class="box box-solid">
                         <div class="box-body">
@@ -176,7 +179,12 @@ else {
                             </label>
                             <select name="indikator" id="indikator" class="form-control">
                                 <option value="">-- pilih indikator --</option>
-                                <?php foreach($kinerja2 as $inputkpi) { ?>
+                                <?php foreach($kinerja2 as $inputkpi) { 
+                                    // Tambahkan kondisi untuk memeriksa tipe kualitatif dan level user
+                                    if ($inputkpi['tipe'] == 'kualitatif' && !in_array($leveluser, ['superadmin', 'admin'])) {
+                                        continue;
+                                    }
+                                ?>
                                     <option value="<?= $inputkpi['id'] . "-" . $inputkpi['nama'] ?>"> <?= $inputkpi['nama'] ?></option>
                                 <?php } ?>
                             </select>

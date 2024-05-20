@@ -128,7 +128,7 @@ else{
           <!-- <li class="dropdown user user-menu">
               <a href="#"> 
                 <i class="fa fa-user"></i>
-                <span class="hidden-xs"><?php echo $_SESSION['namalengkap']; ?></span>
+                <span class="hidden-xs"><?php //echo $_SESSION['namalengkap']; ?></span>
               </a>
           </li>
 			    <li>

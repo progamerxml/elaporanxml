@@ -17,6 +17,9 @@ else {
     $roles = getRole();
     $gol_kpi2 = getGolKpi();
     $gol2 = getDataGolKpi();
+    $leveluser = $_SESSION['leveluser'];
+    $idPeg =  ($leveluser == 'superadmin') ? null : $nmpgw['id'];
+    $persenKpi = getPersenKpi();
 
 
     //$hasil = getRoleId(3); var_dump($hasil);
@@ -52,6 +55,20 @@ else {
     
             <h2>Manajemen <?= $mod; ?></h2> <br>
 
+            <!-- Bagian data KPI Karyawan -->
+            <div class="box box-warning">
+                <div class="box-header with-border mb-3 d-flex align-content-center">
+                    <h3>Data KPI Karyawan</h3>
+                    <div class="box-tools pull-right"></div>
+                </div>
+                <div class="box-body">
+                    <div class="nav-pills-warning">
+                        <div class="nav nav-pills"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- bagian data indikator KPI -->
             <div class="box box-warning">
                 <div class="box-header with-border mb-3 d-flex align-content-center">
                     <h3 >Data Indikator KPI</h3>
@@ -98,6 +115,11 @@ else {
                                                     $no = 1;
                                                     foreach($kinerja2 as $kinerja){
                                                         $role = getJabatanById($kinerja['role_id']);
+
+                                                        // Tambahkan kondisi untuk memeriksa tipe kualitatif dan level user
+                                                        if ($kinerja['tipe'] == 'kualitatif' && !in_array($leveluser, ['superadmin', 'admin'])) {
+                                                            continue;
+                                                        }
                                                 ?>
                                                     <tr>
                                                         <td><?= $no ?></td>
