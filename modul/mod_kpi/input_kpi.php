@@ -15,6 +15,8 @@ else {
     $leveluser = $_SESSION['leveluser'];
     $golongan = ($leveluser == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']);
     $kinerja2 = getKinerjaKpi($golongan);
+    $idPeg =  $nmpgw['id'];
+    $persenKpi = getPersenKpi($idPeg); echo $persenKpi;
 
     ?>
     <section class="content-header">

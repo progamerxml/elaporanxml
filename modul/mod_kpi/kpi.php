@@ -19,7 +19,6 @@ else {
     $gol2 = getDataGolKpi();
     $leveluser = $_SESSION['leveluser'];
     $idPeg =  ($leveluser == 'superadmin') ? null : $nmpgw['id'];
-    $persenKpi = getPersenKpi();
 
 
     //$hasil = getRoleId(3); var_dump($hasil);
@@ -62,9 +61,34 @@ else {
                     <div class="box-tools pull-right"></div>
                 </div>
                 <div class="box-body">
-                    <div class="nav-pills-warning">
-                        <div class="nav nav-pills"></div>
-                    </div>
+
+                <table id="datatemplates_1" class="table table-borderless table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%;">no</th>
+                            <th style="width: 60%;">Nama</th>
+                            <th>Final Score KPI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            $no = 1;
+                            $persenKpi = getPersenKpi($idPeg);
+                            foreach($persenKpi as $dataPersen) :
+                        ?>
+                        <tr>
+                            <td><?= $no ?></td>
+                            <td><?= $dataPersen['nama'] ?></td>
+                            <td><?= konversiDecimalKePersen($dataPersen['total_score']) ?></td>
+                        </tr>
+                        <?php $no++; endforeach; ?>
+                    </tbody>
+                </table>
+                    <!-- <div class="nav-pills-warning">
+                        <div class="nav nav-pills">
+
+                        </div>
+                    </div> -->
                 </div>
             </div>
 

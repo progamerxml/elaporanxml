@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 20, 2024 at 08:23 AM
+-- Generation Time: May 21, 2024 at 08:20 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -431,22 +431,6 @@ INSERT INTO `kegiatan` (`id`, `uraian`, `satuan`, `target`, `id_pegawai`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam`
---
-
-CREATE TABLE `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail`
 --
 
@@ -548,10 +532,12 @@ INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, 
 (126, 'report_iklan_dengan_sosmed_pribadi_support', 'iklan', 10, '0.05', 4, 'kuantitatif', 'nama_program,hari_dan_tanggal_rilis,nama_aplikasi,keterangan'),
 (127, 'komentar_postingan_support', 'interaksi', 10, '0.05', 4, 'kuantitatif', 'isi_komentar,postingan_siapa,link_komentar'),
 (128, 'penambahan_member_aktif_retail_xml_ke_akun_pribadi_support', 'new', 2, '0.05', 4, 'kuantitatif', 'agen_id,tanggal_daftar,saldo_deposit'),
-(129, 'memiliki_kompetensi_di_semua_bagian_yang_di_backup_support', 'mitigasi kerugian server (update hpp dan set parsing)', 1, '0.10', 4, 'kualitatif', ''),
-(130, 'mitigasi_kerugian_server_update_hpp_dan_set_parsing', 'mitigasi', 1, '0.05', 4, 'kualitatif', ''),
-(131, 'menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support', 'komunikasi', 1, '0.05', 4, 'kualitatif', ''),
-(132, 'ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam', 'Data', 1, '0.10', 4, 'kualitatif', '');
+(133, 'memiliki_kompetensi_si_semua_bagian_yang_di_backup_support', 'DEAL', 1, '0.10', 4, 'kualitatif', ''),
+(134, 'rekap_harian_data_transaksi_dan_produk_close', 'DEAL', 1, '0.05', 4, 'kualitatif', ''),
+(135, 'meneruskan_request_member_dan_komunikasi_antar_team_support', 'deal', 1, '0.10', 4, 'kualitatif', ''),
+(136, 'setting_berjalan_dengan_baik', 'deal', 1, '0.05', 4, 'kualitatif', ''),
+(137, 'saldo_supplier_terpenuhi_dan_deposit_member', 'deal', 1, '0.05', 4, 'kualitatif', ''),
+(138, 'merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar', 'deal', 1, '0.05', 4, 'kualitatif', '');
 
 -- --------------------------------------------------------
 
@@ -871,10 +857,26 @@ CREATE TABLE `memastikan_margin_dan_transaksi_naik_stabil` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support`
+-- Table structure for table `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support`
 --
 
-CREATE TABLE `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support` (
+CREATE TABLE `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meneruskan_request_member_dan_komunikasi_antar_team_support`
+--
+
+CREATE TABLE `meneruskan_request_member_dan_komunikasi_antar_team_support` (
   `id` int(11) NOT NULL,
   `id_pgw` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -922,22 +924,6 @@ CREATE TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support`
---
-
-CREATE TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support` (
-  `id` int(11) NOT NULL,
-  `id_pgw` int(11) NOT NULL,
-  `date` date DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `ket` varchar(255) DEFAULT NULL,
-  `jumlah` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `menjaga_member_yang_sudah_bergabung_opr`
 --
 
@@ -973,10 +959,10 @@ CREATE TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mitigasi_kerugian_server_opr`
+-- Table structure for table `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar`
 --
 
-CREATE TABLE `mitigasi_kerugian_server_opr` (
+CREATE TABLE `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar` (
   `id` int(11) NOT NULL,
   `id_pgw` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -989,10 +975,10 @@ CREATE TABLE `mitigasi_kerugian_server_opr` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mitigasi_kerugian_server_update_hpp_dan_set_parsing`
+-- Table structure for table `mitigasi_kerugian_server_opr`
 --
 
-CREATE TABLE `mitigasi_kerugian_server_update_hpp_dan_set_parsing` (
+CREATE TABLE `mitigasi_kerugian_server_opr` (
   `id` int(11) NOT NULL,
   `id_pgw` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -1091,26 +1077,36 @@ INSERT INTO `nilai_kpi` (`id`, `pegawai_id`, `indikator_id`, `pencapaian`, `pers
 (76, 71, 119, 1, '1.00', '0.05', '0.05'),
 (77, 81, 119, 1, '1.00', '0.05', '0.05'),
 (78, 82, 119, 1, '1.00', '0.05', '0.05'),
-(79, 76, 129, 1, '1.00', '0.10', '0.10'),
-(80, 77, 129, 1, '1.00', '0.10', '0.10'),
-(81, 78, 129, 1, '1.00', '0.10', '0.10'),
-(82, 79, 129, 1, '1.00', '0.10', '0.10'),
-(83, 80, 129, 1, '1.00', '0.10', '0.10'),
-(84, 76, 130, 1, '1.00', '0.05', '0.05'),
-(85, 77, 130, 1, '1.00', '0.05', '0.05'),
-(86, 78, 130, 1, '1.00', '0.05', '0.05'),
-(87, 79, 130, 1, '1.00', '0.05', '0.05'),
-(88, 80, 130, 1, '1.00', '0.05', '0.05'),
-(89, 76, 131, 1, '1.00', '0.05', '0.05'),
-(90, 77, 131, 1, '1.00', '0.05', '0.05'),
-(91, 78, 131, 1, '1.00', '0.05', '0.05'),
-(92, 79, 131, 1, '1.00', '0.05', '0.05'),
-(93, 80, 131, 1, '1.00', '0.05', '0.05'),
-(94, 76, 132, 1, '1.00', '0.10', '0.10'),
-(95, 77, 132, 1, '1.00', '0.10', '0.10'),
-(96, 78, 132, 1, '1.00', '0.10', '0.10'),
-(97, 79, 132, 1, '1.00', '0.10', '0.10'),
-(98, 80, 132, 1, '1.00', '0.10', '0.10');
+(99, 76, 133, 1, '1.00', '0.10', '0.10'),
+(100, 77, 133, 1, '1.00', '0.10', '0.10'),
+(101, 78, 133, 1, '1.00', '0.10', '0.10'),
+(102, 79, 133, 1, '1.00', '0.10', '0.10'),
+(103, 80, 133, 1, '1.00', '0.10', '0.10'),
+(104, 76, 134, 1, '1.00', '0.05', '0.05'),
+(105, 77, 134, 1, '1.00', '0.05', '0.05'),
+(106, 78, 134, 1, '1.00', '0.05', '0.05'),
+(107, 79, 134, 1, '1.00', '0.05', '0.05'),
+(108, 80, 134, 1, '1.00', '0.05', '0.05'),
+(109, 76, 135, 1, '1.00', '0.10', '0.10'),
+(110, 77, 135, 1, '1.00', '0.10', '0.10'),
+(111, 78, 135, 1, '1.00', '0.10', '0.10'),
+(112, 79, 135, 1, '1.00', '0.10', '0.10'),
+(113, 80, 135, 1, '1.00', '0.10', '0.10'),
+(114, 76, 136, 1, '1.00', '0.05', '0.05'),
+(115, 77, 136, 1, '1.00', '0.05', '0.05'),
+(116, 78, 136, 1, '1.00', '0.05', '0.05'),
+(117, 79, 136, 1, '1.00', '0.05', '0.05'),
+(118, 80, 136, 1, '1.00', '0.05', '0.05'),
+(119, 76, 137, 1, '1.00', '0.05', '0.05'),
+(120, 77, 137, 1, '1.00', '0.05', '0.05'),
+(121, 78, 137, 1, '1.00', '0.05', '0.05'),
+(122, 79, 137, 1, '1.00', '0.05', '0.05'),
+(123, 80, 137, 1, '1.00', '0.05', '0.05'),
+(124, 76, 138, 1, '1.00', '0.05', '0.05'),
+(125, 77, 138, 1, '1.00', '0.05', '0.05'),
+(126, 78, 138, 1, '1.00', '0.05', '0.05'),
+(127, 79, 138, 1, '1.00', '0.05', '0.05'),
+(128, 80, 138, 1, '1.00', '0.05', '0.05');
 
 -- --------------------------------------------------------
 
@@ -1750,6 +1746,22 @@ CREATE TABLE `program_flash_sale_xmltronik_h2h_dan_retail` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rekap_harian_data_transaksi_dan_produk_close`
+--
+
+CREATE TABLE `rekap_harian_data_transaksi_dan_produk_close` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rekap_report`
 --
 
@@ -1836,6 +1848,22 @@ INSERT INTO `roles` (`id`, `kode`, `nama`) VALUES
 --
 
 CREATE TABLE `saldo_balance_antara_sistem_dengan_real_opr` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `saldo_supplier_terpenuhi_dan_deposit_member`
+--
+
+CREATE TABLE `saldo_supplier_terpenuhi_dan_deposit_member` (
   `id` int(11) NOT NULL,
   `id_pgw` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -1992,6 +2020,22 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (133, 73, 1, 3, NULL, NULL, '2024-05-08'),
 (134, 73, 6, 2, NULL, NULL, '2024-05-09'),
 (135, 73, 4, 5, NULL, NULL, '2024-05-10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `setting_berjalan_dengan_baik`
+--
+
+CREATE TABLE `setting_berjalan_dengan_baik` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2289,12 +2333,6 @@ ALTER TABLE `kegiatan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam`
---
-ALTER TABLE `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail`
 --
 ALTER TABLE `ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail`
@@ -2344,9 +2382,15 @@ ALTER TABLE `memastikan_margin_dan_transaksi_naik_stabil`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support`
+-- Indexes for table `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support`
 --
-ALTER TABLE `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support`
+ALTER TABLE `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `meneruskan_request_member_dan_komunikasi_antar_team_support`
+--
+ALTER TABLE `meneruskan_request_member_dan_komunikasi_antar_team_support`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2362,12 +2406,6 @@ ALTER TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support`
---
-ALTER TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `menjaga_member_yang_sudah_bergabung_opr`
 --
 ALTER TABLE `menjaga_member_yang_sudah_bergabung_opr`
@@ -2380,15 +2418,15 @@ ALTER TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mitigasi_kerugian_server_opr`
+-- Indexes for table `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar`
 --
-ALTER TABLE `mitigasi_kerugian_server_opr`
+ALTER TABLE `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mitigasi_kerugian_server_update_hpp_dan_set_parsing`
+-- Indexes for table `mitigasi_kerugian_server_opr`
 --
-ALTER TABLE `mitigasi_kerugian_server_update_hpp_dan_set_parsing`
+ALTER TABLE `mitigasi_kerugian_server_opr`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2407,7 +2445,8 @@ ALTER TABLE `nego_harga_supplier`
 -- Indexes for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_indikator` (`indikator_id`);
 
 --
 -- Indexes for table `pegawai`
@@ -2464,6 +2503,12 @@ ALTER TABLE `program_flash_sale_xmltronik_h2h_dan_retail`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rekap_harian_data_transaksi_dan_produk_close`
+--
+ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `rekap_report`
 --
 ALTER TABLE `rekap_report`
@@ -2494,6 +2539,12 @@ ALTER TABLE `saldo_balance_antara_sistem_dengan_real_opr`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `saldo_supplier_terpenuhi_dan_deposit_member`
+--
+ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `schedules`
 --
 ALTER TABLE `schedules`
@@ -2501,6 +2552,12 @@ ALTER TABLE `schedules`
   ADD KEY `fk_role_id` (`role_id`),
   ADD KEY `fk_shift_id` (`shift_id`),
   ADD KEY `fk_employ_id` (`employ_id`) USING BTREE;
+
+--
+-- Indexes for table `setting_berjalan_dengan_baik`
+--
+ALTER TABLE `setting_berjalan_dengan_baik`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `shifts`
@@ -2646,12 +2703,6 @@ ALTER TABLE `kegiatan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam`
---
-ALTER TABLE `ketersediaan_data_dan_terselesaikanya_kerjaan_saat_shift_malam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail`
 --
 ALTER TABLE `ketersediaan_rekap_data_transaksi_dan_margin_h2h_dan_retail`
@@ -2667,7 +2718,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
@@ -2700,9 +2751,15 @@ ALTER TABLE `memastikan_margin_dan_transaksi_naik_stabil`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support`
+-- AUTO_INCREMENT for table `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support`
 --
-ALTER TABLE `memiliki_kompetensi_di_semua_bagian_yang_di_backup_support`
+ALTER TABLE `memiliki_kompetensi_si_semua_bagian_yang_di_backup_support`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `meneruskan_request_member_dan_komunikasi_antar_team_support`
+--
+ALTER TABLE `meneruskan_request_member_dan_komunikasi_antar_team_support`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -2718,12 +2775,6 @@ ALTER TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support`
---
-ALTER TABLE `menjaga_kelancaran_transaksi_dan_komunikasi_antar_shift_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `menjaga_member_yang_sudah_bergabung_opr`
 --
 ALTER TABLE `menjaga_member_yang_sudah_bergabung_opr`
@@ -2736,15 +2787,15 @@ ALTER TABLE `menjalankan_iklan_atau_ads_di_fb_instagram_dan_google`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `mitigasi_kerugian_server_opr`
+-- AUTO_INCREMENT for table `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar`
 --
-ALTER TABLE `mitigasi_kerugian_server_opr`
+ALTER TABLE `merespon_chat_agen_menggunakan_bahasa_yang_baik_dan_benar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `mitigasi_kerugian_server_update_hpp_dan_set_parsing`
+-- AUTO_INCREMENT for table `mitigasi_kerugian_server_opr`
 --
-ALTER TABLE `mitigasi_kerugian_server_update_hpp_dan_set_parsing`
+ALTER TABLE `mitigasi_kerugian_server_opr`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -2763,7 +2814,7 @@ ALTER TABLE `nego_harga_supplier`
 -- AUTO_INCREMENT for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -2820,6 +2871,12 @@ ALTER TABLE `program_flash_sale_xmltronik_h2h_dan_retail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `rekap_harian_data_transaksi_dan_produk_close`
+--
+ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `rekap_report`
 --
 ALTER TABLE `rekap_report`
@@ -2850,10 +2907,22 @@ ALTER TABLE `saldo_balance_antara_sistem_dengan_real_opr`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `saldo_supplier_terpenuhi_dan_deposit_member`
+--
+ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+
+--
+-- AUTO_INCREMENT for table `setting_berjalan_dengan_baik`
+--
+ALTER TABLE `setting_berjalan_dengan_baik`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `shifts`
@@ -2894,6 +2963,12 @@ ALTER TABLE `jabatan`
 --
 ALTER TABLE `kinerja_kpi`
   ADD CONSTRAINT `kinerja_kpi_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+
+--
+-- Constraints for table `nilai_kpi`
+--
+ALTER TABLE `nilai_kpi`
+  ADD CONSTRAINT `fk_indikator` FOREIGN KEY (`indikator_id`) REFERENCES `kinerja_kpi` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `schedules`

@@ -63,6 +63,18 @@ else{
                     p.nama
                 ORDER BY 
                     p.nama";
+
+        $ex = mysqli_query($konek, $query);
+        $datas = array();
+        while($row = mysqli_fetch_assoc($ex)){
+            $datas[] = [
+                'nama' => $row['nama_pegawai'],
+                'persen' => $row['total_persen'],
+                'score' => $row['total_score'],
+                'total_score' => $row['total_final_score']
+            ];
+        }
+        return $datas;
     }
 
     // function untuk mendapatkan data id jabatan dan karyawan by golongan kpi
