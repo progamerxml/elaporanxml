@@ -16,7 +16,7 @@ else {
     $golongan = ($leveluser == 'superadmin') ? null : getGolKpyByKar($nmpgw['jabatan']);
     $kinerja2 = getKinerjaKpi($golongan);
     $idPeg =  $nmpgw['id'];
-    $persenKpi = getPersenKpi($idPeg); echo $persenKpi;
+    $persenKpi = getPersenKpi($idPeg);
 
     ?>
     <section class="content-header">
@@ -68,6 +68,36 @@ else {
                     <!-- </section>
                 </div> -->
                 <!-- /.box -->
+
+                            <!-- Bagian data KPI Karyawan -->
+            <div class="box box-warning" style="display: <?= ($leveluser == 'superadmin') ? "none" : "block";?>;">
+                <div class="box-header with-border mb-3 d-flex align-content-center">
+                    <h3>Data KPI Saya</h3>
+                    <div class="box-tools pull-right"></div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-xs-3 text-center flex-center" style="">
+                            <h1 ><strong><?= konversiDecimalKePersen($persenKpi[0]['total_score']) ?></strong></h1>
+                            <div class="knob-label">Total Score KPI</div>
+                        </div>
+
+                        <div class="col-xs-9">
+                            <ul class="nav nav-stacked">
+                                <?php 
+                                $indikators = getDetailScoreKpi($idPeg); // print_r($indikators);
+                                foreach($indikators as $indk) :
+                                ?>
+                                <li><a href="#"><?= camelCaseToSpace($indk['indikator']) ?>
+                                <span class="pull-right text-red"><strong><?= konversiDecimalKePersen($indk['score']) ?></strong></span></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
                 <?php $b = 1; foreach($kinerja2 as $kkpi) { 
                     // Tambahkan kondisi untuk memeriksa tipe kualitatif dan level user

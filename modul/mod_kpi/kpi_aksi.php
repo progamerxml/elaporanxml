@@ -18,6 +18,41 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan nilai kpi perkaryawan 
+    function getDetailScoreKpi($id): array
+    {
+        $datas = array();
+        global $konek;
+        $query = "SELECT 
+                    p.nama AS nama_pegawai,
+                    kk.id AS kinerja_id,
+                    kk.nama AS nama_kinerja,
+                    COALESCE(nk.final_score, 0) AS final_score
+                FROM 
+                    pegawai p
+                JOIN 
+                    jabatan j ON p.jabatan = j.id
+                JOIN 
+                    golongan_kpi gk ON j.gol_kpi = gk.id
+                JOIN 
+                    kinerja_kpi kk ON gk.id = kk.role_id
+                LEFT JOIN 
+                    nilai_kpi nk ON p.id = nk.pegawai_id AND kk.id = nk.indikator_id
+                WHERE 
+                    p.id = $id";
+        $ex = mysqli_query($konek, $query);
+        if($ex != false){
+            while($brs = mysqli_fetch_assoc($ex)){
+                $datas [] = [
+                    'id_indikator' => $brs['kinerja_id'],
+                    'indikator' => $brs['nama_kinerja'],
+                    'score' => $brs['final_score']
+                ];
+            }
+        }
+
+        return $datas;
+    }
     // function untuk mendapatkan persentase, 
     function getPersenKpi($id = null)
     {
