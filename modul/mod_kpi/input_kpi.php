@@ -69,7 +69,7 @@ else {
                 </div> -->
                 <!-- /.box -->
 
-                            <!-- Bagian data KPI Karyawan -->
+            <!-- Bagian data KPI Karyawan -->
             <div class="box box-warning" style="display: <?= ($leveluser == 'superadmin') ? "none" : "block";?>;">
                 <div class="box-header with-border mb-3 d-flex align-content-center">
                     <h3>Data KPI Saya</h3>

@@ -74,14 +74,14 @@ else{
 							<li class="<?php if($module=="log_jadwal") echo "active"; ?>"><a href="<?php echo $base_url;?>log_jadwal"><i class="fa fa-list-ol"></i> <span>Log Jadwal</span></a></li>
 						</ul>
 					</li>
-					<li class="treeview <?php if($module=="kpi" || $module=="input_kpi") echo "active"; ?>" >
+					<li class="treeview <?php if($module=="kpi" || $module=="input_kpi" || $module == "detail_kpi") echo "active"; ?>" >
 						<a href="#">
 							<i class="fa fa-check-square-o"></i>
 								<span><b>KPI</b></span>
 							<i class="fa fa-angle-left pull-right"></i>
 						</a>
 						<ul class="treeview-menu">
-							<li class="<?php if($module=="kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>kpi"><i class="fa fa-list-ol"></i> <span>KPI</span></a></li>
+							<li class="<?php if($module=="kpi" || $module == "detail_kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>kpi"><i class="fa fa-list-ol"></i> <span>KPI</span></a></li>
 							<li class="<?php if($module=="input_kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>input_kpi"><i class="fa fa-list-ol"></i> <span>Input KPI</span></a></li>
 						</ul>
 					</li>

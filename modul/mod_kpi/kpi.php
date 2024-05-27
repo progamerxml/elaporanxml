@@ -51,9 +51,7 @@ else {
                 unset($_SESSION['error'])
             ?>
     
-    
-            <h2>Manajemen <?= $mod; ?></h2> <br>
-
+            <?php switch ($act) { default : ?>
             <!-- Bagian data KPI Karyawan -->
             <div class="box box-warning">
                 <div class="box-header with-border mb-3 d-flex align-content-center">
@@ -64,10 +62,10 @@ else {
 
                 <table id="datatemplates_1" class="table table-borderless table-hover">
                     <thead>
-                        <tr>
-                            <th style="width: 1%;">no</th>
-                            <th style="width: 60%;">Nama</th>
-                            <th>Final Score KPI</th>
+                        <tr style="display: none;">
+                            <th style="width: 5%; color: #fff; font-size: .8em;">no</th>
+                            <th style="width: 90%; color: #fff; font-size: .8em;">Nama</th>
+                            <th style="color: #fff; font-size: .8em;">Final Score KPI</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,38 +75,34 @@ else {
                             foreach($persenKpi as $dataPersen) :
                         ?>
                         <tr>
-                            <td><?= $no ?></td>
-                            <td><?= $dataPersen['nama'] ?></td>
-                            <td><?= konversiDecimalKePersen($dataPersen['total_score']) ?></td>
+                            <td style="width: 2%; text-decoration: none; font-size: 1em; color: black;"><?= $no ?></td>
+                            <td style="width: 90%; text-decoration: none; font-size: 1em; color: black;"><strong text-decoration: none;><a href="<?= $base_url . $mod . "-detail-" . $dataPersen['id_peg'] ?>.html" style="text-decoration: none;"><?= $dataPersen['nama'] ?></a></strong></td>
+                            <td style="width: 5%; text-decoration: none; font-size: 1em; color: black;"><strong><?= konversiDecimalKePersen($dataPersen['total_score']) ?></strong></td>
                         </tr>
                         <?php $no++; endforeach; ?>
                     </tbody>
                 </table>
-                    <!-- <div class="nav-pills-warning">
-                        <div class="nav nav-pills">
 
-                        </div>
-                    </div> -->
                 </div>
             </div>
-
+            
             <!-- bagian data indikator KPI -->
             <div class="box box-warning">
                 <div class="box-header with-border mb-3 d-flex align-content-center">
                     <h3 >Data Indikator KPI</h3>
                     <div class="box-tools pull-right">
                         
+                        </div>
                     </div>
-                </div>
-                <div class="box-body">
-                    
-                    <div class="nav-pills-warning">
-                        <ul class="nav nav-pills">
-                            <?php foreach($gol2 as $gol) : ?>
+                    <div class="box-body">
+                        
+                        <div class="nav-pills-warning">
+                            <ul class="nav nav-tabs">
+                                <?php foreach($gol2 as $gol) : if($gol['id'] == 9)  continue; ?>
                                 <li class=" <?= $gol['id'] == 1 ? 'active' : '' ?>">
-                                <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
+                                    <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
                                 </li>
-                            <?php endforeach ?>
+                                <?php endforeach ?>
                             <li class="pull-right">
                                 <button type="button" class="btn btn-success text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
                                     Tambah indikator <?= $mod; ?>
@@ -165,13 +159,70 @@ else {
                                         </table>
                                     </div><!-- /.box-body -->
                                 </div>
-                            <?php endforeach ?>
+                                <?php endforeach ?>
+                            </div>
                         </div>
-                    </div>
 
                 </div>
             </div>
 
+            <?php break; case "detail" : ?>
+                <?php $testDatas = getDetailIndikByPegawai($_GET['id']); ?>
+                <div class="box box-warning">
+                    <div class="box-header with-border mb-3 d-flex align-content-center">
+                        <h3>Data KPI <?= camelCaseToSpace($testDatas[0]['nama']) ?></h3>
+                        <div class="box-tools pull-right"></div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <table id="datatemplates_<?= $gol['id'] ?>" class="table table-borderless table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 1%;">No</th>
+                                        <th>Indikator</th>
+                                        <th>Recap</th>
+                                        <th>Target</th>
+                                        <th>Pencapaian</th>
+                                        <th>Persen</th>
+                                        <th>Bobot</th>
+                                        <th>Score</th>
+                                        <th>Final Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $no = 1;
+                                        $totalFinalScore = 0;
+                                        foreach($testDatas as $detail) {
+                                            $totalFinalScore += $detail['final_score'];
+                                    ?>
+                                        <tr>
+                                            <td><?= $no ?></td>
+                                            <td><?= camelCaseToSpace($detail['nama_kinerja']) ?></td>
+                                            <td><?= $detail['recap'] ?></td>
+                                            <td><?= $detail['target'] ?></td>
+                                            <td><?= $detail['pencapaian'] ?></td>
+                                            <td><?= konversiDecimalKePersen($detail['persen']) ?></td>
+                                            <td><?= konversiDecimalKePersen($detail['bobot']) ?></td>
+                                            <td><?= konversiDecimalKePersen($detail['score']) ?></td>
+                                            <td><?= konversiDecimalKePersen($detail['final_score']) ?></td>
+                                        </tr>
+                                    <?php $no++; } ?>
+                                    <tr>
+                                        <td colspan="8" align="left"><strong><h3>Total Nilai KPI</h3></strong></td>
+                                        <td><strong><h3><?= konversiDecimalKePersen($totalFinalScore) ?></strong></h3></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <?php break; } ?>
         </div>
 
                 <!-- modal area -->
@@ -258,47 +309,5 @@ else {
 ?>
 
 <script>
-    function getDataKr(id, indikator, recap, target, bobot, role_id, tipe, param_indikator) {
-    // Isi nilai input pada modal dengan data yang diambil dari tabel
-    $('#id').val(id);
-    $('#nama').val(indikator);
-    $('#recap').val(recap);
-    $('#target').val(target);
-    $('#bobotIndikator').val(bobot);
-    $('#role_id').val(role_id);
-    $('#typeIndikator').val(tipe);
-    $('#param_indikator').val(param_indikator);
-    }
-
-    // Reset nilai input pada modal setelah modal ditutup
-    $('#modal-update').on('hidden.bs.modal', function () {
-        $('#id').val('');
-        $('#nama').val('');
-        $('#recap').val('');
-        $('#target').val('');
-    });
-
-    function switchModal()
-    {
-        $('.modal-title').text("Tambah Indikator");
-        $('#updateForm').attr('action','modul/mod_kpi/kpi_aksi.php?module=kpi&act=input');
-    }
-
-    $(document).ready(function() {
-      $('#typeIndikator').on('change', function() {
-        var selectedValue = $(this).val();
-        if (selectedValue === 'kualitatif') {
-            $('#dynamic-form-group').html(`
-            <label for="pencapaian">Pencapaian</label>
-            <input type="number" class="form-control" id="pencapaian" name="pencapaian" step="0.01" min="0" placeholder="Pencapaian" required>
-            `);
-        } else if (selectedValue === 'kuantitatif') {
-            $('#dynamic-form-group').html(`
-              <label for="param_indikator">Parameter Indikator</label>
-              <input type="text" class="form-control" id="param_indikator" name="param_indikator" placeholder="Parameter Indikator" required>
-              <span class="text-danger" style="font-weight: normal; font-size: .9em; font-style: italic;"><b>*</b>gunakan tanda koma (,) untuk memisahkan tiap parameter</span>
-            `);
-        }
-      });
-    });
+    
 </script>

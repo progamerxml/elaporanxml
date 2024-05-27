@@ -18,6 +18,52 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan detial score dan target KPI perkaryawan
+    function getDetailIndikByPegawai($id)
+    {
+        global $konek;
+        $datas = array();
+        $query = "SELECT 
+                    p.nama AS nama_pegawai,
+                    kk.id AS kinerja_id, kk.nama AS nama_kinerja, kk.recap, kk.target, kk.bobot,
+                    COALESCE(nk.pencapaian, 0) AS pencapaian, COALESCE(nk.score, 0) AS score, COALESCE(nk.persen, 0) AS persen, COALESCE(nk.final_score, 0) AS final_score,
+                    COALESCE(nk.final_score, 0) AS jml_score
+                FROM 
+                    pegawai p
+                JOIN 
+                    jabatan j ON p.jabatan = j.id
+                JOIN 
+                    golongan_kpi gk ON j.gol_kpi = gk.id
+                JOIN 
+                    kinerja_kpi kk ON gk.id = kk.role_id
+                LEFT JOIN 
+                    nilai_kpi nk ON p.id = nk.pegawai_id AND kk.id = nk.indikator_id
+                WHERE 
+                    p.id = $id";
+
+        $ex = mysqli_query($konek, $query);
+
+        if($ex){
+            $total_score = 0;
+            while($bar = mysqli_fetch_assoc($ex)){
+                $total_score += $bar['final_score'];
+                $datas[] = [
+                    "nama" => $bar['nama_pegawai'],
+                    'nama_kinerja' => $bar['nama_kinerja'],
+                    'recap' => $bar['recap'],
+                    'target' => $bar['target'],
+                    'bobot' => $bar['bobot'],
+                    'pencapaian' => $bar['pencapaian'],
+                    'persen' => $bar['persen'],
+                    'score' => $bar['score'],
+                    'final_score' => $bar['final_score'],
+                ];
+                $datas['total_score'] = $total_score;
+            }
+        }
+        return $datas;
+    }
+
     // function untuk mendapatkan nilai kpi perkaryawan 
     function getDetailScoreKpi($id): array
     {
@@ -58,7 +104,7 @@ else{
     {
         global $konek;
         $query = ($id == null) ? "SELECT 
-                    p.nama AS nama_pegawai,
+                    p.id as id_peg, p.nama AS nama_pegawai,
                     COALESCE(SUM(nk.persen), 0) AS total_persen,
                     COALESCE(SUM(nk.score), 0) AS total_score,
                     COALESCE(SUM(nk.final_score), 0) AS total_final_score
@@ -75,10 +121,10 @@ else{
                 WHERE 
                     j.gol_kpi != 9
                 GROUP BY 
-                    p.nama
+                    p.nama, p.id
                 ORDER BY 
-                    p.nama" : "SELECT 
-                    p.nama AS nama_pegawai,
+                    p.nama;" : "SELECT 
+                    p.id as id_peg, p.nama AS nama_pegawai,
                     COALESCE(SUM(nk.persen), 0) AS total_persen,
                     COALESCE(SUM(nk.score), 0) AS total_score,
                     COALESCE(SUM(nk.final_score), 0) AS total_final_score
@@ -95,7 +141,7 @@ else{
                 WHERE 
                     j.gol_kpi != 9 AND p.id = $id
                 GROUP BY 
-                    p.nama
+                    p.nama, p.id
                 ORDER BY 
                     p.nama";
 
@@ -103,6 +149,7 @@ else{
         $datas = array();
         while($row = mysqli_fetch_assoc($ex)){
             $datas[] = [
+                'id_peg' => $row['id_peg'],
                 'nama' => $row['nama_pegawai'],
                 'persen' => $row['total_persen'],
                 'score' => $row['total_score'],
