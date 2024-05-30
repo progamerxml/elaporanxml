@@ -72,7 +72,8 @@ else {
             while ($hsift = mysqli_fetch_assoc($qshift)) {
                 $shifts[] = [
                     'id' => $hsift['id'],
-                    'nama' => $hsift['nama']
+                    'nama' => $hsift['nama'],
+                    'kode_warna' => $hsift['kode_warna']
                 ];
             }
         }

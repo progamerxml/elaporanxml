@@ -82,7 +82,7 @@ else{
 						</a>
 						<ul class="treeview-menu">
 							<li class="<?php if($module=="kpi" || $module == "detail_kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>kpi"><i class="fa fa-list-ol"></i> <span>KPI</span></a></li>
-							<li class="<?php if($module=="input_kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>input_kpi"><i class="fa fa-list-ol"></i> <span>Input KPI</span></a></li>
+							<!-- <li class="<?php if($module=="input_kpi") echo "active"; ?>"><a href="<?php echo $base_url;?>input_kpi"><i class="fa fa-list-ol"></i> <span>Input KPI</span></a></li> -->
 						</ul>
 					</li>
 					<li>

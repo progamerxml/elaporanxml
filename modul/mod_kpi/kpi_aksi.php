@@ -18,6 +18,20 @@ else{
         header("location:".$base_url.$module);
     }  
 
+    // function untuk mendapatkan data role / golongan berdasarkan id
+    function getGolongan($id)
+    {
+        global $konek;
+        $query = "SELECT golongan FROM golongan_kpi WHERE id = $id";
+        $ex = mysqli_query($konek, $query);
+        if($ex){
+            $brs = mysqli_fetch_assoc($ex);
+            $golongan = $brs['golongan'];
+        }
+
+        return $golongan;
+    }
+
     // function untuk mendapatkan detial score dan target KPI perkaryawan
     function getDetailIndikByPegawai($id)
     {
@@ -58,7 +72,6 @@ else{
                     'score' => $bar['score'],
                     'final_score' => $bar['final_score'],
                 ];
-                $datas['total_score'] = $total_score;
             }
         }
         return $datas;
@@ -440,14 +453,15 @@ else{
         $recap = htmlspecialchars($_POST['recap']);
         $target = htmlspecialchars($_POST['target']);
         $bobot = $_POST['bobot'];
-        $pencapaian = $_POST['pencapaian'] ?? 0 ;
+        $pencapaian = $target;
         $role_id = $_POST['gol_kpi'];
         $tipe  = htmlspecialchars($_POST['tipe']);
         $param_indik = $_POST['param_indikator'] ?? NULL;
         $teks_param_indik = cleanString($param_indik);
         $param_indikator = explode(",", cleanString($teks_param_indik));
+        $golongan = getGolongan($role_id);
 
-        $table_name = cleanString($nama);
+        $table_name = cleanString($nama . "_" . $golongan);
         
         $cek = mysqli_fetch_array(mysqli_query($konek, "SELECT COUNT(id) as jml FROM kinerja_kpi WHERE nama = '$table_name'"));
         mysqli_query($konek, "insert into kinerja_kpi (nama, recap, target, bobot, role_id, tipe, param_indikator) Values ('$table_name', '$recap', $target, $bobot, $role_id, '$tipe', '$teks_param_indik')");

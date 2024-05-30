@@ -24,19 +24,22 @@ else {
     //$hasil = getRoleId(3); var_dump($hasil);
     ?>
     <section class="content-header">
-        <h1 class="page-header">
-            <ol class="breadcrumb">
-                <li>
-                    <a href="<?= $base_url; ?>">
-                        <i class="fa fa-home"></i>
-                        <span style="vertical-align: inherit;">Home </span>
-                    </a>
-                </li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= $mod; ?></span></li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?= $mod; ?> </span></li>
-            </ol>
-        </h1>
-    </section>
+		<h1 class="page-header">
+			<!-- <font style="vertical-align: inherit;">Rekap Report Hari ini</font> -->
+			<small>
+				<font style="vertical-align: inherit;"></font>
+			</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="<?php echo $base_url; ?>">
+					<i class="fa fa-home"></i>
+					<font style="vertical-align: inherit;">Home </font>
+				</a>
+			</li>
+            <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= camelCaseToSpace ($mod); ?></span></li>
+		</ol>
+	</section>
 
     <!-- Main content -->
     <section class="content">
@@ -91,8 +94,10 @@ else {
                 <div class="box-header with-border mb-3 d-flex align-content-center">
                     <h3 >Data Indikator KPI</h3>
                     <div class="box-tools pull-right">
-                        
-                        </div>
+                        <button type="button" class="btn btn-success text-capitalize pull-right mt-3" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
+                            Tambah indikator <?= $mod; ?>
+                        </button>
+                    </div>
                     </div>
                     <div class="box-body">
                         
@@ -103,11 +108,6 @@ else {
                                     <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
                                 </li>
                                 <?php endforeach ?>
-                            <li class="pull-right">
-                                <button type="button" class="btn btn-success text-capitalize" data-toggle="modal" data-target="#modal-update" onclick="switchModal();">
-                                    Tambah indikator <?= $mod; ?>
-                                </button>
-                            </li>
                         </ul>
                         <div class="tab-content">
                             <?php foreach($gol2 as $gol) : ?>
@@ -167,7 +167,7 @@ else {
             </div>
 
             <?php break; case "detail" : ?>
-                <?php $testDatas = getDetailIndikByPegawai($_GET['id']); ?>
+                <?php $testDatas = getDetailIndikByPegawai($_GET['id']); // echo json_encode($testDatas); ?>
                 <div class="box box-warning">
                     <div class="box-header with-border mb-3 d-flex align-content-center">
                         <h3>Data KPI <?= camelCaseToSpace($testDatas[0]['nama']) ?></h3>
@@ -309,5 +309,33 @@ else {
 ?>
 
 <script>
-    
+    function switchModal()
+    {
+        $('.modal-title').text("Tambah Indikator");
+        $('#updateForm').attr('action','modul/mod_kpi/kpi_aksi.php?module=kpi&act=input');
+    }
+
+    $(document).ready(function(){
+    $('select#typeIndikator').on('change', function () {
+        var selectedID = $(this).val(); console.log(selectedID);
+        if(selectedID == 'kualitatif') {
+            rmvElement = $('#dynamic-form-group');
+            rmvElement.remove();
+        }
+        // $.ajax({
+        //     url: 'modul/mod_kpi/kpi_aksi.php?module=kpi&act=get-param-indikator',
+        //     type: 'POST',
+        //     data: {
+        //         id: selectedID
+        //     },
+        //     success: function (response) {
+                
+        //         // console.log(response);
+
+        //         var form = document.getElementById('isi');
+        //         form.innerHTML = response;
+        //     }
+        // });
+    });
+});
 </script>

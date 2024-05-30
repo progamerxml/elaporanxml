@@ -20,19 +20,22 @@ else {
 
     ?>
     <section class="content-header">
-        <h1 class="page-header">
-            <ol class="breadcrumb">
-                <li>
-                    <a href="<?php echo $base_url; ?>">
-                        <i class="fa fa-home"></i>
-                        <span style="vertical-align: inherit;">Home </span>
-                    </a>
-                </li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= camelCaseToSpace ($mod); ?></span></li>
-                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?= camelCaseToSpace($mod); ?> </span></li>
-            </ol>
-        </h1>
-    </section>
+		<h1 class="page-header">
+			<!-- <font style="vertical-align: inherit;">Rekap Report Hari ini</font> -->
+			<small>
+				<font style="vertical-align: inherit;"></font>
+			</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li>
+				<a href="<?php echo $base_url; ?>">
+					<i class="fa fa-home"></i>
+					<font style="vertical-align: inherit;">Home </font>
+				</a>
+			</li>
+            <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?= camelCaseToSpace ($mod); ?></span></li>
+		</ol>
+	</section>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -48,20 +51,7 @@ else {
                 ?>
 
                 <div class="row border">
-                    <div class="col-md-11 border">
-                        <h1 class="text-capitalize fw-bolder"><strong>Data <?= camelCaseToSpace($mod); ?></strong></h1>
-                    </div>
-                    <div class="col-md-1 d-flex align-items-center">
-                        <?php 
-                            $addBtn = "<button type=\"button\" class=\"btn btn-success pull-right text-capitalize\" data-toggle=\"modal\" data-target=\"#modal-update\" onclick=\"switchModal();\">
-                                Tambah <?= camelCaseToSpace($mod); ?>
-                            </button>"; 
-
-                            echo $levUsr = ($leveluser == 'superadmin') ?'':$addBtn;
-                        ?>
-                        
-                    </div>
-                </div> <br>
+                </div>
                 <!-- <div class="box box-warning">
                     <section class="content-header"> -->
                         <!-- debuging -->
@@ -71,27 +61,44 @@ else {
 
             <!-- Bagian data KPI Karyawan -->
             <div class="box box-warning" style="display: <?= ($leveluser == 'superadmin') ? "none" : "block";?>;">
-                <div class="box-header with-border mb-3 d-flex align-content-center">
-                    <h3>Data KPI Saya</h3>
-                    <div class="box-tools pull-right"></div>
+                <div class="box-header with-border my-3 d-flex align-content-center"> 
+                    <h3 class="box-title">Data KPI Saya</h3>
+                    <div class="box-tools pull-right">
+                        <?php 
+                            $addBtn = "<button type=\"button\" class=\"btn btn-success pull-right text-capitalize\" data-toggle=\"modal\" data-target=\"#modal-update\" onclick=\"switchModal();\">
+                                Tambah Input KPI <?= camelCaseToSpace($mod); ?>
+                            </button>"; 
+
+                            echo $levUsr = ($leveluser == 'superadmin') ?'':$addBtn;
+                        ?>
+                    </div>
                 </div>
                 <div class="box-body">
                     <div class="row">
-
-                        <div class="col-xs-3 text-center flex-center" style="">
-                            <h1 ><strong><?= konversiDecimalKePersen($persenKpi[0]['total_score']) ?></strong></h1>
-                            <div class="knob-label">Total Score KPI</div>
+                        <div class="col-xs-12 text-center flex-center" style="">
+                        <?php $class = 'bg-green'; if ($persenKpi[0]['total_score'] <= 0.4) { $class = 'bg-red'; } elseif ($persenKpi[0]['total_score'] > 0.4 && $persenKpi[0]['total_score'] <= 0.8) { $class = 'bg-yellow'; } ?>
+                            <div class="small-box <?= $class ?>">
+                                <div class="inner">
+                                    <h3><?= konversiDecimalKePersen($persenKpi[0]['total_score']) ?></sup></h3>
+                                    <p>Total Score KPI</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-xs-9">
+                        <div class="col-xs-12">
+                            <table class="table table-borderless table-hover">
+                            <?php $indikators = getDetailScoreKpi($idPeg); foreach($indikators as $indk) : ?>
+                                <tr>
+                                    <td class=""><strong><?= camelCaseToSpace($indk['indikator']) ?></strong></td>
+                                    <td class="text-center"><strong><?= konversiDecimalKePersen($indk['score']) ?></strong></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </table>
                             <ul class="nav nav-stacked">
-                                <?php 
-                                $indikators = getDetailScoreKpi($idPeg); // print_r($indikators);
-                                foreach($indikators as $indk) :
-                                ?>
-                                <li><a href="#"><?= camelCaseToSpace($indk['indikator']) ?>
-                                <span class="pull-right text-red"><strong><?= konversiDecimalKePersen($indk['score']) ?></strong></span></a></li>
-                                <?php endforeach; ?>
+                                
                             </ul>
                         </div>
 
@@ -138,6 +145,7 @@ else {
                     </div> -->
 
                 <div class="box box-warning">
+                    
                     <div class="box-body  table-responsive">
                         <!-- lakukan perulangan terhadap data kinerja_kpi -->
 

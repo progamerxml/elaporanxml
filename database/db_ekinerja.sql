@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 27, 2024 at 09:18 AM
+-- Generation Time: May 30, 2024 at 09:00 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -199,12 +199,13 @@ INSERT INTO `golongan_kpi` (`id`, `golongan`) VALUES
 (1, 'marketing'),
 (2, 'operator'),
 (4, 'support'),
-(5, 'sdp_ph'),
+(5, 'sdp'),
 (6, 'pg_ssb'),
 (7, 'cs_h2h'),
 (8, 'retail_xml'),
 (9, 'non_kpi'),
-(10, 'data_voucher');
+(10, 'data_voucher'),
+(11, 'ph');
 
 -- --------------------------------------------------------
 
@@ -298,7 +299,7 @@ INSERT INTO `jabatan` (`id`, `kode`, `nama_jabatan`, `status`, `gol_kpi`) VALUES
 (29, 'OPR', 'Operator XML Mobile', 1, 2),
 (30, 'XML', 'CS XML Mobile', 1, 8),
 (31, 'ADM', 'ADM XML Mobile', 1, 9),
-(32, 'PH', 'Operator & CS PH', 1, 5),
+(32, 'PH', 'Operator & CS PH', 1, 11),
 (33, 'SDP', 'Operator & CS SDP', 1, 5),
 (34, 'PG', 'Operator & CS PG', 1, 6),
 (35, 'SP', 'Support 2', 1, 4),
@@ -607,7 +608,11 @@ INSERT INTO `kinerja_kpi` (`id`, `nama`, `recap`, `target`, `bobot`, `role_id`, 
 (141, 'upload_iklan_di_sosmed_pribadi_berdasar_report', 'iklan', 10, '0.05', 5, 'kuantitatif', 'nama_program,hari_dan_tanggal_rilis,nama_aplikasi,keterangan'),
 (142, 'komentar_postingan_link_wajib_kirim_di_grup_report_sdp_ph', 'interaksi', 10, '0.05', 5, 'kuantitatif', 'isi_komentar,postingan_siapa,link'),
 (143, 'penambahan_member_aktif_sdp_ph_ke_akun_pribadi', 'new', 2, '0.05', 5, 'kuantitatif', 'nama_member,id_member_baru,produk_yang_ditawarkan,deposit_awal'),
-(144, 'followup_agen_terdaftar_belum_deposit', 'foll2', 30, '0.05', 5, 'kuantitatif', 'id_agen,produk_yang_ditawarkan,hasil_follow_up');
+(144, 'followup_agen_terdaftar_belum_deposit', 'foll2', 30, '0.05', 5, 'kuantitatif', 'id_agen,produk_yang_ditawarkan,hasil_follow_up'),
+(146, 'terselesaikanya_komplain_dengan_baik_sdp', 'Komplen', 1, '0.05', 5, 'kualitatif', ''),
+(147, 'rekap_harian_data_transaksi_dan_produk_close_sdp', 'Rekap', 1, '0.05', 5, 'kualitatif', ''),
+(148, 'meneruskan_request_member_komunikasi_antar_team_dengan_bukti_valid_sdp', 'komunikasi', 1, '0.05', 5, 'kualitatif', ''),
+(149, 'saldo_supplier_terpenuhi_dan_deposit_member_sdp', 'Goal', 1, '0.05', 5, 'kualitatif', '');
 
 -- --------------------------------------------------------
 
@@ -925,7 +930,32 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 (215, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-04, role: 12', '2024-05-07 08:08:41'),
 (216, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 26', '2024-05-07 08:10:13'),
 (217, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-03, role: 22', '2024-05-07 08:11:14'),
-(218, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-10, role: 4', '2024-05-08 00:57:28');
+(218, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-05-10, role: 4', '2024-05-08 00:57:28'),
+(219, 'irfanem', 'insert data role pegawai: 98, tanggal : 2024-05-02, role: 2', '2024-05-29 06:56:23'),
+(220, 'irfanem', 'update data shift pegawai: 98, tanggal : 2024-05-02, shift: 4', '2024-05-29 06:56:25'),
+(221, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-11, role: 3', '2024-05-29 06:57:00'),
+(222, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-05-21, role: 1', '2024-05-29 06:57:50'),
+(223, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-21, shift: 3', '2024-05-29 06:57:52'),
+(224, 'irfanem', 'insert data role pegawai: 55, tanggal : 2024-05-12, role: 8', '2024-05-29 06:58:44'),
+(225, 'irfanem', 'update data shift pegawai: 55, tanggal : 2024-05-12, shift: 5', '2024-05-29 06:58:47'),
+(226, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-11, shift: 3', '2024-05-30 06:46:29'),
+(227, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-12, role: 3', '2024-05-30 06:46:42'),
+(228, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-12, shift: 2', '2024-05-30 06:46:44'),
+(229, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-05-04, role: 1', '2024-05-30 06:46:58'),
+(230, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-04, shift: 1', '2024-05-30 06:47:03'),
+(231, 'irfanem', 'insert data shift pegawai: 80, tanggal : 2024-05-05, shift: 3', '2024-05-30 08:05:03'),
+(232, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-05, shift: 5', '2024-05-30 08:05:08'),
+(233, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-05, shift: 3', '2024-05-30 08:05:17'),
+(234, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-05, shift: 1', '2024-05-30 08:05:22'),
+(235, 'irfanem', 'update data role pegawai: 80, tanggal : 2024-05-05, role: 1', '2024-05-30 08:05:42'),
+(236, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-09, shift: 4', '2024-05-30 08:09:50'),
+(237, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-10, shift: 4', '2024-05-30 08:09:52'),
+(238, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-11, shift: 1', '2024-05-30 08:10:11'),
+(239, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-12, shift: 1', '2024-05-30 08:10:14'),
+(240, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-13, shift: 2', '2024-05-30 08:10:26'),
+(241, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-14, shift: 2', '2024-05-30 08:10:29'),
+(242, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-15, shift: 3', '2024-05-30 08:10:39'),
+(243, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-16, shift: 3', '2024-05-30 08:10:42');
 
 -- --------------------------------------------------------
 
@@ -1196,7 +1226,23 @@ INSERT INTO `nilai_kpi` (`id`, `pegawai_id`, `indikator_id`, `pencapaian`, `pers
 (126, 78, 138, 1, '1.00', '0.05', '0.05'),
 (127, 79, 138, 1, '1.00', '0.05', '0.05'),
 (128, 80, 138, 1, '1.00', '0.05', '0.05'),
-(136, 58, 95, 1, '1.00', '0.05', '0.05');
+(136, 58, 95, 1, '1.00', '0.05', '0.05'),
+(137, 91, 146, 1, '1.00', '0.05', '0.05'),
+(138, 92, 146, 1, '1.00', '0.05', '0.05'),
+(139, 93, 146, 1, '1.00', '0.05', '0.05'),
+(140, 94, 146, 1, '1.00', '0.05', '0.05'),
+(141, 91, 147, 1, '1.00', '0.05', '0.05'),
+(142, 92, 147, 1, '1.00', '0.05', '0.05'),
+(143, 93, 147, 1, '1.00', '0.05', '0.05'),
+(144, 94, 147, 1, '1.00', '0.05', '0.05'),
+(145, 91, 148, 1, '1.00', '0.05', '0.05'),
+(146, 92, 148, 1, '1.00', '0.05', '0.05'),
+(147, 93, 148, 1, '1.00', '0.05', '0.05'),
+(148, 94, 148, 1, '1.00', '0.05', '0.05'),
+(149, 91, 149, 1, '1.00', '0.05', '0.05'),
+(150, 92, 149, 1, '1.00', '0.05', '0.05'),
+(151, 93, 149, 1, '1.00', '0.05', '0.05'),
+(152, 94, 149, 1, '1.00', '0.05', '0.05');
 
 -- --------------------------------------------------------
 
@@ -1872,6 +1918,22 @@ CREATE TABLE `rekap_harian_data_transaksi_dan_produk_close` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `rekap_harian_data_transaksi_dan_produk_close_sdp`
+--
+
+CREATE TABLE `rekap_harian_data_transaksi_dan_produk_close_sdp` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rekap_report`
 --
 
@@ -1974,6 +2036,22 @@ CREATE TABLE `saldo_balance_antara_sistem_dengan_real_opr` (
 --
 
 CREATE TABLE `saldo_supplier_terpenuhi_dan_deposit_member` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
+--
+
+CREATE TABLE `saldo_supplier_terpenuhi_dan_deposit_member_sdp` (
   `id` int(11) NOT NULL,
   `id_pgw` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -2129,7 +2207,22 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (132, 104, 2, 4, NULL, NULL, '2024-04-08'),
 (133, 73, 1, 3, NULL, NULL, '2024-05-08'),
 (134, 73, 6, 2, NULL, NULL, '2024-05-09'),
-(135, 73, 4, 5, NULL, NULL, '2024-05-10');
+(135, 73, 4, 5, NULL, NULL, '2024-05-10'),
+(136, 98, 2, 4, NULL, NULL, '2024-05-02'),
+(137, 73, 3, 3, NULL, NULL, '2024-05-11'),
+(138, 80, 1, 3, NULL, NULL, '2024-05-21'),
+(139, 55, 8, 5, NULL, NULL, '2024-05-12'),
+(140, 73, 3, 2, NULL, NULL, '2024-05-12'),
+(141, 80, 1, 1, NULL, NULL, '2024-05-04'),
+(142, 80, 1, 1, NULL, NULL, '2024-05-05'),
+(143, 60, NULL, 4, NULL, NULL, '2024-05-09'),
+(144, 60, NULL, 4, NULL, NULL, '2024-05-10'),
+(145, 60, NULL, 1, NULL, NULL, '2024-05-11'),
+(146, 60, NULL, 1, NULL, NULL, '2024-05-12'),
+(147, 60, NULL, 2, NULL, NULL, '2024-05-13'),
+(148, 60, NULL, 2, NULL, NULL, '2024-05-14'),
+(149, 60, NULL, 3, NULL, NULL, '2024-05-15'),
+(150, 60, NULL, 3, NULL, NULL, '2024-05-16');
 
 -- --------------------------------------------------------
 
@@ -2155,21 +2248,22 @@ CREATE TABLE `setting_berjalan_dengan_baik` (
 
 CREATE TABLE `shifts` (
   `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL
+  `nama` varchar(255) NOT NULL,
+  `kode_warna` varchar(99) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `shifts`
 --
 
-INSERT INTO `shifts` (`id`, `nama`) VALUES
-(1, 'Pagi'),
-(2, 'Siang'),
-(3, 'Malam'),
-(4, 'Middle'),
-(5, 'Libur'),
-(7, 'Sakit'),
-(8, 'Tukar Libur');
+INSERT INTO `shifts` (`id`, `nama`, `kode_warna`) VALUES
+(1, 'Pagi', '#ac86f3'),
+(2, 'Siang', '#7c737d'),
+(3, 'Malam', '#279400'),
+(4, 'Middle', '#dd8383'),
+(5, 'Libur', '#f50000'),
+(7, 'Sakit', '#8f8f8f'),
+(8, 'Tukar Libur', '#d400ff');
 
 -- --------------------------------------------------------
 
@@ -2218,6 +2312,22 @@ INSERT INTO `task` (`id`, `tgl_input`, `deadline`, `judul`, `keterangan`, `statu
 (28, '2023-05-13 00:00:00', '2023-05-20', 'konten kebangkitan nasional', '<ol>\r\n	<li>buat konten kebangkitan dengan detail</li>\r\n</ol>\r\n\r\n<ul>\r\n	<li>test</li>\r\n	<li>test</li>\r\n	<li>estetsw</li>\r\n	<li>test</li>\r\n</ul>\r\n', 'selesai', '<p>sudah done</p>\r\n', '2023-05-13 14:55:55', 'Konten Kreator - test', 'IT / Progammer - Irfan Machmud'),
 (29, '2023-05-13 00:00:00', '2023-05-16', 'tambah ram pc konten', '<p>minta tolong pasangin ram buat pc konten kreator</p>\r\n', 'selesai', '<p>test selesai</p>\r\n', '2023-05-22 13:59:56', 'IT / Progammer - Irfan Machmud', 'Konten Kreator - test'),
 (30, '2023-05-20 00:00:00', '2023-05-20', 'update Elap', '<p>- bukan login tidak boleh edit laporan&nbsp; dan tugas</p>\r\n', '50%', '<p>sudah pak..mungkin mau di review dlu</p>\r\n', '2023-05-22 15:27:28', 'IT / Progammer - Irfan Machmud', 'Owner Utama - admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `terselesaikanya_komplain_dengan_baik_sdp`
+--
+
+CREATE TABLE `terselesaikanya_komplain_dengan_baik_sdp` (
+  `id` int(11) NOT NULL,
+  `id_pgw` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `ket` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -2669,6 +2779,12 @@ ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rekap_harian_data_transaksi_dan_produk_close_sdp`
+--
+ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close_sdp`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `rekap_report`
 --
 ALTER TABLE `rekap_report`
@@ -2705,6 +2821,12 @@ ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
+--
+ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `schedules`
 --
 ALTER TABLE `schedules`
@@ -2729,6 +2851,12 @@ ALTER TABLE `shifts`
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `terselesaikanya_komplain_dengan_baik_sdp`
+--
+ALTER TABLE `terselesaikanya_komplain_dengan_baik_sdp`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2806,7 +2934,7 @@ ALTER TABLE `giveaway`
 -- AUTO_INCREMENT for table `golongan_kpi`
 --
 ALTER TABLE `golongan_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ide_promo_dan_konten_xmltronik_marketing`
@@ -2902,7 +3030,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `kinerja_kpi`
 --
 ALTER TABLE `kinerja_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `kinerja_kuantitatif`
@@ -2932,7 +3060,7 @@ ALTER TABLE `komentar_postingan_support`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
 
 --
 -- AUTO_INCREMENT for table `memastikan_margin_dan_transaksi_naik_stabil`
@@ -3004,7 +3132,7 @@ ALTER TABLE `nego_harga_supplier`
 -- AUTO_INCREMENT for table `nilai_kpi`
 --
 ALTER TABLE `nilai_kpi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=153;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -3073,6 +3201,12 @@ ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `rekap_harian_data_transaksi_dan_produk_close_sdp`
+--
+ALTER TABLE `rekap_harian_data_transaksi_dan_produk_close_sdp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `rekap_report`
 --
 ALTER TABLE `rekap_report`
@@ -3109,10 +3243,16 @@ ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
+--
+ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT for table `setting_berjalan_dengan_baik`
@@ -3131,6 +3271,12 @@ ALTER TABLE `shifts`
 --
 ALTER TABLE `task`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `terselesaikanya_komplain_dengan_baik_sdp`
+--
+ALTER TABLE `terselesaikanya_komplain_dengan_baik_sdp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `upload_iklan_di_sosmed_pribadi_berdasar_report`

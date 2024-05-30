@@ -33,11 +33,13 @@ else{
     elseif ($module=='shift' AND $act=='update'){
         $id				    = $_POST['id'];
         $nama				= $_POST['nama'];
-        mysqli_query($konek, "update shifts set nama = '$nama' WHERE id = $id");
+        $warna				= $_POST['warna'];
+        // echo "update shifts set nama = '$nama', kode_warna = '$warna' WHERE id = $id";
+        mysqli_query($konek, "update shifts set nama = '$nama', kode_warna = '$warna' WHERE id = $id");
         header("location:".$base_url.$module);
     }
 
-    function getShift()
+    function getShifts()
     {
         global $konek;
         $exec = mysqli_query($konek, "SELECT * FROM shifts");
@@ -45,12 +47,31 @@ else{
         if (mysqli_num_rows($exec) > 0) {
             while ($shift = mysqli_fetch_assoc($exec)) {
                 $shifts[] = [
+                    'id' => $shift['id'],
                     'nama' => $shift['nama'],
-                    'id' => $shift['id']
+                    'kode_warna' => $shift['kode_warna']
                 ];
             }
         }
         return $shifts;
+    }
+    
+    function getShiftById($id)
+    {
+        global $konek;
+        $query = "SELECT * FROM shifts WHERE id = $id";
+        $ex = mysqli_query($konek, $query);
+        $shift = array();
+        if($ex) {
+            while ($brs = mysqli_fetch_assoc($ex))
+            {
+                $shift['id'] = $brs['id'];
+                $shift['nama'] = $brs['nama'];
+                $shift['kode_warna'] = $brs['kode_warna'];
+            }
+        }
+        
+        return $shift;
     }
 }
 ?>

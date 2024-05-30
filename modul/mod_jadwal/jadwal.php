@@ -13,7 +13,7 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 else {
     $aksi = "modul/mod_jadwal/aksi_jadwal.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
-    // require __DIR__ . "/aksi_jadwal.php";
+    require __DIR__ . "/../mod_shift/shift_aksi.php";
 
     if (empty($_SESSION['waktu'])) {
         $waktu = explode("-", date("m-Y"));
@@ -104,48 +104,49 @@ else {
                             <?php
                             // Iterate over the array of names and their schedules
                             foreach ($schedules as $nama => $jadwal) { ?>
-                                <tr>
-                                    <td style="vertical-align: middle; font-weight: bold;"><?= $nama ?></td>
+                            <tr>
+                                <td style="vertical-align: middle; font-weight: bold;"><?= $nama ?></td>
 
-                                    <!-- // Generate cells for each date from 1 to 30 -->
-                                    <?php
-                                    for ($date = 1; $date <= $dates; $date++) {
-                                        $tanggal = $waktu[1] . '-' . sprintf("%02d", $waktu[0]) . '-' . sprintf("%02d", $date); // Format tanggal
-                                        ?>
-                                        <!-- If data exists for this date, display it -->
-                                        <?php if ($jadwal[$tanggal] !== null) {
-                                            foreach ($jadwal[$tanggal] as $item) { ?>
-                                                <td style="text-align: left; vertical-align: middle; width: 10em;">
+                                <!-- Generate cells for each date from 1 to 30 -->
+                                <?php
+                                for ($date = 1; $date <= $dates; $date++) {
+                                    $tanggal = $waktu[1] . '-' . sprintf("%02d", $waktu[0]) . '-' . sprintf("%02d", $date); // Format tanggal
+                                    ?>
+                                    <!-- If data exists for this date, display it -->
+                                    <?php if ($jadwal[$tanggal] !== null) {
+                                        foreach ($jadwal[$tanggal] as $item) { $background = getShiftById($item['shift_id']); ?>
+                                            <td style="text-align: left; vertical-align: middle; width: 10em; background-color: <?= $background['kode_warna'] ?>; background-opacity: 0.5;" data-toggle="tooltip" title="<?= $nama ?>">
 
-                                                    <div class="d-flex flex-column">
-                                                        <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                                -
-                                                            </option>
-                                                            <?php foreach ($roles2 as $role) { ?>
-                                                                <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
-                                                            <?php } ?>
-                                                        </select> <br>
-                                                        <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                                -
-                                                            </option>
-                                                            <?php foreach ($shifts2 as $shift) { ?>
-                                                                <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <br/>
-                                                    <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
-                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
-                                                </td>
-                                            <?php }
-                                        }
-                                    } ?>
+                                                <div class="d-flex flex-column">
+                                                    <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                            <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                        <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                            -
+                                                        </option>
+                                                        <?php foreach ($roles2 as $role) { ?>
+                                                            <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
+                                                        <?php } ?>
+                                                    </select> <br>
+                                                    <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                            <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                        <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                            -
+                                                        </option>
+                                                        <?php foreach ($shifts2 as $shift) { ?>
+                                                            <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <br/>
+                                                <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
+                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
+                                            </td>
+                                        <?php }
+                                    }
+                                } ?>
 
-                                </tr>
+                            </tr>
+
                             <?php }
                             ?>
                             </tbody>
@@ -160,6 +161,10 @@ else {
 ?>
 
 <script>
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
     const status = '<?= $otoritas['level'] ?>';
     if (status !== "superadmin" && status !== "admin") {
@@ -325,6 +330,7 @@ else {
                 });
             } else if (kolom === 'shift') {
                 const shiftId = $(this).val();
+                const background = $(this)
                 $.ajax({
                     url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=update-shift',
                     type: 'POST',
