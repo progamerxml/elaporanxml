@@ -14,9 +14,7 @@ else{
     <section class="sidebar">
 		<!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="<?php if($module=="beranda") echo "active"; ?>"><a href="<?php echo $base_url;?>beranda" title="beranda"><i class="fa fa-home"></i> <span>Beranda 
-	(<?php echo $_SESSION['leveluser'];?>)
-            </span></a></li>
+            <li class="<?php if($module=="beranda") echo "active"; ?>"><a href="<?php echo $base_url;?>beranda" title="beranda"><i class="fa fa-home" id="beranda"></i> <strong>Beranda (</strong><span id="level"><?php echo $_SESSION['leveluser'];?></span>)</a></li>
 			<?php
 			
 			//JIKA USER ADALAH SUPERADMIN MAKA AKAN TAMPIL MENU

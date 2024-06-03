@@ -10,27 +10,6 @@ else {
     $module = $_GET['module'];
     $act = $_GET['act'];
 
-//   data role
-    function getRole()
-    {
-        global $konek;
-        $qrole = mysqli_query($konek, "select * from roles");
-        $roles = array();
-        if (mysqli_num_rows($qrole) > 0) {
-            while ($hrole = mysqli_fetch_assoc($qrole)) {
-                $roles[] = [
-                    'id' => $hrole['id'],
-                    'kode' => $hrole['kode'],
-                    'nama' => $hrole['nama']
-                ];
-            }
-        } else {
-            $roles = array();
-        }
-
-        return $roles;
-    }
-    
     function getRoleG()
     {
         global $konek;

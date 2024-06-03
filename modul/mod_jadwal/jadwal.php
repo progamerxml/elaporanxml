@@ -14,16 +14,10 @@ else {
     $aksi = "modul/mod_jadwal/aksi_jadwal.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
     require __DIR__ . "/../mod_shift/shift_aksi.php";
+    require __DIR__ . "/../mod_role/role_aksi.php";
 
-    if (empty($_SESSION['waktu'])) {
-        $waktu = explode("-", date("m-Y"));
-    } else {
-        $waktu = $_SESSION['waktu'];
-    }
+    $waktu = (empty($_SESSION['waktu'])) ? explode("-", date("m-Y")) : $_SESSION['waktu'];
 
-    $roles2 = getRole();  // print_r($roles2). "<br>";
-    $shifts2 = getShift(); // print_r($shifts2['nama']);
-    $schedules = getJadwal($waktu);  //  print_r($schedules);
     $otoritas = cekOto($_SESSION['namauser']);
     
     // print_r($otoritas['level']);
@@ -103,7 +97,7 @@ else {
                             <tbody>
                             <?php
                             // Iterate over the array of names and their schedules
-                            foreach ($schedules as $nama => $jadwal) { ?>
+                            foreach (getJadwal($waktu) as $nama => $jadwal) { ?>
                             <tr>
                                 <td style="vertical-align: middle; font-weight: bold;"><?= $nama ?></td>
 
@@ -115,31 +109,35 @@ else {
                                     <!-- If data exists for this date, display it -->
                                     <?php if ($jadwal[$tanggal] !== null) {
                                         foreach ($jadwal[$tanggal] as $item) { $background = getShiftById($item['shift_id']); ?>
-                                            <td style="text-align: left; vertical-align: middle; width: 10em; background-color: <?= $background['kode_warna'] ?>; background-opacity: 0.5;" data-toggle="tooltip" title="<?= $nama ?>">
+                                            <td style="text-align: left; vertical-align: middle; width: 10em; background-color: <?= $background['kode_warna'] ?>; background-opacity: 0.5; vertical-align: center; border: 1px solid black;" data-toggle="tooltip" title="<?= $nama ?>">
 
-                                                <div class="d-flex flex-column">
+                                                <div class="d-flex flex-column" style="vertical-align:middle;">
+                                                    <?php if($otoritas['level'] == 'superadmin' || $otoritas['level'] == 'admin') { ?>
                                                     <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                             <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                        <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                        <option style="background-color: transparent;" value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             -
                                                         </option>
-                                                        <?php foreach ($roles2 as $role) { ?>
-                                                            <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
+                                                        <?php foreach ( $roles2 = getRole() as $role) { ?>
+                                                            <option style="background-color: transparent;" value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
                                                         <?php } ?>
                                                     </select> <br>
                                                     <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
                                                             <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                        <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                        <option style="background-color: transparent;" value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             -
                                                         </option>
-                                                        <?php foreach ($shifts2 as $shift) { ?>
-                                                            <option value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
+                                                        <?php foreach (getShift() as $shift) { ?>
+                                                            <option style="background-color: transparent;" value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
                                                         <?php } ?>
                                                     </select>
+                                                    <br/>
+                                                    <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
+                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
+                                                    <?php } else { $role = getRoleId($item['role_id']);  $shift = getShiftById($item['shift_id']);?>
+                                                        <p style="color: #fff; padding:.2em; text-align: center; height: 100%;"><strong><?= $role['kode'] . "<br></hr>" . $shift['nama'] ?></strong></p>
+                                                    <?php } ?>
                                                 </div>
-                                                <br/>
-                                                <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
-                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
                                             </td>
                                         <?php }
                                     }
@@ -302,6 +300,20 @@ else {
     }
 
     $(document).ready(function () {
+        // const level = $('span#level').text();
+        //     // Mengecek jika level bukan superadmin atau admin
+        // if (level !== 'superadmin' && level !== 'admin') {
+        //     // Mengubah setiap elemen select menjadi input teks
+        //     $('select').each(function(){
+        //         var value = $(this).text(); // Mengambil nilai select yang ada
+        //         var input = $('<input type="text">'); // Membuat elemen input teks baru
+        //         input.val(value); // Menetapkan nilai input sesuai dengan nilai select sebelumnya
+        //         input.prop('disabled', true); // Menambahkan atribut disabled ke elemen input
+        //         $(this).replaceWith(input); // Menggantikan elemen select dengan elemen input teks
+        //     });
+        // }
+
+        // untuk insert / update jadwal dan shift
         $('table').on('change', 'select', function () {
             var selectId = $(this).attr('id'); 
             const values = selectId.split('.'); // Memisahkan string menjadi array
@@ -330,7 +342,6 @@ else {
                 });
             } else if (kolom === 'shift') {
                 const shiftId = $(this).val();
-                const background = $(this)
                 $.ajax({
                     url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=update-shift',
                     type: 'POST',

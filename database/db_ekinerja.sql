@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 30, 2024 at 09:00 AM
+-- Generation Time: Jun 03, 2024 at 08:36 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -955,7 +955,39 @@ INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
 (240, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-13, shift: 2', '2024-05-30 08:10:26'),
 (241, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-14, shift: 2', '2024-05-30 08:10:29'),
 (242, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-15, shift: 3', '2024-05-30 08:10:39'),
-(243, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-16, shift: 3', '2024-05-30 08:10:42');
+(243, 'irfanem', 'insert data shift pegawai: 60, tanggal : 2024-05-16, shift: 3', '2024-05-30 08:10:42'),
+(244, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-01, role: 3', '2024-06-03 04:13:50'),
+(245, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-01, shift: 2', '2024-06-03 04:13:52'),
+(246, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-02, role: 7', '2024-06-03 04:14:20'),
+(247, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-02, shift: 2', '2024-06-03 04:14:22'),
+(248, 'irfanem', 'insert data shift pegawai: 1, tanggal : 2024-08-03, shift: 1', '2024-06-03 04:14:54'),
+(249, 'irfanem', 'update data role pegawai: 1, tanggal : 2024-08-03, role: 1', '2024-06-03 04:14:56'),
+(250, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-04, role: 4', '2024-06-03 05:02:52'),
+(251, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-04, shift: 4', '2024-06-03 05:02:55'),
+(252, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-05, role: 1', '2024-06-03 06:08:55'),
+(253, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-05, shift: 2', '2024-06-03 06:08:56'),
+(254, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-29, role: 1', '2024-06-03 06:24:17'),
+(255, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-29, shift: 3', '2024-06-03 06:24:21'),
+(256, 'irfanem', 'insert data role pegawai: 56, tanggal : 2024-08-01, role: 2', '2024-06-03 06:26:06'),
+(257, 'irfanem', 'update data shift pegawai: 56, tanggal : 2024-08-01, shift: 2', '2024-06-03 06:26:09'),
+(258, 'irfanem', 'insert data role pegawai: 55, tanggal : 2024-08-01, role: 3', '2024-06-03 06:26:18'),
+(259, 'irfanem', 'update data shift pegawai: 55, tanggal : 2024-08-01, shift: 2', '2024-06-03 06:26:19'),
+(260, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-06, role: 3', '2024-06-03 06:26:25'),
+(261, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-06, shift: 3', '2024-06-03 06:26:26'),
+(262, 'irfanem', 'insert data role pegawai: 58, tanggal : 2024-08-03, role: 1', '2024-06-03 06:26:39'),
+(263, 'irfanem', 'update data shift pegawai: 58, tanggal : 2024-08-03, shift: 3', '2024-06-03 06:26:41'),
+(264, 'irfanem', 'insert data role pegawai: 58, tanggal : 2024-08-01, role: 1', '2024-06-03 06:42:36'),
+(265, 'irfanem', 'update data shift pegawai: 58, tanggal : 2024-08-01, shift: 3', '2024-06-03 06:42:38'),
+(266, 'irfanem', 'insert data role pegawai: 58, tanggal : 2024-08-02, role: 1', '2024-06-03 06:42:41'),
+(267, 'irfanem', 'update data shift pegawai: 58, tanggal : 2024-08-02, shift: 3', '2024-06-03 06:42:43'),
+(268, 'irfanem', 'insert data role pegawai: 58, tanggal : 2024-08-04, role: 1', '2024-06-03 06:42:46'),
+(269, 'irfanem', 'update data shift pegawai: 58, tanggal : 2024-08-04, shift: 3', '2024-06-03 06:42:49'),
+(270, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-02, shift: 4', '2024-06-03 08:16:53'),
+(271, 'irfanem', 'update data role pegawai: 1, tanggal : 2024-08-05, role: 3', '2024-06-03 08:17:05'),
+(272, 'irfanem', 'insert data role pegawai: 1, tanggal : 2024-08-07, role: 3', '2024-06-03 08:17:50'),
+(273, 'irfanem', 'update data shift pegawai: 1, tanggal : 2024-08-07, shift: 3', '2024-06-03 08:17:53'),
+(274, 'irfanem', 'insert data role pegawai: 55, tanggal : 2024-08-02, role: 4', '2024-06-03 08:25:32'),
+(275, 'irfanem', 'update data shift pegawai: 55, tanggal : 2024-08-02, shift: 3', '2024-06-03 08:25:34');
 
 -- --------------------------------------------------------
 
@@ -1259,6 +1291,7 @@ CREATE TABLE `pegawai` (
   `email` varchar(255) DEFAULT NULL,
   `jabatan` varchar(50) DEFAULT NULL,
   `report` int(11) NOT NULL DEFAULT '1',
+  `no_absen` int(11) DEFAULT NULL,
   `tgl_masuk` date DEFAULT NULL,
   `tgl_kontrak` date DEFAULT NULL,
   `bpjs_kes` varchar(255) DEFAULT NULL,
@@ -1269,61 +1302,61 @@ CREATE TABLE `pegawai` (
 -- Dumping data for table `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `nama`, `nik`, `alamat`, `kontak`, `email`, `jabatan`, `report`, `tgl_masuk`, `tgl_kontrak`, `bpjs_kes`, `bpjs_ket`) VALUES
-(1, 'xmltrronik', 0, '', '', 'admin@contoh.com', '9', 1, '1970-01-01', '1970-01-01', '', ''),
-(52, 'Zulfa Aulia Wibowo ', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '12', 1, '2015-06-01', '2015-06-01', '', '23003154376'),
-(53, 'Aprelia Gusniawati ', 0, 'Jl. Baruna Tengah X No 169 Rt 006 Rw 014 Kel. Tegalkamulyan , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '13', 1, '2014-08-11', '2014-08-11', '', ''),
-(54, 'Zulfa Rohadatul aisyi fauziah', 0, 'Jl. Mt Haryono Gg. Cendrawasih No 1, Tegalreja, Cilacap ', NULL, NULL, '14', 1, '2023-02-01', '2023-02-01', '', ''),
-(55, 'Widyaswari Kusuma N', 0, 'Jl. Jendral Sudirman No 73 Rt 002 Rw 008 Kel. Tegalreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '15', 1, '2020-07-10', '2020-07-10', '', '23003154384'),
-(56, 'Siska Tri Y', 0, 'Jl. Beringin Rt 003 Rw 004 Desa. Tritih Kulon , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '16', 1, '2021-03-05', '2021-03-05', '', '23003154368'),
-(57, 'test', 0, 'test', NULL, NULL, '17', 1, '2023-04-30', '2024-05-31', '', ''),
-(58, 'Wildan Faturohman', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '18', 1, '2016-01-11', '2016-01-11', '', '23003154350'),
-(59, 'Giovani Magdalena', 0, 'Perum Rineggo Asri Blok A6/35 Rt 008 Rw 018 Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '19', 1, '2016-12-05', '2016-12-05', '', '23012602555'),
-(60, 'Muji Kurnianto', 0, 'Jl. Darusman No 88 Rt 002 Rw 006 Kel. Karangtalun , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '20', 1, '2022-02-01', '2022-02-01', '', ''),
-(61, 'Eko Aziz Setiawan ', 0, 'Jl. Tugu utara Rt 03/02 Sampang. Kec Sampang ', NULL, NULL, '20', 0, '2023-03-01', '2023-03-01', '', ''),
-(62, 'Abdul Aziz', 0, 'Desa. Grujugan Rt 002 Rw 004 Kec. Kemranjen - Kab. Banyumas', NULL, NULL, '20', 1, '2023-01-09', '2023-01-09', '', ''),
-(63, 'Ades Chaniago Akmal ', 0, 'Cluster Pelita Garden Rt 03/01, Kalikidang, Kec. Sokaraja, Banyumas ', NULL, NULL, '20', 1, '2023-05-01', '2023-05-01', '', ''),
-(64, 'Dwi Mey Hariprasetyo', 0, 'Jl. Bogowonto No 46 Rt 006 Rw 008 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', '', '', '21', 1, '2022-07-27', '2022-07-27', '', ''),
-(65, 'Khoerul Anam', 0, 'Dusun. Awiluar Rt 004 Rw 001 Desa. Kedungreja, Kec. Kedungreja - Kab. Cilacap', NULL, NULL, '22', 1, '2022-09-01', '2022-09-01', '', ''),
-(66, 'Yogi Nuraini ', 0, 'Jl. Rajawali VII No 23 Rt 03/03, Tegalreja, Cilacap ', NULL, NULL, '39', 1, '2023-05-01', '2023-05-01', '', ''),
-(67, 'Aprilia Bekti Mahalani', 0, 'Jl. Kendeng Rt 03/01. Kuripan, kesugihan, cilacap ', NULL, NULL, '23', 1, '2023-05-04', '2023-05-04', '', ''),
-(68, 'Irfan Machmud', 0, 'Dusun. Kedung Banteng  Utara Rt 002 Rw 001 Desa. Sumingkir, Kec. Jeruklegi - Kab. Cilacap', '+6285602944606', 'progamerxml@gmail.com', '17', 1, '2022-07-01', '2022-07-01', '', ''),
-(69, 'Cholid Qiwamudin', 0, 'Jl. Dr. Cipto No 92 Rt 004 Rw 016 Kel. Gumilir , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '24', 1, '2015-11-23', '2015-11-23', '', ''),
-(70, 'Ramdita Febriana', 0, 'Jl. Merbabu No 46 Rt 003 Rw 006 Kel. Sidanegara , Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '24', 1, '2016-08-29', '2016-08-29', '', ''),
-(71, 'Erlangga Triasa', 0, 'Jl. Sendangsari Timur  Rt 009 Rw 011 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '24', 1, '2018-10-08', '2018-10-08', '', ''),
-(72, 'Silvia Dwi R', 0, 'Jl. Delima No 173 Rt 006 Rw 002 Kel. Tambakreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '26', 1, '2014-09-01', '2014-09-01', '', ''),
-(73, 'Novita Yuli Anika', 0, 'Jl. Dr. Cipto no.108 Rt. 003/004 Kel. Kebonmanis Cilacap Utara - Kab. Cilacap', NULL, NULL, '26', 1, '2016-12-12', '2016-12-12', '', ''),
-(74, 'Mulyani', 0, 'jl. merbabu no.44 rt.03/rw.06 sidanegara', NULL, NULL, '27', 1, '2018-08-06', '2018-08-06', '', ''),
-(75, 'Anisyha Huditia', 0, 'Jl. Anggrek ruko No 4 Rt 004 Rw 013 Kel. Sidakaya , Kec. Cilacap Selatan - Kab.Cilacap', NULL, NULL, '27', 1, '2019-11-11', '2019-11-11', '', ''),
-(76, 'Gesang Prayogi', 0, 'Jl. Lingkar Rt 002 Rw 001 Kel. Tegalkamulyan, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '25', 1, '2019-09-30', '2019-09-30', '', ''),
-(77, 'Edwin Bahari', 0, 'Jl. Kinibalu No 42 Rt 002 Rw 011 Kel. Sidanegara, Kec.Cilacap Tengah - Kab. Cilacap', NULL, NULL, '25', 1, '2021-02-01', '2021-02-01', '', ''),
-(78, 'Widi Rizaldi', 0, 'Jl. Let. Jend. Suprapto No. 10 Rt 008 Rw 007 Kel. Tegalreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '35', 1, '2019-11-01', '2019-11-01', '', ''),
-(79, 'Tiara Mercusiana P', 0, 'Jl. Swadaya Rt 010 Rw 003 Kel. Tambakreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '35', 1, '2020-02-17', '2020-02-17', '', ''),
-(80, 'Akmal Hidayat', 0, 'Jl. Rinjani, Perumahan Sidanegara Indah Blok 14 No     Kel. Sidanegara, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '38', 1, '2021-10-20', '2021-10-20', '', ''),
-(81, 'Andi Susanto', 0, 'Jl. Penyu Gg Bulus RT 08/13, Cilacap selatan ', NULL, NULL, '29', 1, '2018-10-08', '2018-10-08', '', ''),
-(82, 'Rizki Puspita Sari', 0, 'Jl. Banjaran Rt 002 Rw 022 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '29', 1, '2019-05-01', '2019-05-01', '', ''),
-(83, 'Dhwi Sulistiyowati', 0, 'Jl. Sendangsari Rt 006 Rw 023 Kel. Donan , Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '31', 1, '2023-01-16', '2023-01-16', '', ''),
-(84, 'Novia Nurdianing Putri', 0, 'Jl. Nakula Rt 001 Rw 008 Kel. Tritih Wetan, Kec. Jeruklegi - Kab. Cilacap', NULL, NULL, '31', 1, '2022-01-03', '2022-01-03', '', ''),
-(85, 'Mei Neiska Wati', 0, 'Jl. Perjuangan No 35 Rt 002 Rw 009 Desa. Jangrana , Kec. Kesugihan - Kab. Cilacap', NULL, NULL, '31', 1, '2022-08-08', '2022-08-08', '', ''),
-(86, 'Valen Milan Ananta', 0, 'Jl. Kutilang No 8 Rt 003 Rw 005 Kel. Tegalreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '30', 1, '2022-07-15', '2022-07-15', '', ''),
-(87, 'Nadia Surya Wardani', 0, 'Jl. Wisata Payau Rt 03/11, Tritih kulon, Kec. Cilacap Utara ', NULL, NULL, '30', 1, '2023-03-20', '2023-03-20', '', ''),
-(88, 'Oktaf Alan Alende', 0, 'Jl. Jambu No 3 Rt 005 / Rw 003 Kel. Tambakreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '32', 1, '2021-08-01', '2021-08-01', '', ''),
-(89, 'Nafitta Nur istifa', 0, 'Perum Rineggo Asri Blok A6/35 Rt 008 Rw 018 Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '32', 1, '2021-10-16', '2021-10-16', '', ''),
-(90, 'Slamet Mahardika', 0, 'Dusun mentasan Rt 04/03, Kawunganten, cilacap ', NULL, NULL, '32', 1, '2023-04-01', '2023-04-01', '', ''),
-(91, 'Trivem Adde Alfan', 0, 'Jl. Delima No 258 Rt 006 Rw 001 Kel. Tambakreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '33', 1, '2021-04-01', '2021-04-01', '', ''),
-(92, 'Muhammad Faiz', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '33', 1, '2021-04-01', '2021-04-01', '', ''),
-(93, 'Eep Syaifulloh', 0, 'Dusun, Ciarus Rt 002 Rw 010 Desa. Randegan, Kec. Wangon -  Kab. Banyumas', NULL, NULL, '33', 1, '2021-07-21', '2021-07-21', '', ''),
-(94, 'Dion Pangestu', 0, 'JL. Manggasari Rt 01/11, Dayeuhluhur, Cilacap ', NULL, NULL, '33', 1, '2023-04-01', '2023-04-01', '', ''),
-(95, 'Gregorio Matthew', 0, 'Perum Bayur Permai Rt 003 Rw 019  Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '34', 1, '2022-05-23', '2022-05-23', '', ''),
-(96, 'Bernandus Agung Wijaya', 0, 'Jl. Kendeng No 49 Rt 005 Rw 015 Kel. Sidanegara, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '34', 1, '2022-07-06', '2022-07-06', '', ''),
-(97, 'Vina Apriliana', 0, 'Jl. Singa Laut Rt 002 Rw 012 Kel. Mertasinga , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '40', 1, '2023-01-03', '2023-01-03', '', ''),
-(98, 'Septi Widiarti Ningrum ', 0, 'Jl. Kendeng Rt 02/14 Sidanegara. Kel. Cilacap Tengah ', NULL, NULL, '40', 1, '2023-03-01', '2023-03-01', '', ''),
-(99, 'Lutfi Nuraini ', 0, 'Jl. Bromo No.305 Rt 003/006, Sidanegara, Cilacap tengah, Cilacap ', NULL, NULL, '40', 1, '2023-05-08', '2023-05-08', '', ''),
-(100, 'Fajar Arif Imaduddin', 0, 'Jl. Dr. Rajiman No 30 Rt 001 Rw 012 Kel. Gunungsimping, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '41', 1, '2022-08-08', '2022-08-08', '', ''),
-(101, 'Dhea Amelia putri ', 0, 'Jl. IR.H Juanda GG savita 56 rt 007/016 kec. Sidanegara kec. Cilacap tengah ', NULL, NULL, '41', 1, '2023-02-16', '2023-02-16', '', ''),
-(102, 'Zalfa Saesarifa', 0, 'Gang. Bintang IV Rt 005 Rw 004 Kel. Tegalkamulyan , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '28', 1, '2022-02-01', '2022-02-01', '', ''),
-(103, 'Diah Prihatin', 0, 'Jl. Kakap Rt 005/010 Cilacap selatan ', NULL, NULL, '20', 0, '2023-05-11', '2023-05-11', '', ''),
-(104, 'Ambar Asmara Sapto A.', 0, 'Jl. DR Cipto Rt 02/01, Kel. Kebon Manis, Kab Cilacap ', NULL, NULL, '42', 1, '2023-06-02', '2023-06-02', '', '');
+INSERT INTO `pegawai` (`id`, `nama`, `nik`, `alamat`, `kontak`, `email`, `jabatan`, `report`, `no_absen`, `tgl_masuk`, `tgl_kontrak`, `bpjs_kes`, `bpjs_ket`) VALUES
+(1, 'xmltrronik', 0, '', '', 'admin@contoh.com', '9', 1, 0, '1970-01-01', '1970-01-01', '', ''),
+(52, 'Zulfa Aulia Wibowo ', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '12', 1, 0, '2015-06-01', '2015-06-01', '', '23003154376'),
+(53, 'Aprelia Gusniawati ', 0, 'Jl. Baruna Tengah X No 169 Rt 006 Rw 014 Kel. Tegalkamulyan , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '13', 1, 0, '2014-08-11', '2014-08-11', '', ''),
+(54, 'Zulfa Rohadatul aisyi fauziah', 0, 'Jl. Mt Haryono Gg. Cendrawasih No 1, Tegalreja, Cilacap ', NULL, NULL, '14', 1, 0, '2023-02-01', '2023-02-01', '', ''),
+(55, 'Widyaswari Kusuma N', 0, 'Jl. Jendral Sudirman No 73 Rt 002 Rw 008 Kel. Tegalreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '15', 1, 0, '2020-07-10', '2020-07-10', '', '23003154384'),
+(56, 'Siska Tri Y', 0, 'Jl. Beringin Rt 003 Rw 004 Desa. Tritih Kulon , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '16', 1, 0, '2021-03-05', '2021-03-05', '', '23003154368'),
+(57, 'test', 0, 'test', NULL, NULL, '17', 1, 0, '2023-04-30', '2024-05-31', '', ''),
+(58, 'Wildan Faturohman', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '18', 1, 0, '2016-01-11', '2016-01-11', '', '23003154350'),
+(59, 'Giovani Magdalena', 0, 'Perum Rineggo Asri Blok A6/35 Rt 008 Rw 018 Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '19', 1, 0, '2016-12-05', '2016-12-05', '', '23012602555'),
+(60, 'Muji Kurnianto', 0, 'Jl. Darusman No 88 Rt 002 Rw 006 Kel. Karangtalun , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '20', 1, 0, '2022-02-01', '2022-02-01', '', ''),
+(61, 'Eko Aziz Setiawan ', 0, 'Jl. Tugu utara Rt 03/02 Sampang. Kec Sampang ', NULL, NULL, '20', 0, 0, '2023-03-01', '2023-03-01', '', ''),
+(62, 'Abdul Aziz', 0, 'Desa. Grujugan Rt 002 Rw 004 Kec. Kemranjen - Kab. Banyumas', NULL, NULL, '20', 1, 0, '2023-01-09', '2023-01-09', '', ''),
+(63, 'Ades Chaniago Akmal ', 0, 'Cluster Pelita Garden Rt 03/01, Kalikidang, Kec. Sokaraja, Banyumas ', NULL, NULL, '20', 1, 0, '2023-05-01', '2023-05-01', '', ''),
+(64, 'Dwi Mey Hariprasetyo', 0, 'Jl. Bogowonto No 46 Rt 006 Rw 008 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', '', '', '21', 1, 0, '2022-07-27', '2022-07-27', '', ''),
+(65, 'Khoerul Anam', 0, 'Dusun. Awiluar Rt 004 Rw 001 Desa. Kedungreja, Kec. Kedungreja - Kab. Cilacap', NULL, NULL, '22', 1, 0, '2022-09-01', '2022-09-01', '', ''),
+(66, 'Yogi Nuraini ', 0, 'Jl. Rajawali VII No 23 Rt 03/03, Tegalreja, Cilacap ', NULL, NULL, '39', 1, 0, '2023-05-01', '2023-05-01', '', ''),
+(67, 'Aprilia Bekti Mahalani', 0, 'Jl. Kendeng Rt 03/01. Kuripan, kesugihan, cilacap ', NULL, NULL, '23', 1, 0, '2023-05-04', '2023-05-04', '', ''),
+(68, 'Irfan Machmud', 0, 'Dusun. Kedung Banteng  Utara Rt 002 Rw 001 Desa. Sumingkir, Kec. Jeruklegi - Kab. Cilacap', '+6285602944606', 'progamerxml@gmail.com', '17', 1, 0, '2022-07-01', '2022-07-01', '', ''),
+(69, 'Cholid Qiwamudin', 0, 'Jl. Dr. Cipto No 92 Rt 004 Rw 016 Kel. Gumilir , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '24', 1, 0, '2015-11-23', '2015-11-23', '', ''),
+(70, 'Ramdita Febriana', 0, 'Jl. Merbabu No 46 Rt 003 Rw 006 Kel. Sidanegara , Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '24', 1, 0, '2016-08-29', '2016-08-29', '', ''),
+(71, 'Erlangga Triasa', 0, 'Jl. Sendangsari Timur  Rt 009 Rw 011 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '24', 1, 0, '2018-10-08', '2018-10-08', '', ''),
+(72, 'Silvia Dwi R', 0, 'Jl. Delima No 173 Rt 006 Rw 002 Kel. Tambakreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '26', 1, 0, '2014-09-01', '2014-09-01', '', ''),
+(73, 'Novita Yuli Anika', 0, 'Jl. Dr. Cipto no.108 Rt. 003/004 Kel. Kebonmanis Cilacap Utara - Kab. Cilacap', NULL, NULL, '26', 1, 0, '2016-12-12', '2016-12-12', '', ''),
+(74, 'Mulyani', 0, 'jl. merbabu no.44 rt.03/rw.06 sidanegara', NULL, NULL, '27', 1, 0, '2018-08-06', '2018-08-06', '', ''),
+(75, 'Anisyha Huditia', 0, 'Jl. Anggrek ruko No 4 Rt 004 Rw 013 Kel. Sidakaya , Kec. Cilacap Selatan - Kab.Cilacap', NULL, NULL, '27', 1, 0, '2019-11-11', '2019-11-11', '', ''),
+(76, 'Gesang Prayogi', 0, 'Jl. Lingkar Rt 002 Rw 001 Kel. Tegalkamulyan, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '25', 1, 0, '2019-09-30', '2019-09-30', '', ''),
+(77, 'Edwin Bahari', 0, 'Jl. Kinibalu No 42 Rt 002 Rw 011 Kel. Sidanegara, Kec.Cilacap Tengah - Kab. Cilacap', NULL, NULL, '25', 1, 0, '2021-02-01', '2021-02-01', '', ''),
+(78, 'Widi Rizaldi', 0, 'Jl. Let. Jend. Suprapto No. 10 Rt 008 Rw 007 Kel. Tegalreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '35', 1, 0, '2019-11-01', '2019-11-01', '', ''),
+(79, 'Tiara Mercusiana P', 0, 'Jl. Swadaya Rt 010 Rw 003 Kel. Tambakreja, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '35', 1, 0, '2020-02-17', '2020-02-17', '', ''),
+(80, 'Akmal Hidayat', 0, 'Jl. Rinjani, Perumahan Sidanegara Indah Blok 14 No     Kel. Sidanegara, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '38', 1, 0, '2021-10-20', '2021-10-20', '', ''),
+(81, 'Andi Susanto', 0, 'Jl. Penyu Gg Bulus RT 08/13, Cilacap selatan ', NULL, NULL, '29', 1, 0, '2018-10-08', '2018-10-08', '', ''),
+(82, 'Rizki Puspita Sari', 0, 'Jl. Banjaran Rt 002 Rw 022 Kel. Donan, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '29', 1, 0, '2019-05-01', '2019-05-01', '', ''),
+(83, 'Dhwi Sulistiyowati', 0, 'Jl. Sendangsari Rt 006 Rw 023 Kel. Donan , Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '31', 1, 0, '2023-01-16', '2023-01-16', '', ''),
+(84, 'Novia Nurdianing Putri', 0, 'Jl. Nakula Rt 001 Rw 008 Kel. Tritih Wetan, Kec. Jeruklegi - Kab. Cilacap', NULL, NULL, '31', 1, 0, '2022-01-03', '2022-01-03', '', ''),
+(85, 'Mei Neiska Wati', 0, 'Jl. Perjuangan No 35 Rt 002 Rw 009 Desa. Jangrana , Kec. Kesugihan - Kab. Cilacap', NULL, NULL, '31', 1, 0, '2022-08-08', '2022-08-08', '', ''),
+(86, 'Valen Milan Ananta', 0, 'Jl. Kutilang No 8 Rt 003 Rw 005 Kel. Tegalreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '30', 1, 0, '2022-07-15', '2022-07-15', '', ''),
+(87, 'Nadia Surya Wardani', 0, 'Jl. Wisata Payau Rt 03/11, Tritih kulon, Kec. Cilacap Utara ', NULL, NULL, '30', 1, 0, '2023-03-20', '2023-03-20', '', ''),
+(88, 'Oktaf Alan Alende', 0, 'Jl. Jambu No 3 Rt 005 / Rw 003 Kel. Tambakreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '32', 1, 0, '2021-08-01', '2021-08-01', '', ''),
+(89, 'Nafitta Nur istifa', 0, 'Perum Rineggo Asri Blok A6/35 Rt 008 Rw 018 Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '32', 1, 0, '2021-10-16', '2021-10-16', '', ''),
+(90, 'Slamet Mahardika', 0, 'Dusun mentasan Rt 04/03, Kawunganten, cilacap ', NULL, NULL, '32', 1, 0, '2023-04-01', '2023-04-01', '', ''),
+(91, 'Trivem Adde Alfan', 0, 'Jl. Delima No 258 Rt 006 Rw 001 Kel. Tambakreja , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '33', 1, 0, '2021-04-01', '2021-04-01', '', ''),
+(92, 'Muhammad Faiz', 0, 'Jl. Mayjen Sutoyo Gg. Turi No 7 Rt 002 Rw 007 Kel. Sidakaya, Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '33', 1, 0, '2021-04-01', '2021-04-01', '', ''),
+(93, 'Eep Syaifulloh', 0, 'Dusun, Ciarus Rt 002 Rw 010 Desa. Randegan, Kec. Wangon -  Kab. Banyumas', NULL, NULL, '33', 1, 0, '2021-07-21', '2021-07-21', '', ''),
+(94, 'Dion Pangestu', 0, 'JL. Manggasari Rt 01/11, Dayeuhluhur, Cilacap ', NULL, NULL, '33', 1, 0, '2023-04-01', '2023-04-01', '', ''),
+(95, 'Gregorio Matthew', 0, 'Perum Bayur Permai Rt 003 Rw 019  Kel. Gumilir, Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '34', 1, 0, '2022-05-23', '2022-05-23', '', ''),
+(96, 'Bernandus Agung Wijaya', 0, 'Jl. Kendeng No 49 Rt 005 Rw 015 Kel. Sidanegara, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '34', 1, 0, '2022-07-06', '2022-07-06', '', ''),
+(97, 'Vina Apriliana', 0, 'Jl. Singa Laut Rt 002 Rw 012 Kel. Mertasinga , Kec. Cilacap Utara - Kab. Cilacap', NULL, NULL, '40', 1, 0, '2023-01-03', '2023-01-03', '', ''),
+(98, 'Septi Widiarti Ningrum ', 0, 'Jl. Kendeng Rt 02/14 Sidanegara. Kel. Cilacap Tengah ', NULL, NULL, '40', 1, 0, '2023-03-01', '2023-03-01', '', ''),
+(99, 'Lutfi Nuraini ', 0, 'Jl. Bromo No.305 Rt 003/006, Sidanegara, Cilacap tengah, Cilacap ', NULL, NULL, '40', 1, 0, '2023-05-08', '2023-05-08', '', ''),
+(100, 'Fajar Arif Imaduddin', 0, 'Jl. Dr. Rajiman No 30 Rt 001 Rw 012 Kel. Gunungsimping, Kec. Cilacap Tengah - Kab. Cilacap', NULL, NULL, '41', 1, 0, '2022-08-08', '2022-08-08', '', ''),
+(101, 'Dhea Amelia putri ', 0, 'Jl. IR.H Juanda GG savita 56 rt 007/016 kec. Sidanegara kec. Cilacap tengah ', NULL, NULL, '41', 1, 0, '2023-02-16', '2023-02-16', '', ''),
+(102, 'Zalfa Saesarifa', 0, 'Gang. Bintang IV Rt 005 Rw 004 Kel. Tegalkamulyan , Kec. Cilacap Selatan - Kab. Cilacap', NULL, NULL, '28', 1, 0, '2022-02-01', '2022-02-01', '', ''),
+(103, 'Diah Prihatin', 0, 'Jl. Kakap Rt 005/010 Cilacap selatan ', NULL, NULL, '20', 0, 0, '2023-05-11', '2023-05-11', '', ''),
+(104, 'Ambar Asmara Sapto A.', 0, 'Jl. DR Cipto Rt 02/01, Kel. Kebon Manis, Kab Cilacap ', NULL, NULL, '42', 1, 0, '2023-06-02', '2023-06-02', '', '');
 
 -- --------------------------------------------------------
 
@@ -2222,7 +2255,22 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (147, 60, NULL, 2, NULL, NULL, '2024-05-13'),
 (148, 60, NULL, 2, NULL, NULL, '2024-05-14'),
 (149, 60, NULL, 3, NULL, NULL, '2024-05-15'),
-(150, 60, NULL, 3, NULL, NULL, '2024-05-16');
+(150, 60, NULL, 3, NULL, NULL, '2024-05-16'),
+(151, 1, 3, 2, NULL, NULL, '2024-08-01'),
+(152, 1, 7, 4, NULL, NULL, '2024-08-02'),
+(153, 1, 1, 1, NULL, NULL, '2024-08-03'),
+(154, 1, 4, 4, NULL, NULL, '2024-08-04'),
+(155, 1, 3, 2, NULL, NULL, '2024-08-05'),
+(156, 1, 1, 3, NULL, NULL, '2024-08-29'),
+(157, 56, 2, 2, NULL, NULL, '2024-08-01'),
+(158, 55, 3, 2, NULL, NULL, '2024-08-01'),
+(159, 1, 3, 3, NULL, NULL, '2024-08-06'),
+(160, 58, 1, 3, NULL, NULL, '2024-08-03'),
+(161, 58, 1, 3, NULL, NULL, '2024-08-01'),
+(162, 58, 1, 3, NULL, NULL, '2024-08-02'),
+(163, 58, 1, 3, NULL, NULL, '2024-08-04'),
+(164, 1, 3, 3, NULL, NULL, '2024-08-07'),
+(165, 55, 4, 3, NULL, NULL, '2024-08-02');
 
 -- --------------------------------------------------------
 
@@ -3060,7 +3108,7 @@ ALTER TABLE `komentar_postingan_support`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
 
 --
 -- AUTO_INCREMENT for table `memastikan_margin_dan_transaksi_naik_stabil`
@@ -3252,7 +3300,7 @@ ALTER TABLE `saldo_supplier_terpenuhi_dan_deposit_member_sdp`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT for table `setting_berjalan_dengan_baik`
