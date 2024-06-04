@@ -18,6 +18,12 @@ else{
       
   }
 
+    //tugas
+    elseif ($_GET['module']=='jadwal_prev'){               
+    
+      include "modul/mod_jadwal/preview.php";
+    }
+  
   //tugas
   elseif ($_GET['module']=='tugas'){               
     

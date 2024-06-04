@@ -197,6 +197,7 @@ else {
 
     // cek jadwal
     if($module == 'jadwal' and $act == 'cek-jadwal') {
+        require __DIR__ . "/../mod_role/role_aksi.php";
         $bulan = $_POST['bulan'];
         $tahun = $_POST['tahun'];
         $waktu = array("$bulan", "$tahun");

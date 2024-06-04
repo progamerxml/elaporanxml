@@ -9,13 +9,14 @@ else {
     require __DIR__ . "/../../config/fungsi_kalender.php";
     require __DIR__ . "/kpi_aksi.php";
     require __DIR__ . "/../mod_jabatan/aksi_jabatan.php";
+    require __DIR__ . "/../mod_role/role_aksi.php";
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
 
 
     $roles = getRole();
-    $gol_kpi2 = getGolKpi();
+    // $gol_kpi2 = getGolKpi();
     $gol2 = getDataGolKpi();
     $leveluser = $_SESSION['leveluser'];
     $idPeg =  ($leveluser == 'superadmin') ? null : $nmpgw['id'];
@@ -242,7 +243,7 @@ else {
                                 <label for="role_id">Role</label>
                                 <select class="form-control" id="gol_kpi" name="gol_kpi" required>
                                     <option value="">-- Pilih Role--</option>
-                                    <?php foreach($gol_kpi2 as $gol_kpi) { ?>
+                                    <?php foreach(getGolKpi() as $gol_kpi) { ?>
                                     <option value="<?= $gol_kpi['id'] ?>"><?= $gol_kpi['golongan'] ?></option>
                                     <?php } ?>
                                 </select>
