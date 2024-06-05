@@ -253,13 +253,6 @@ else {
                     $nama_role = $schedule['nama_role'];
                     $nama_shift = $schedule['nama_shift'];
 
-                    // $newArray[] = [
-                    //     'role_id' => $role_id,
-                    //     'shift_id' => $shift_id,
-                    //     'nama_role' => $nama_role,
-                    //     'nama_shift' => $nama_shift
-                    // ];
-
                     $newArray[] = [
                         $nama_role => $nama_shift
                     ];
