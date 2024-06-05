@@ -55,5 +55,15 @@ else{
         }
         return $roles;
     }
+
+    function getRoleId($id)
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM roles WHERE id = $id");
+        if(mysqli_num_rows($exec) > 0){
+            $role = mysqli_fetch_assoc($exec);
+        }
+        return $role;
+    }
 }
 ?>

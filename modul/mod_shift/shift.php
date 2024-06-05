@@ -12,7 +12,7 @@ else {
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
 
-    $shifts = getShift();
+    $shifts = getShifts();
 
     ?>
     <section class="content-header">
@@ -58,6 +58,8 @@ else {
                             <tr>
                                 <th style="width: 3%;" >No</th>
                                 <th>Nama</th>
+                                <th>Kode </th>
+                                <th>Warna </th>
                                 <th style="width: 6%;">Aksi</th>
                             </tr>
                             </thead>
@@ -69,8 +71,10 @@ else {
                                     <tr>
                                         <td><?= $no ?></td>
                                         <td><?= $shift['nama'] ?></td>
+                                        <td><?= $shift['kode_warna'] ?? '#fff' ?></td>
+                                        <td><div style="padding: 1em; border: 1px solid white; background-color: <?= $shift['kode_warna'] ?>; width: 1em; border-radius: 50%;"> </td>
                                         <td align="center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-update" onclick="getDataKr('<?=$shift['nama'] ?>', <?=$shift['id']?>);"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-update" onclick="getDataKr(<?=$shift['id']?>, '<?=$shift['nama'] ?>', '<?=$shift['kode_warna'] ?? '' ?>');"><i class="fa fa-pencil"></i></button>
                 			                <a type="button" class="btn btn-danger"  href="<?= $aksi . "?module=shift&act=hapus&id=" . $shift['id'] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data">
                                             <i class="fa fa-trash"></i></a> &nbsp; 
 	                    	            </td>
@@ -102,6 +106,11 @@ else {
                             <input type="hidden" name="id" id="idShift">
                             <input type="text" class="form-control" id="namaShift" name="nama" placeholder="Nama Shift">
                         </div>
+                        <div class="form-group">
+                            <label for="kodeWarna">Warna</label><br>
+                            <input type="color" id="kodeWarna" name="warna" style="height: 4em; width: 4em;">
+                            <p>Kode warna : <span id="colorCode"></span></p>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Tutup</button>
@@ -117,16 +126,24 @@ else {
 ?>
 
 <script>
-    function getDataKr(nama, id) {
+    document.getElementById('kodeWarna').addEventListener('input', function() {
+        let color = this.value;
+        document.getElementById('colorCode').textContent = color;
+    });
+    
+    function getDataKr(id, nama, kode_warna) {
     // Isi nilai input pada modal dengan data yang diambil dari tabel
     $('#idShift').val(id);
     $('#namaShift').val(nama);
+    $('#kodeWarna').val(kode_warna);
+    $('#colorCode').text(kode_warna);
     }
 
     // Reset nilai input pada modal setelah modal ditutup
     $('#modal-update').on('hidden.bs.modal', function () {
         $('#idShift').val('');
         $('#namaShift').val('');
+        $('#kodeWarna').val('');
     });
 
     function switchModal()

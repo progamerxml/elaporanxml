@@ -14,7 +14,7 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 
 else{
-  require_once __DIR__ . "/modul/mod_jadwal/aksi_jadwal.php";
+  require __DIR__ . "/modul/mod_jadwal/aksi_jadwal.php";
 
   
 ?>
@@ -97,11 +97,11 @@ else{
               <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
               <i class="fa fa-user"></i>
               <span class="hidden-xs"><?php //var_dump($_SESSION['namalengkap']);
-              $pgwi = mysqli_query($konek, "SELECT id, nama, tgl_masuk FROM pegawai WHERE id = $_SESSION[namalengkap]");
+              $pgwi = mysqli_query($konek, "SELECT * FROM pegawai WHERE id = $_SESSION[namalengkap]");
               $nmpgw = mysqli_fetch_array($pgwi);
               $jadwalKini = getJadwalKini(["id" => $nmpgw["id"], "tanggal" => date("Y-m-d")]);
                 echo $nmpgw['nama'] . " ( " . $jadwalKini['nama_role'] . " - " . $jadwalKini['nama_shift'] . " )"; 
-                //var_dump($_SESSION['namalengkap']);
+                // var_dump($nmpgw['jabatan']);
               ?></span>
             </a>
             <ul class="dropdown-menu">
@@ -128,7 +128,7 @@ else{
           <!-- <li class="dropdown user user-menu">
               <a href="#"> 
                 <i class="fa fa-user"></i>
-                <span class="hidden-xs"><?php echo $_SESSION['namalengkap']; ?></span>
+                <span class="hidden-xs"><?php //echo $_SESSION['namalengkap']; ?></span>
               </a>
           </li>
 			    <li>

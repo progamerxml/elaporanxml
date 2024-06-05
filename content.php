@@ -18,6 +18,12 @@ else{
       
   }
 
+    //tugas
+    elseif ($_GET['module']=='jadwal_prev'){               
+    
+      include "modul/mod_jadwal/preview.php";
+    }
+  
   //tugas
   elseif ($_GET['module']=='tugas'){               
     
@@ -29,6 +35,23 @@ else{
    
     include "modul/mod_jadwal/jadwal.php";
   }
+
+    //kpi
+    elseif ($_GET['module']=='kpi'){               
+   
+      include "modul/mod_kpi/kpi.php";
+    }
+
+    //kpi
+    elseif ($_GET['module']=='input_kpi'){               
+   
+      include "modul/mod_kpi/input_kpi.php";
+    }
+
+    elseif($_GET['module'] == 'detail_kpi'){
+      $id_peg = $_GET['id']; var_dump($id_peg);
+      include"modul/mod_kpi/detail_kpi.php";
+    }
 
   elseif ($_GET['module']=='log_jadwal'){               
    

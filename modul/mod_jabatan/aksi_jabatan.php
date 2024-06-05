@@ -60,5 +60,15 @@ else{
 
     header("location:../../media.php?module=".$module);
   }
+
+  function getJabatanById($id){
+    global $konek;
+    $ex = mysqli_query($konek, "SELECT * FROM jabatan WHERE gol_kpi = $id");
+    if(mysqli_num_rows($ex) > 0){
+      $jabatan = mysqli_fetch_assoc($ex);
+    }
+
+    return $jabatan;
+  }
 }
 ?>

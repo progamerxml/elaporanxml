@@ -69,7 +69,11 @@ function getBulan($bln){
 	}
 } 
 
-
+function konversiDecimalKePersen($nilai) {
+    // Mengonversi nilai desimal menjadi persen
+    $persen = $nilai * 100;
+    return $persen . "%";
+}
 
 
 ?>

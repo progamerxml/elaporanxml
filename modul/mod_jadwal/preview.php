@@ -43,6 +43,13 @@ else {
     // mengatasi variabel yang belum di definisikan (notice undefined index)
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
+
+    
+    if($otoritas['level'] != 'superadmin' && $otoritas['level'] != 'admin'){
+        echo $otoritas['level'];
+        $tujuan = $base_url . "jadwal"; echo $tujuan;
+        echo"<script>window.location.href=\"jadwal\";</script>";
+    }
     ?>
     <section class="content-header">
         <h1 class="page-header">
@@ -69,19 +76,6 @@ else {
                                 <h1>Jadwal <?php
                                     $tanggal = date('M Y', strtotime("$waktu[1]-$waktu[0]-01"));
                                     echo $tanggal ?></h1>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="button-group pull-right me-5 border">
-                                <?php $btn = " <button type=\"submit\" name=\"cek\" class=\"btn btn-success\" onclick=\"cekJadwalKosong()\">Cek Jadwal</button> | <button type=\"submit\" name=\"cek\" class=\"btn btn-success\" onclick=\"preview()\">preview</button>"; $prev = "<input type=\"button\" value=\"preview\" >";?>
-                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
-                                    | 
-                                    <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i class="fa fa-arrow-left"></i>
-                                        Prev
-                                    </button>
-                                    | 
-                                    <button type="submit" name="next" class="btn btn-primary" onclick="nextMonth()">Next <i class="fa fa-arrow-right"></i>
-                                    </button>
-                                </div>
                             </div>
                         </div>
 
@@ -123,35 +117,11 @@ else {
                                     ?>
                                     <!-- If data exists for this date, display it -->
                                     <?php if ($jadwal[$tanggal] !== null) {
-                                        foreach ($jadwal[$tanggal] as $item) { $background = getShiftById($item['shift_id']); ?>
+                                        foreach ($jadwal[$tanggal] as $item) { $background = getShiftById($item['shift_id']);  $role = getRoleId($item['role_id']);  $shift = getShiftById($item['shift_id']); ?>
                                             <td style="text-align: left; vertical-align: middle; width: 10em; background-color: <?= $background['kode_warna'] ?>; background-opacity: 0.5; vertical-align: center; border: 1px solid black;" id="td_<?= $item['tanggal'] . '_' . $item['pegawai_id'] ?>">
                                                 <div class="tooltip_cust" id="div_<?= $item['tanggal'] . '_' . $item['pegawai_id'] ?>" style="background-color: white; padding: 1px; text-align: center; border-radius: .3em; display: none;"><?= $nama ?></div>
                                                 <div class="d-flex flex-column" style="vertical-align:middle;">
-                                                    <?php if($otoritas['level'] == 'superadmin' || $otoritas['level'] == 'admin') { ?>
-                                                    <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                            <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                        <option style="background-color: transparent;" value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            -
-                                                        </option>
-                                                        <?php foreach ( $roles2 = getRole() as $role) { ?>
-                                                            <option style="background-color: transparent;" value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
-                                                        <?php } ?>
-                                                    </select> <br>
-                                                    <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                            <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                        <option style="background-color: transparent;" value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
-                                                            -
-                                                        </option>
-                                                        <?php foreach (getShift() as $shift) { ?>
-                                                            <option style="background-color: transparent;" value="<?= $shift['id'] ?>" <?= $shift['id'] == $item['shift_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $shift['nama'] ?> </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                    <br/>
-                                                    <?php $btn = "<button class=\"btn btn-danger form-control\" onclick=\"hapusJadwal('{$item['tanggal']}.{$item['pegawai_id']}')\">hapus</button>"; ?>
-                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
-                                                    <?php } else { $role = getRoleId($item['role_id']);  $shift = getShiftById($item['shift_id']);?>
-                                                        <p style="color: #fff; padding:.2em; text-align: center; height: 100%;"><strong><?= $role['kode'] . "<br></hr>" . $shift['nama'] ?></strong></p>
-                                                    <?php } ?>
+                                                    <p style="color: #fff; padding:.2em; text-align: center; height: 100%;"><strong><?= $role['kode'] . "<br></hr>" . $shift['nama'] ?></strong></p>
                                                 </div>
                                             </td>
                                         <?php }
@@ -175,10 +145,6 @@ else {
 
 <script>
 
-    function preview()
-    {
-        window.location.href="<?=$base_url.'jadwal_prev' ?>";
-    }
     const status = '<?= $otoritas['level'] ?>';
     if (status !== "superadmin" && status !== "admin") {
         console.log(status); // Outputkan status jika tidak sama dengan "superadmin" atau "admin"

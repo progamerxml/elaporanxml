@@ -11,6 +11,30 @@ else{
   $module = $_GET['module'];
   $act    = $_GET['act'];
 
+  function getDataKaryawanByUser($username){
+    global $konek;
+    $exec = mysqli_query($konek, "SELECT p.id, p.nama, p.jabatan, u.username, u.level, u.nama_lengkap FROM pegawai p, users u INNER JOIN users ON p.id = u.nama_lengkap WHERE u.username ='$username'");
+
+    return $exec;
+  }
+
+  function getDataKaryawanById($id){
+    global $konek;
+    $ex = mysqli_query($konek, "SELECT * FROM pegawai WHERE id = $id");
+    $dataKry = array();
+    if(mysqli_num_rows($ex) > 0){
+      while($row = mysqli_fetch_assoc($ex)){
+        $dataKry = [
+          "id" => $row['id'],
+          "nama" => $row['nama'],
+          "jabatan" => $row['jabatan']
+        ];
+      }
+    }
+
+    return $dataKry;
+  }
+
   // Hapus templates
   if ($module=='pegawai' AND $act=='hapus'){
     $hapus = "DELETE FROM pegawai WHERE id='$_GET[id]'";

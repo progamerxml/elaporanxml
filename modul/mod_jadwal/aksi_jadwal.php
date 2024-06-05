@@ -6,29 +6,48 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 } // Apabila user sudah login dengan benar, maka terbentuklah session
 else {
     include "../../config/koneksi.php";
+    
+
 
     $module = $_GET['module'];
     $act = $_GET['act'];
 
-//   data role
-    function getRole()
+    function getRoleJ()
     {
         global $konek;
-        $qrole = mysqli_query($konek, "select * from roles");
+        $exec = mysqli_query($konek, "SELECT * FROM roles");
         $roles = array();
-        if (mysqli_num_rows($qrole) > 0) {
-            while ($hrole = mysqli_fetch_assoc($qrole)) {
+        if (mysqli_num_rows($exec) > 0) {
+            while ($role = mysqli_fetch_assoc($exec)) {
                 $roles[] = [
-                    'id' => $hrole['id'],
-                    'kode' => $hrole['kode'],
-                    'nama' => $hrole['nama']
+                    'kode' => $role['kode'],
+                    'nama' => $role['nama'],
+                    'id' => $role['id']
                 ];
             }
-        } else {
-            $roles = array();
+        }
+        return $roles;
+    }
+
+    function getRoleG()
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM jabatan");
+        $jabatan2 = array();
+        if(mysqli_num_rows($exec) > 0){
+            while($hasil = mysqli_fetch_assoc($exec)){
+                $jabatan2[] = [
+                    'id' => $hasil['id'],
+                    'kode' => $hasil['kode'],
+                    'jabatan' => $hasil['nama_jabatan'],
+                    'status' => $hasil['status']
+                ];
+            }
+        }else{
+            return $jabatan2 = array();
         }
 
-        return $roles;
+        return $jabatan2;
     }
 
     // cek otoritas
@@ -51,7 +70,8 @@ else {
             while ($hsift = mysqli_fetch_assoc($qshift)) {
                 $shifts[] = [
                     'id' => $hsift['id'],
-                    'nama' => $hsift['nama']
+                    'nama' => $hsift['nama'],
+                    'kode_warna' => $hsift['kode_warna']
                 ];
             }
         }
@@ -82,10 +102,10 @@ else {
                                     r.id AS role_id, r.nama AS nama_role, 
                                     s.id AS shift_id, s.nama AS nama_shift, 
                                     sc.id AS schedule_id, sc.date
-                              FROM pegawai p
-                              LEFT JOIN schedules sc ON p.id = sc.employ_id
-                              LEFT JOIN roles r ON sc.role_id = r.id
-                              LEFT JOIN shifts s ON sc.shift_id = s.id"
+                                    FROM pegawai p
+                                    LEFT JOIN schedules sc ON p.id = sc.employ_id
+                                    LEFT JOIN roles r ON sc.role_id = r.id
+                                    LEFT JOIN shifts s ON sc.shift_id = s.id"
         );
 
         // Membuat array untuk menyimpan data jadwal untuk setiap karyawan
@@ -196,13 +216,15 @@ else {
 
     // cek jadwal
     if($module == 'jadwal' and $act == 'cek-jadwal') {
+        
+
         $bulan = $_POST['bulan'];
         $tahun = $_POST['tahun'];
         $waktu = array("$bulan", "$tahun");
 
         $schedules = getJadwal($waktu);
         $shifts = getShift();
-        $roles = getRole();
+        $roles = getRoleJ();
 
         $newArrays = [];
 
@@ -230,13 +252,6 @@ else {
                     $shift_id = $schedule['shift_id'];
                     $nama_role = $schedule['nama_role'];
                     $nama_shift = $schedule['nama_shift'];
-
-                    // $newArray[] = [
-                    //     'role_id' => $role_id,
-                    //     'shift_id' => $shift_id,
-                    //     'nama_role' => $nama_role,
-                    //     'nama_shift' => $nama_shift
-                    // ];
 
                     $newArray[] = [
                         $nama_role => $nama_shift
@@ -321,6 +336,7 @@ else {
         }
 
         echo "Data berhasil disimpan";
+        // echo $insert;
     }
 
     if ($module == 'jadwal' and $act == 'update-shift') {
