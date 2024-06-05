@@ -6,9 +6,28 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 } // Apabila user sudah login dengan benar, maka terbentuklah session
 else {
     include "../../config/koneksi.php";
+    
+
 
     $module = $_GET['module'];
     $act = $_GET['act'];
+
+    function getRoleJ()
+    {
+        global $konek;
+        $exec = mysqli_query($konek, "SELECT * FROM roles");
+        $roles = array();
+        if (mysqli_num_rows($exec) > 0) {
+            while ($role = mysqli_fetch_assoc($exec)) {
+                $roles[] = [
+                    'kode' => $role['kode'],
+                    'nama' => $role['nama'],
+                    'id' => $role['id']
+                ];
+            }
+        }
+        return $roles;
+    }
 
     function getRoleG()
     {
@@ -83,10 +102,10 @@ else {
                                     r.id AS role_id, r.nama AS nama_role, 
                                     s.id AS shift_id, s.nama AS nama_shift, 
                                     sc.id AS schedule_id, sc.date
-                              FROM pegawai p
-                              LEFT JOIN schedules sc ON p.id = sc.employ_id
-                              LEFT JOIN roles r ON sc.role_id = r.id
-                              LEFT JOIN shifts s ON sc.shift_id = s.id"
+                                    FROM pegawai p
+                                    LEFT JOIN schedules sc ON p.id = sc.employ_id
+                                    LEFT JOIN roles r ON sc.role_id = r.id
+                                    LEFT JOIN shifts s ON sc.shift_id = s.id"
         );
 
         // Membuat array untuk menyimpan data jadwal untuk setiap karyawan
@@ -197,14 +216,15 @@ else {
 
     // cek jadwal
     if($module == 'jadwal' and $act == 'cek-jadwal') {
-        require __DIR__ . "/../mod_role/role_aksi.php";
+        
+
         $bulan = $_POST['bulan'];
         $tahun = $_POST['tahun'];
         $waktu = array("$bulan", "$tahun");
 
         $schedules = getJadwal($waktu);
         $shifts = getShift();
-        $roles = getRole();
+        $roles = getRoleJ();
 
         $newArrays = [];
 
