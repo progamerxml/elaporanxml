@@ -77,6 +77,7 @@ else {
     function getJadwal($waktu)
     {
         global $konek;
+        $where = " WHERE p.id in(73,80,94)";
         $qjdwl = mysqli_query($konek, "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
                                     r.id AS role_id, r.nama AS nama_role, 
                                     s.id AS shift_id, s.nama AS nama_shift, 
@@ -176,6 +177,125 @@ else {
         return $logs;
 
     }
+
+    function getJadwalKini($data){
+        global $konek;
+        $query = "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
+                            r.id AS role_id, r.nama AS nama_role, 
+                            s.id AS shift_id, s.nama AS nama_shift, 
+                            sc.id AS schedule_id, sc.date
+                    FROM pegawai p
+                    LEFT JOIN schedules sc ON p.id = sc.employ_id
+                    LEFT JOIN roles r ON sc.role_id = r.id
+                    LEFT JOIN shifts s ON sc.shift_id = s.id 
+                    WHERE p.id = $data[id] and sc.`date` = '$data[tanggal]'";
+        $exec = mysqli_query($konek, $query);
+        $jadwalKini = mysqli_fetch_array($exec);
+        return $jadwalKini;
+    }
+
+    // cek jadwal
+    if($module == 'jadwal' and $act == 'cek-jadwal') {
+        $bulan = $_POST['bulan'];
+        $tahun = $_POST['tahun'];
+        $waktu = array("$bulan", "$tahun");
+
+        $schedules = getJadwal($waktu);
+        $shifts = getShift();
+        $roles = getRole();
+
+        $newArrays = [];
+
+        // Mengaitkan setiap role dengan tiga shift (pagi, siang, malam)
+        foreach ($roles as $role) {
+            $roleName = $role['nama'];
+
+            foreach($shifts as $shift){
+                if($shift['id'] == 1 || $shift['id'] == 2 || $shift['id'] == 3){
+                    $shiftName = $shift['nama'];
+                }
+
+                $newArrays [] = [
+                    $roleName => $shiftName
+                ];
+            }
+        }
+        
+        $newArray = [];
+
+        foreach ($schedules as $nama => $schedules) {
+            foreach ($schedules as $tanggal => $details) {
+                foreach ($details as $schedule) {
+                    $role_id = $schedule['role_id'];
+                    $shift_id = $schedule['shift_id'];
+                    $nama_role = $schedule['nama_role'];
+                    $nama_shift = $schedule['nama_shift'];
+
+                    // $newArray[] = [
+                    //     'role_id' => $role_id,
+                    //     'shift_id' => $shift_id,
+                    //     'nama_role' => $nama_role,
+                    //     'nama_shift' => $nama_shift
+                    // ];
+
+                    $newArray[] = [
+                        $nama_role => $nama_shift
+                    ];
+                }
+            }
+        }
+
+        // Menghapus elemen duplikat dari $newArray
+        $newArray = array_unique($newArray, SORT_REGULAR);
+
+        // Mengindeks ulang array setelah menghapus duplikat
+        $newArray = array_values($newArray);
+        
+        // Mengonversi array
+        foreach ($newArray as $item) {
+            // Mengambil kunci (role) dan nilai (shift) dari setiap elemen dalam array
+            $role = key($item);
+            $shift = current($item);
+
+            // Memasukkan data ke dalam array asosiatif dengan role sebagai kunci dan shift sebagai nilai
+            $transformedArray[$role] = $shift;
+        }
+
+        // Mengambil nilai data B yang tidak ada di data A
+        $filteredArrayB = array_filter($newArrays, function ($itemB) use ($newArray) {
+            foreach ($newArray as $itemA) {
+                // Jika ada item pada data B yang sama dengan data A, maka filter
+                if ($itemA == $itemB) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        echo '<div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Daftar Role dan Shift Kosong : </h3>
+            </div>
+
+            <div class="box-body">
+                <ol>';
+                    // Perulangan untuk setiap elemen dalam array $data
+                    foreach ($filteredArrayB as $key => $value) {
+                        // Mendapatkan role (kunci array dalam $value)
+                        $role = key($value);
+                        // Mendapatkan shift (nilai array dalam $value)
+                        $shift = reset($value);
+
+                        // Membuat item list HTML untuk setiap role dan shift
+                        echo '<li>' . $role . ' - ' . $shift . '</li>';
+                    }
+                echo '<ol>
+            </div>
+
+        </div>';
+    }
+
+    // update role
     if ($module == 'jadwal' and $act == 'update-role') {
         $tanggal = $_POST['tanggal'];
         $pegawai_id = $_POST['pegawai_id'];

@@ -1,3 +1,9 @@
+<style>
+        /* Custom styles */
+        .table-container {
+            max-width: 100%; overflow-x: auto;
+        }
+    </style>
 <?php
 session_start();
 // Apabila user belum login
@@ -7,7 +13,7 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 else {
     $aksi = "modul/mod_jadwal/aksi_jadwal.php";
     require __DIR__ . "/../../config/fungsi_kalender.php";
-    require __DIR__ . "/aksi_jadwal.php";
+    // require __DIR__ . "/aksi_jadwal.php";
 
     if (empty($_SESSION['waktu'])) {
         $waktu = explode("-", date("m-Y"));
@@ -15,13 +21,14 @@ else {
         $waktu = $_SESSION['waktu'];
     }
 
-    $roles2 = getRole();
-    $shifts2 = getShift();
-    $schedules = getJadwal($waktu);
+    $roles2 = getRole();  // print_r(json_encode($roles2['nama'])). "<br>";
+    $shifts2 = getShift(); // print_r($shifts2['nama']);
+    $schedules = getJadwal($waktu);  //  print_r($schedules);
     $otoritas = cekOto($_SESSION['namauser']);
+    
     // print_r($otoritas['level']);
     // var_dump($_SESSION['waktu']);
-    //print_r($schedules);
+    // print_r($schedules);
     //echo json_encode($schedules, JSON_PRETTY_PRINT);
 
 
@@ -31,21 +38,17 @@ else {
     ?>
     <section class="content-header">
         <h1 class="page-header">
-            <span style="vertical-align: inherit;">Data Jadwal</span>
-            <small>
-                <span style="vertical-align: inherit;"></span>
-            </small>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<?php echo $base_url; ?>">
+                        <i class="fa fa-home"></i>
+                        <span style="vertical-align: inherit;">Home </span>
+                    </a>
+                </li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize">Manajemen <?php echo $mod; ?></span></li>
+                <li class="active"><span style="vertical-align: inherit;" class="text-capitalize"><?php echo $mod; ?> </span></li>
+            </ol>
         </h1>
-        <ol class="breadcrumb">
-            <li>
-                <a href="<?php echo $base_url; ?>">
-                    <i class="fa fa-home"></i>
-                    <span style="vertical-align: inherit;">Home </span>
-                </a>
-            </li>
-            <li class="active"><span style="vertical-align: inherit;">Manajemen Jadwal</span></li>
-            <li class="active"><span style="vertical-align: inherit;"><?php echo $mod; ?> </span></li>
-        </ol>
     </section>
     <!-- Main content -->
     <section class="content">
@@ -61,6 +64,9 @@ else {
                             </div>
                             <div class="col-md-auto">
                                 <div class="button-group pull-right me-5 border">
+                                <?php $btn = " <button type=\"submit\" name=\"cek\" class=\"btn btn-success\" onclick=\"cekJadwalKosong()\">Cek Jadwal</button>"; ?>
+                                                    <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? $btn : '' ?>
+                                   
                                     <button type="submit" name="prev" class="btn btn-primary" onclick="prevMonth()"><i class="fa fa-arrow-left"></i>
                                         Prev
                                     </button>
@@ -75,19 +81,23 @@ else {
                     </section>
                     <hr>
 
-                    <div class="box-body  table-responsive">
+                    <!-- section hasil cek role dan shift -->
+                    <section id="hasil-cek" class=" box-body">
+                    </section>
+
+                    <!-- section div untuk table -->
+                    <div class="box-body" style="max-width: 100%; overflow-x: auto;">
 
                         <table id="" class="table table-bordered table-striped">
                             <?php $dates = cal_days_in_month(CAL_GREGORIAN, $waktu[0], $waktu[1]); ?>
                             <thead>
                             <tr>
-                                <th>Nama</th>
+                                <th style="width: 15em;">Nama</th>
                                 <?php
                                 // Generate column headers for dates from 1 to 30
-                                for ($date = 1; $date <= $dates; $date++) {
-                                    echo '<th>' . $date . '</th>';
-                                }
-                                ?>
+                                for ($date = 1; $date <= $dates; $date++) { ?>
+                                    <th style="max-width: 100%;"> <?= $date ?> </th>
+                                <?php } ?>
                             </tr>
                             </thead>
                             <tbody>
@@ -95,7 +105,7 @@ else {
                             // Iterate over the array of names and their schedules
                             foreach ($schedules as $nama => $jadwal) { ?>
                                 <tr>
-                                    <td><?= $nama ?></td>
+                                    <td style="vertical-align: middle; font-weight: bold;"><?= $nama ?></td>
 
                                     <!-- // Generate cells for each date from 1 to 30 -->
                                     <?php
@@ -105,11 +115,11 @@ else {
                                         <!-- If data exists for this date, display it -->
                                         <?php if ($jadwal[$tanggal] !== null) {
                                             foreach ($jadwal[$tanggal] as $item) { ?>
-                                                <td style="text-align: left; vertical-align: middle;">
+                                                <td style="text-align: left; vertical-align: middle; width: 10em;">
 
-                                                    <div class="d-flex flex-column">
-                                                        <select class="form-control" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                <div class="d-flex flex-column">
+                                                        <select style="border: none; background-color: transparent;" id="role.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             <option value="" <?= isset($item['role_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
@@ -117,8 +127,8 @@ else {
                                                                 <option value="<?= $role['id'] ?>" <?= $role['id'] == $item['role_id'] ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> > <?= $role['kode'] ?> </option>
                                                             <?php } ?>
                                                         </select> <br>
-                                                        <select class="form-control" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
-                                                                style="border:none;" <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
+                                                        <select style="border: none; background-color: transparent;" id="shift.<?= $item['tanggal'] . '.' . $item['pegawai_id'] ?>"
+                                                                <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                             <option value="" <?= isset($item['shift_id']) ? 'selected' : '' ?> <?= in_array($otoritas['level'], ['superadmin', 'admin']) ? '' : 'disabled' ?> >
                                                                 -
                                                             </option>
@@ -234,9 +244,56 @@ else {
         });
     }
 
+    function cekJadwalKosong(){
+        $(document).ready(function() {
+            // Loop melalui setiap elemen select
+            $('select').each(function() {
+                // Periksa nilai option yang dipilih
+                if ($(this).val() === '') {
+                    // Jika nilai kosong, atur properti CSS secara langsung
+                    $(this).css('border', '2px solid red');
+                } else {
+                    // Jika tidak kosong, hapus properti CSS
+                    $(this).css('border', 'none');
+                }
+
+                // Menambahkan event listener untuk memantau perubahan nilai <select>
+                $(this).change(function() {
+                    // Periksa kembali nilai option yang dipilih setelah perubahan
+                    if ($(this).val() === '') {
+                        // Jika nilai kosong, atur properti CSS
+                        $(this).css('border', '2px solid red');
+                    } else {
+                        // Jika tidak kosong, hapus properti CSS
+                        $(this).css('border', 'none');
+                    }
+                });
+            });
+        });
+
+        const waktu = <?= json_encode($waktu) ?>;
+        console.log(waktu);
+        $.ajax({
+            url: 'modul/mod_jadwal/aksi_jadwal.php?module=jadwal&act=cek-jadwal',
+            type: 'POST',
+            data: {
+                bulan: waktu[0],
+                tahun: waktu[1]
+            },
+            success: function (response) {
+                console.log(response);
+
+                var hasilFilter = document.getElementById('hasil-cek');
+
+                // Menetapkan isi dari variabel response ke dalam elemen HTML hasilFilter
+                hasilFilter.innerHTML = response;
+            }
+        });
+    }
+
     $(document).ready(function () {
         $('table').on('change', 'select', function () {
-            var selectId = $(this).attr('id');
+            var selectId = $(this).attr('id'); 
             const values = selectId.split('.'); // Memisahkan string menjadi array
 
             // Mengambil tiga nilai
@@ -244,7 +301,6 @@ else {
             const tanggal = values[1];
             const pegawaiId = values[2];
             const user = '<?= $_SESSION['namauser'] ?>';
-            console.log(user);
 
             if (kolom === 'role') {
                 const roleId = $(this).val();
@@ -258,7 +314,7 @@ else {
                         user: user
                     },
                     success: function (response) {
-                        alert(response);
+                        console.log(response);
                     }
                 });
             } else if (kolom === 'shift') {
@@ -273,7 +329,7 @@ else {
                         user: user
                     },
                     success: function (response) {
-                        alert(response);
+                        console.log(response);
                     }
                 });
 

@@ -14,6 +14,9 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 
 else{
+  require_once __DIR__ . "/modul/mod_jadwal/aksi_jadwal.php";
+
+  
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,7 +99,8 @@ else{
               <span class="hidden-xs"><?php //var_dump($_SESSION['namalengkap']);
               $pgwi = mysqli_query($konek, "SELECT id, nama, tgl_masuk FROM pegawai WHERE id = $_SESSION[namalengkap]");
               $nmpgw = mysqli_fetch_array($pgwi);
-                echo $nmpgw['nama']; 
+              $jadwalKini = getJadwalKini(["id" => $nmpgw["id"], "tanggal" => date("Y-m-d")]);
+                echo $nmpgw['nama'] . " ( " . $jadwalKini['nama_role'] . " - " . $jadwalKini['nama_shift'] . " )"; 
                 //var_dump($_SESSION['namalengkap']);
               ?></span>
             </a>

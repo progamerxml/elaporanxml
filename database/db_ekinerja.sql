@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 17, 2024 at 08:48 AM
+-- Generation Time: Apr 23, 2024 at 08:03 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.2.31
 
@@ -238,24 +238,198 @@ INSERT INTO `kinerja` (`id`, `nama_pegawai`, `uraian_kegiatan`, `waktu`, `waktu_
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
   `user` varchar(255) NOT NULL,
-  `aksi` text
+  `aksi` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `log`
 --
 
-INSERT INTO `log` (`id`, `user`, `aksi`) VALUES
-(5, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-05, shift: 2'),
-(6, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-06, shift: 2'),
-(7, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-02-07, role: 1'),
-(8, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-07, shift: 4'),
-(9, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-02-06, role: 3'),
-(10, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-02-06, shift: 2'),
-(11, 'irfanem', 'insert data role pegawai: 63, tanggal : 2024-02-04, role: 1'),
-(12, 'irfanem', 'update data shift pegawai: 63, tanggal : 2024-02-04, shift: 3'),
-(13, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-06, role: 3'),
-(14, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-06, shift: 2');
+INSERT INTO `log` (`id`, `user`, `aksi`, `created_at`) VALUES
+(5, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-05, shift: 2', '2024-04-18 02:06:55'),
+(6, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-06, shift: 2', '2024-04-18 02:06:55'),
+(7, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-02-07, role: 1', '2024-04-18 02:06:55'),
+(8, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-02-07, shift: 4', '2024-04-18 02:06:55'),
+(9, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-02-06, role: 3', '2024-04-18 02:06:55'),
+(10, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-02-06, shift: 2', '2024-04-18 02:06:55'),
+(11, 'irfanem', 'insert data role pegawai: 63, tanggal : 2024-02-04, role: 1', '2024-04-18 02:06:55'),
+(12, 'irfanem', 'update data shift pegawai: 63, tanggal : 2024-02-04, shift: 3', '2024-04-18 02:06:55'),
+(13, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-06, role: 3', '2024-04-18 02:06:55'),
+(14, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-06, shift: 2', '2024-04-18 02:06:55'),
+(15, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-05-01, role: 3', '2024-04-18 02:07:43'),
+(16, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-01, shift: 3', '2024-04-18 02:07:47'),
+(17, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-15, role: 4', '2024-04-19 01:15:30'),
+(18, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-15, shift: 4', '2024-04-19 01:15:33'),
+(19, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-05-07, role: 8', '2024-04-22 03:42:02'),
+(20, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-05-07, shift: 3', '2024-04-22 03:42:06'),
+(21, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-05-02, role: 4', '2024-04-22 03:42:11'),
+(22, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-02, shift: 4', '2024-04-22 03:42:14'),
+(23, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-05-03, role: 5', '2024-04-22 03:42:16'),
+(24, 'irfanem', 'update data role pegawai: 80, tanggal : 2024-05-03, role: 1', '2024-04-22 03:42:18'),
+(25, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-05-03, shift: 3', '2024-04-22 03:42:22'),
+(26, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-05-01, role: 10', '2024-04-22 03:42:27'),
+(27, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-05-01, shift: 1', '2024-04-22 03:42:30'),
+(28, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-05-02, role: 10', '2024-04-22 03:42:31'),
+(29, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-05-02, shift: 4', '2024-04-22 03:42:34'),
+(30, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-05-03, role: 10', '2024-04-22 03:42:36'),
+(31, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-05-03, shift: 3', '2024-04-22 03:42:38'),
+(32, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-05-04, role: 10', '2024-04-22 03:42:40'),
+(33, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-05-04, shift: 3', '2024-04-22 03:42:42'),
+(34, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-05, shift: 1', '2024-04-22 04:19:43'),
+(35, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-06, role: 2', '2024-04-22 04:19:55'),
+(36, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-22, role: 1', '2024-04-22 04:32:41'),
+(37, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-22, shift: 3', '2024-04-22 04:32:50'),
+(38, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-16, role: 2', '2024-04-22 05:32:34'),
+(39, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-16, shift: 3', '2024-04-22 05:32:37'),
+(40, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-06, role: 3', '2024-04-22 05:33:01'),
+(41, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-06, shift: 2', '2024-04-22 05:33:05'),
+(42, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-07, role: 2', '2024-04-22 05:37:58'),
+(43, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-08, shift: 3', '2024-04-22 05:38:01'),
+(44, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-07, shift: 5', '2024-04-22 05:38:04'),
+(45, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-07, shift: 3', '2024-04-22 05:38:08'),
+(46, 'irfanem', 'update data role pegawai: 73, tanggal : 2024-04-04, role: 8', '2024-04-22 08:07:16'),
+(47, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-09, role: 3', '2024-04-23 01:44:42'),
+(48, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-11, shift: 5', '2024-04-23 01:44:47'),
+(49, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-11, shift: 2', '2024-04-23 01:44:51'),
+(50, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-09, shift: 4', '2024-04-23 01:44:54'),
+(51, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-13, role: 5', '2024-04-23 01:44:58'),
+(52, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-13, shift: 3', '2024-04-23 01:45:01'),
+(53, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-17, role: 4', '2024-04-23 01:45:07'),
+(54, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-17, shift: 2', '2024-04-23 01:45:10'),
+(55, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-18, role: 2', '2024-04-23 01:45:13'),
+(56, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-18, shift: 1', '2024-04-23 01:45:16'),
+(57, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-06, shift: 2', '2024-04-23 01:47:46'),
+(58, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-07, role: 1', '2024-04-23 01:47:47'),
+(59, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-07, shift: 1', '2024-04-23 01:47:52'),
+(60, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-08, role: 1', '2024-04-23 01:47:57'),
+(61, 'irfanem', 'update data role pegawai: 80, tanggal : 2024-04-08, role: 2', '2024-04-23 01:48:02'),
+(62, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-08, shift: 2', '2024-04-23 01:48:06'),
+(63, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-09, role: 3', '2024-04-23 01:48:07'),
+(64, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-09, shift: 1', '2024-04-23 01:48:09'),
+(65, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-10, role: 3', '2024-04-23 01:48:10'),
+(66, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-10, shift: 1', '2024-04-23 01:48:11'),
+(67, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-11, role: 3', '2024-04-23 01:48:15'),
+(68, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-11, shift: 3', '2024-04-23 01:48:16'),
+(69, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-12, role: 6', '2024-04-23 01:48:18'),
+(70, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-12, shift: 4', '2024-04-23 01:48:20'),
+(71, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-13, role: 6', '2024-04-23 01:48:21'),
+(72, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-13, shift: 5', '2024-04-23 01:48:22'),
+(73, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-14, role: 6', '2024-04-23 01:48:30'),
+(74, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-14, shift: 3', '2024-04-23 01:48:33'),
+(75, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-15, role: 6', '2024-04-23 01:48:35'),
+(76, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-15, shift: 2', '2024-04-23 01:48:41'),
+(77, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-16, role: 7', '2024-04-23 01:48:43'),
+(78, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-16, shift: 3', '2024-04-23 01:48:45'),
+(79, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-17, role: 5', '2024-04-23 01:48:47'),
+(80, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-17, shift: 3', '2024-04-23 01:48:50'),
+(81, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-18, role: 9', '2024-04-23 01:48:53'),
+(82, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-18, shift: 3', '2024-04-23 01:48:55'),
+(83, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-19, role: 5', '2024-04-23 01:48:57'),
+(84, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-19, shift: 3', '2024-04-23 01:48:58'),
+(85, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-20, role: 5', '2024-04-23 01:49:00'),
+(86, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-20, shift: 2', '2024-04-23 01:49:01'),
+(87, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-21, role: 9', '2024-04-23 01:49:04'),
+(88, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-21, shift: 1', '2024-04-23 01:49:06'),
+(89, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-23, role: 6', '2024-04-23 01:49:09'),
+(90, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-23, shift: 2', '2024-04-23 01:49:12'),
+(91, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-24, role: 3', '2024-04-23 01:49:14'),
+(92, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-24, shift: 2', '2024-04-23 01:49:16'),
+(93, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-25, role: 5', '2024-04-23 01:49:18'),
+(94, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-25, shift: 3', '2024-04-23 01:49:19'),
+(95, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-26, role: 6', '2024-04-23 01:49:22'),
+(96, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-26, shift: 2', '2024-04-23 01:49:24'),
+(97, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-27, role: 3', '2024-04-23 01:49:27'),
+(98, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-27, shift: 1', '2024-04-23 01:49:29'),
+(99, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-28, role: 1', '2024-04-23 01:49:35'),
+(100, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-28, shift: 2', '2024-04-23 01:49:37'),
+(101, 'irfanem', 'insert data role pegawai: 80, tanggal : 2024-04-29, role: 1', '2024-04-23 01:49:39'),
+(102, 'irfanem', 'update data shift pegawai: 80, tanggal : 2024-04-29, shift: 2', '2024-04-23 01:49:41'),
+(103, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-19, role: 3', '2024-04-23 01:49:45'),
+(104, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-19, shift: 2', '2024-04-23 01:49:46'),
+(105, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-20, role: 6', '2024-04-23 01:49:49'),
+(106, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-20, shift: 1', '2024-04-23 01:49:51'),
+(107, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-21, role: 3', '2024-04-23 01:49:53'),
+(108, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-21, shift: 3', '2024-04-23 01:49:55'),
+(109, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-22, role: 3', '2024-04-23 01:49:56'),
+(110, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-22, shift: 3', '2024-04-23 01:49:58'),
+(111, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-23, role: 2', '2024-04-23 01:50:00'),
+(112, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-23, shift: 3', '2024-04-23 01:50:02'),
+(113, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-25, role: 1', '2024-04-23 01:50:03'),
+(114, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-25, shift: 2', '2024-04-23 01:50:06'),
+(115, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-26, role: 4', '2024-04-23 01:50:09'),
+(116, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-26, shift: 3', '2024-04-23 01:50:11'),
+(117, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-27, role: 2', '2024-04-23 01:51:04'),
+(118, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-27, shift: 3', '2024-04-23 01:51:06'),
+(119, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-28, role: 2', '2024-04-23 01:51:07'),
+(120, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-28, shift: 1', '2024-04-23 01:51:09'),
+(121, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-29, role: 4', '2024-04-23 01:51:11'),
+(122, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-29, shift: 2', '2024-04-23 01:51:12'),
+(123, 'irfanem', 'insert data role pegawai: 73, tanggal : 2024-04-30, role: 2', '2024-04-23 01:51:14'),
+(124, 'irfanem', 'update data shift pegawai: 73, tanggal : 2024-04-30, shift: 3', '2024-04-23 01:51:15'),
+(125, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-30, role: 1', '2024-04-23 01:51:18'),
+(126, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-30, shift: 3', '2024-04-23 01:51:20'),
+(127, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-29, role: 7', '2024-04-23 01:51:22'),
+(128, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-29, shift: 2', '2024-04-23 01:51:24'),
+(129, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-28, role: 3', '2024-04-23 01:51:26'),
+(130, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-28, shift: 1', '2024-04-23 01:51:27'),
+(131, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-27, role: 1', '2024-04-23 01:51:29'),
+(132, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-27, shift: 1', '2024-04-23 01:51:30'),
+(133, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-26, role: 2', '2024-04-23 01:51:31'),
+(134, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-26, shift: 2', '2024-04-23 01:51:33'),
+(135, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-25, role: 3', '2024-04-23 01:51:35'),
+(136, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-25, shift: 1', '2024-04-23 01:51:36'),
+(137, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-25, shift: 3', '2024-04-23 01:51:39'),
+(138, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-24, role: 2', '2024-04-23 01:51:40'),
+(139, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-24, shift: 3', '2024-04-23 01:51:43'),
+(140, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-23, role: 7', '2024-04-23 01:51:45'),
+(141, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-23, shift: 2', '2024-04-23 01:52:52'),
+(142, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-22, role: 1', '2024-04-23 01:52:53'),
+(143, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-22, shift: 3', '2024-04-23 01:52:54'),
+(144, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-21, role: 2', '2024-04-23 01:52:56'),
+(145, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-21, shift: 1', '2024-04-23 01:52:57'),
+(146, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-20, role: 4', '2024-04-23 01:52:58'),
+(147, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-20, shift: 3', '2024-04-23 01:52:59'),
+(148, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-19, role: 2', '2024-04-23 01:53:01'),
+(149, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-19, shift: 3', '2024-04-23 01:53:02'),
+(150, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-18, role: 1', '2024-04-23 01:53:04'),
+(151, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-18, shift: 1', '2024-04-23 01:53:05'),
+(152, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-17, role: 6', '2024-04-23 01:53:06'),
+(153, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-17, shift: 3', '2024-04-23 01:53:08'),
+(154, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-16, role: 2', '2024-04-23 01:53:09'),
+(155, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-16, shift: 1', '2024-04-23 01:53:11'),
+(156, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-15, role: 4', '2024-04-23 01:53:14'),
+(157, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-15, shift: 3', '2024-04-23 01:53:16'),
+(158, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-14, role: 3', '2024-04-23 01:53:17'),
+(159, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-14, shift: 2', '2024-04-23 01:53:18'),
+(160, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-13, role: 2', '2024-04-23 01:53:19'),
+(161, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-13, shift: 2', '2024-04-23 01:53:21'),
+(162, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-12, role: 3', '2024-04-23 01:53:22'),
+(163, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-12, shift: 3', '2024-04-23 01:53:24'),
+(164, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-11, role: 2', '2024-04-23 01:53:25'),
+(165, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-11, shift: 2', '2024-04-23 01:53:26'),
+(166, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-10, role: 3', '2024-04-23 01:53:27'),
+(167, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-10, shift: 2', '2024-04-23 01:53:28'),
+(168, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-09, role: 6', '2024-04-23 01:53:30'),
+(169, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-09, shift: 3', '2024-04-23 01:53:32'),
+(170, 'irfanem', 'update data role pegawai: 94, tanggal : 2024-04-07, role: 2', '2024-04-23 01:53:33'),
+(171, 'irfanem', 'insert data role pegawai: 94, tanggal : 2024-04-06, role: 1', '2024-04-23 01:53:35'),
+(172, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-06, shift: 2', '2024-04-23 01:53:37'),
+(173, 'irfanem', 'update data shift pegawai: 94, tanggal : 2024-04-05, shift: 3', '2024-04-23 01:53:39'),
+(174, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-02, role: 3', '2024-04-23 07:04:13'),
+(175, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-02, shift: 3', '2024-04-23 07:04:14'),
+(176, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-03, role: 2', '2024-04-23 07:04:16'),
+(177, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-03, shift: 3', '2024-04-23 07:04:18'),
+(178, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-04, role: 2', '2024-04-23 07:04:21'),
+(179, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-04, shift: 1', '2024-04-23 07:04:22'),
+(180, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-05, role: 1', '2024-04-23 07:04:24'),
+(181, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-05, shift: 2', '2024-04-23 07:04:28'),
+(182, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-06, role: 2', '2024-04-23 07:08:11'),
+(183, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-06, shift: 4', '2024-04-23 07:08:14'),
+(184, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-07, role: 2', '2024-04-23 07:08:16'),
+(185, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-07, shift: 4', '2024-04-23 07:08:17'),
+(186, 'irfanem', 'insert data role pegawai: 104, tanggal : 2024-04-08, role: 2', '2024-04-23 07:08:19'),
+(187, 'irfanem', 'update data shift pegawai: 104, tanggal : 2024-04-08, shift: 4', '2024-04-23 07:08:21');
 
 -- --------------------------------------------------------
 
@@ -807,16 +981,16 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `kode`, `nama`) VALUES
-(1, 'OPR', 'operator'),
-(2, 'SP', 'support'),
-(3, 'RTL', 'operator retail'),
-(4, 'ADM', 'admin H2H'),
-(5, 'CV', 'cs voucher'),
-(6, 'SPR', 'cs retail'),
-(7, 'CS', 'cs xmltronik'),
-(8, 'PG', 'cs pg'),
-(9, 'PH', 'cs ph'),
-(10, 'SSB', 'cs ssb'),
+(1, 'OPR', 'Operator'),
+(2, 'SP', 'Support'),
+(3, 'RTL', 'Operator Retail'),
+(4, 'ADM', 'Admin H2H'),
+(5, 'CV', 'Cs Voucher'),
+(6, 'SPR', 'CS Retail'),
+(7, 'CS', 'CS Xmltronik'),
+(8, 'PG', 'CS Pg'),
+(9, 'PH', 'CS PH'),
+(10, 'SSB', 'CS SSB'),
 (11, 'SDP', 'cs sdp');
 
 -- --------------------------------------------------------
@@ -847,9 +1021,9 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (11, 94, 11, 3, '2024-04-01 13:17:43', NULL, '2024-04-03'),
 (12, 94, 11, 1, '2024-04-01 13:17:43', NULL, '2024-04-04'),
 (13, 94, 1, 3, NULL, NULL, '2024-04-01'),
-(14, 94, 6, NULL, NULL, NULL, '2024-04-05'),
+(14, 94, 6, 3, NULL, NULL, '2024-04-05'),
 (15, 80, 4, 2, NULL, NULL, '2024-04-01'),
-(16, 73, 7, NULL, NULL, NULL, '2024-04-05'),
+(16, 73, 7, 1, NULL, NULL, '2024-04-05'),
 (18, 94, 2, 2, NULL, NULL, '2024-04-08'),
 (20, 73, 2, 2, NULL, NULL, '2024-04-01'),
 (21, 73, 9, 1, NULL, NULL, '2024-04-02'),
@@ -858,13 +1032,13 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (24, 80, 3, 2, NULL, NULL, '2024-04-30'),
 (25, 80, 3, 3, NULL, NULL, '2024-04-05'),
 (26, 73, 3, 3, NULL, NULL, '2024-04-10'),
-(27, 73, 3, NULL, NULL, NULL, '2024-04-11'),
+(27, 73, 3, 2, NULL, NULL, '2024-04-11'),
 (28, 73, 5, 2, NULL, NULL, '2024-04-12'),
-(29, 73, 1, NULL, NULL, NULL, '2024-04-08'),
-(30, 94, NULL, 3, NULL, NULL, '2024-04-07'),
+(29, 73, 1, 3, NULL, NULL, '2024-04-08'),
+(30, 94, 2, 3, NULL, NULL, '2024-04-07'),
 (32, 73, 1, 3, NULL, NULL, '2024-04-24'),
 (33, 73, 2, 3, NULL, NULL, '2024-04-14'),
-(34, 73, 4, 3, NULL, NULL, '2024-04-04'),
+(34, 73, 8, 3, NULL, NULL, '2024-04-04'),
 (35, 73, 2, 2, NULL, NULL, '2024-05-04'),
 (36, 104, 3, 3, NULL, NULL, '2024-05-05'),
 (37, 73, 2, 3, NULL, NULL, '2024-05-03'),
@@ -881,7 +1055,88 @@ INSERT INTO `schedules` (`id`, `employ_id`, `role_id`, `shift_id`, `created_at`,
 (48, 73, 1, 4, NULL, NULL, '2024-02-07'),
 (49, 94, 3, 2, NULL, NULL, '2024-02-06'),
 (50, 63, 1, 3, NULL, NULL, '2024-02-04'),
-(51, 73, 3, 2, NULL, NULL, '2024-05-06');
+(51, 73, 3, 2, NULL, NULL, '2024-05-06'),
+(52, 80, 3, 3, NULL, NULL, '2024-05-01'),
+(53, 73, 4, 4, NULL, NULL, '2024-04-15'),
+(54, 73, 8, 3, NULL, NULL, '2024-05-07'),
+(55, 80, 4, 4, NULL, NULL, '2024-05-02'),
+(56, 80, 1, 3, NULL, NULL, '2024-05-03'),
+(57, 94, 10, 1, NULL, NULL, '2024-05-01'),
+(58, 94, 10, 4, NULL, NULL, '2024-05-02'),
+(59, 94, 10, 3, NULL, NULL, '2024-05-03'),
+(60, 94, 10, 3, NULL, NULL, '2024-05-04'),
+(61, 80, 2, 2, NULL, NULL, '2024-04-06'),
+(62, 80, 1, 3, NULL, NULL, '2024-04-22'),
+(63, 73, 2, 3, NULL, NULL, '2024-04-16'),
+(64, 73, 3, 2, NULL, NULL, '2024-04-06'),
+(65, 73, 2, 3, NULL, NULL, '2024-04-07'),
+(66, 73, 3, 4, NULL, NULL, '2024-04-09'),
+(67, 73, 5, 3, NULL, NULL, '2024-04-13'),
+(68, 73, 4, 2, NULL, NULL, '2024-04-17'),
+(69, 73, 2, 1, NULL, NULL, '2024-04-18'),
+(70, 80, 1, 1, NULL, NULL, '2024-04-07'),
+(71, 80, 2, 2, NULL, NULL, '2024-04-08'),
+(72, 80, 3, 1, NULL, NULL, '2024-04-09'),
+(73, 80, 3, 1, NULL, NULL, '2024-04-10'),
+(74, 80, 3, 3, NULL, NULL, '2024-04-11'),
+(75, 80, 6, 4, NULL, NULL, '2024-04-12'),
+(76, 80, 6, 5, NULL, NULL, '2024-04-13'),
+(77, 80, 6, 3, NULL, NULL, '2024-04-14'),
+(78, 80, 6, 2, NULL, NULL, '2024-04-15'),
+(79, 80, 7, 3, NULL, NULL, '2024-04-16'),
+(80, 80, 5, 3, NULL, NULL, '2024-04-17'),
+(81, 80, 9, 3, NULL, NULL, '2024-04-18'),
+(82, 80, 5, 3, NULL, NULL, '2024-04-19'),
+(83, 80, 5, 2, NULL, NULL, '2024-04-20'),
+(84, 80, 9, 1, NULL, NULL, '2024-04-21'),
+(85, 80, 6, 2, NULL, NULL, '2024-04-23'),
+(86, 80, 3, 2, NULL, NULL, '2024-04-24'),
+(87, 80, 5, 3, NULL, NULL, '2024-04-25'),
+(88, 80, 6, 2, NULL, NULL, '2024-04-26'),
+(89, 80, 3, 1, NULL, NULL, '2024-04-27'),
+(90, 80, 1, 2, NULL, NULL, '2024-04-28'),
+(91, 80, 1, 2, NULL, NULL, '2024-04-29'),
+(92, 73, 3, 2, NULL, NULL, '2024-04-19'),
+(93, 73, 6, 1, NULL, NULL, '2024-04-20'),
+(94, 73, 3, 3, NULL, NULL, '2024-04-21'),
+(95, 73, 3, 3, NULL, NULL, '2024-04-22'),
+(96, 73, 2, 3, NULL, NULL, '2024-04-23'),
+(97, 73, 1, 2, NULL, NULL, '2024-04-25'),
+(98, 73, 4, 3, NULL, NULL, '2024-04-26'),
+(99, 73, 2, 3, NULL, NULL, '2024-04-27'),
+(100, 73, 2, 1, NULL, NULL, '2024-04-28'),
+(101, 73, 4, 2, NULL, NULL, '2024-04-29'),
+(102, 73, 2, 3, NULL, NULL, '2024-04-30'),
+(103, 94, 1, 3, NULL, NULL, '2024-04-30'),
+(104, 94, 7, 2, NULL, NULL, '2024-04-29'),
+(105, 94, 3, 1, NULL, NULL, '2024-04-28'),
+(106, 94, 1, 1, NULL, NULL, '2024-04-27'),
+(107, 94, 2, 2, NULL, NULL, '2024-04-26'),
+(108, 94, 3, 3, NULL, NULL, '2024-04-25'),
+(109, 94, 2, 3, NULL, NULL, '2024-04-24'),
+(110, 94, 7, 2, NULL, NULL, '2024-04-23'),
+(111, 94, 1, 3, NULL, NULL, '2024-04-22'),
+(112, 94, 2, 1, NULL, NULL, '2024-04-21'),
+(113, 94, 4, 3, NULL, NULL, '2024-04-20'),
+(114, 94, 2, 3, NULL, NULL, '2024-04-19'),
+(115, 94, 1, 1, NULL, NULL, '2024-04-18'),
+(116, 94, 6, 3, NULL, NULL, '2024-04-17'),
+(117, 94, 2, 1, NULL, NULL, '2024-04-16'),
+(118, 94, 4, 3, NULL, NULL, '2024-04-15'),
+(119, 94, 3, 2, NULL, NULL, '2024-04-14'),
+(120, 94, 2, 2, NULL, NULL, '2024-04-13'),
+(121, 94, 3, 3, NULL, NULL, '2024-04-12'),
+(122, 94, 2, 2, NULL, NULL, '2024-04-11'),
+(123, 94, 3, 2, NULL, NULL, '2024-04-10'),
+(124, 94, 6, 3, NULL, NULL, '2024-04-09'),
+(125, 94, 1, 2, NULL, NULL, '2024-04-06'),
+(126, 104, 3, 3, NULL, NULL, '2024-04-02'),
+(127, 104, 2, 3, NULL, NULL, '2024-04-03'),
+(128, 104, 2, 1, NULL, NULL, '2024-04-04'),
+(129, 104, 1, 2, NULL, NULL, '2024-04-05'),
+(130, 104, 2, 4, NULL, NULL, '2024-04-06'),
+(131, 104, 2, 4, NULL, NULL, '2024-04-07'),
+(132, 104, 2, 4, NULL, NULL, '2024-04-08');
 
 -- --------------------------------------------------------
 
@@ -899,10 +1154,11 @@ CREATE TABLE `shifts` (
 --
 
 INSERT INTO `shifts` (`id`, `nama`) VALUES
-(1, 'pagi'),
-(2, 'siang'),
-(3, 'malam'),
-(4, 'middle');
+(1, 'Enjing'),
+(2, 'Siang'),
+(3, 'Ndalu'),
+(4, 'Middle'),
+(5, 'Libur');
 
 -- --------------------------------------------------------
 
@@ -1149,9 +1405,9 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `schedules`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_employ_id` (`employ_id`),
   ADD KEY `fk_role_id` (`role_id`),
-  ADD KEY `fk_shift_id` (`shift_id`);
+  ADD KEY `fk_shift_id` (`shift_id`),
+  ADD KEY `fk_employ_id` (`employ_id`) USING BTREE;
 
 --
 -- Indexes for table `shifts`
@@ -1234,7 +1490,7 @@ ALTER TABLE `kinerja`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -1264,19 +1520,19 @@ ALTER TABLE `rekap_report`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT for table `shifts`
 --
 ALTER TABLE `shifts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `task`
