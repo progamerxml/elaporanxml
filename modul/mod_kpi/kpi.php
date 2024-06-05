@@ -103,13 +103,15 @@ else {
                     <div class="box-body">
                         
                         <div class="nav-pills-warning">
-                            <ul class="nav nav-tabs">
-                                <?php foreach($gol2 as $gol) : if($gol['id'] == 9)  continue; ?>
-                                <li class=" <?= $gol['id'] == 1 ? 'active' : '' ?>">
-                                    <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
-                                </li>
-                                <?php endforeach ?>
-                        </ul>
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <?php foreach($gol2 as $gol) : if($gol['id'] == 9)  continue; ?>
+                                    <li class=" <?= $gol['id'] == 1 ? 'active' : '' ?>">
+                                        <a href="#gol-<?= $gol['id'] ?>" data-toggle="tab" aria-expanded="false"><b><?= camelCaseToSpace($gol['golongan']) ?></b></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
                         <div class="tab-content">
                             <?php foreach($gol2 as $gol) : ?>
                                 <div class="tab-pane <?= $gol['id'] == 1 ? 'active' : '' ?>" id="gol-<?= $gol['id'] ?>">
