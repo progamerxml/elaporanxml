@@ -6,7 +6,7 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 } // Apabila user sudah login dengan benar, maka terbentuklah session
 else {
     $aksi = "modul/mod_role/role_aksi.php";
-    // require __DIR__ . "/role_aksi.php";
+    require __DIR__ . "/role_aksi.php";
 
     $act = isset($_GET['act']) ? $_GET['act'] : '';
     $mod = $_GET['module'];
