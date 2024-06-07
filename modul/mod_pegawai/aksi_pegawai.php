@@ -18,6 +18,36 @@ else{
     return $exec;
   }
 
+  function getAllKaryawan($id = null)
+  {
+    $where = ($id == null) ? "" : " AND a.id = $id";
+    global $konek;
+    $query = "SELECT a.id, a.nama,a.alamat, a.tgl_masuk, a.tgl_kontrak, a.report, a.bpjs_kes, a.bpjs_ket, a.no_absen,  b.nama_jabatan as jabatan
+							FROM pegawai a, jabatan b
+							WHERE a.jabatan=b.id $where
+							ORDER by a.no_absen";
+    $ex = mysqli_query($konek, $query);
+    $kars = [];
+    if($ex){
+      while($data = mysqli_fetch_assoc($ex))
+      {
+        $kars[] = [
+          'id' => $data['id'],
+          "nama" => $data['nama'],
+          "alamat" => $data['alamat'],
+          "tgl_masuk" => $data['tgl_masuk'],
+          "tgl_kontrak" => $data['tgl_kontrak'],
+          "report" => $data['report'],
+          "bpjs_kes" => $data['bpjs_kes'],
+          "bpjs_ket" => $data['bpjs_ket'],
+          "no_absen" => $data['no_absen'],
+          "jabatan" => $data['jabatan']
+        ];
+      }
+    }
+    return $kars;
+  }
+
   function getDataKaryawanById($id){
     global $konek;
     $ex = mysqli_query($konek, "SELECT * FROM pegawai WHERE id = $id");
@@ -46,6 +76,7 @@ else{
   // Input templates
   if ($module=='pegawai' AND $act=='input'){
 	$nama				= $_POST['nama'];
+	$no_absen				= $_POST['no_absen'];
 	$alamat				= $_POST['alamat'];
 	$jabatan			= $_POST['nama_jabatan'];
 	$tgl_masuk		= $_POST['tgl_masuk'];
@@ -64,7 +95,7 @@ else{
   if ($ada['jml'] <= 0)
   {     
     // mycode
-  $input = "INSERT INTO pegawai(nama, alamat, jabatan, tgl_masuk, tgl_kontrak, report, bpjs_kes, bpjs_ket) VALUES('$nama','$alamat', '$jabatan','$tgl_masuk','$tgl_kontrak', $report, '$bpjs_kes','$bpjs_ket')";
+  $input = "INSERT INTO pegawai(nama, alamat, jabatan, tgl_masuk, tgl_kontrak, report, bpjs_kes, bpjs_ket) VALUES('$nama','$no_absen','$alamat', '$jabatan','$tgl_masuk','$tgl_kontrak', $report, '$bpjs_kes','$bpjs_ket')";
     if(mysqli_query($konek, $input))
     {
       $id = mysqli_fetch_array(mysqli_query($konek, "SELECT id FROM pegawai WHERE nama = '$nama'"));
@@ -80,6 +111,7 @@ else{
   elseif ($module=='pegawai' AND $act=='update'){
     $id             = $_POST['id'];
     $nama        		= $_POST['nama'];
+    $no_absen        		= $_POST['no_absen'];
 	  $alamat				  = $_POST['alamat'];
     $jabatan			  = $_POST['nama_jabatan'];
     $tgl_masuk		  = date("Y-m-d",strtotime($_POST['tgl_masuk']));
@@ -88,11 +120,11 @@ else{
     $bpjs_kes				= $_POST['bpjs_kes'];
     $bpjs_ket				= $_POST['bpjs_ket'];
     
-    $update = "UPDATE pegawai SET nama='$nama', alamat='$alamat', jabatan='$jabatan', tgl_masuk='$tgl_masuk', tgl_kontrak='$tgl_kontrak', report=$report, bpjs_kes='$bpjs_kes', bpjs_ket='$bpjs_ket' WHERE id=$id";
-    //var_dump($update);
-    mysqli_query($konek, $update);
+    $update = "UPDATE pegawai SET nama='$nama', no_absen = $no_absen, alamat='$alamat', jabatan='$jabatan', tgl_masuk='$tgl_masuk', tgl_kontrak='$tgl_kontrak', report=$report, bpjs_kes='$bpjs_kes', bpjs_ket='$bpjs_ket' WHERE id=$id";
+    var_dump($update);
+    // mysqli_query($konek, $update);
 
-    header("location:".$base_url.$module);
+    // header("location:".$base_url.$module);
   }
 
   // Aktifkan templates

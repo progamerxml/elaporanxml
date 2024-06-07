@@ -7,10 +7,11 @@ if (empty($_SESSION['namauser']) AND empty($_SESSION['passuser'])){
 // Apabila user sudah login dengan benar, maka terbentuklah session
 else{
   $aksi = "modul/mod_pegawai/aksi_pegawai.php";
+  require_once __DIR__ . "/aksi_pegawai.php";
 
   // mengatasi variabel yang belum di definisikan (notice undefined index)
   $act = isset($_GET['act']) ? $_GET['act'] : '';
-  $mod=$_GET['module']; 
+  $mod=$_GET['module'];
 ?>
 <section class="content-header">
 	<h1 class="page-header">
@@ -55,6 +56,7 @@ else{
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>No Absen</th>
 								<th>Nama Karyawan</th>
 								<th>Jabatan</th>
 								<th>Alamat</th>
@@ -67,16 +69,36 @@ else{
 							</tr>
 						</thead>
 						<tbody>
+
+						<!-- <?php $no = 1; foreach(getAllKaryawan() as $karyawan) { $report = ($karyawan['report'] == 1) ? "iya" : "tidak"; ?>
+							<tr>
+								<td><?= $no ?></td>
+								<td><?= $karyawan['nama'] ?></td>
+								<td><?= $karyawan['jabatan'] ?></td>
+								<td><?= $karyawan['alamat'] ?></td>
+								<td><?= $karyawan['tgl_masuk'] ?></td>
+								<td><?= $karyawan['tgl_kontrak'] ?></td>
+								<td><?= $report ?></td>
+								<td><?= $karyawan['bpjs_kes'] ?></td>
+								<td><?= $karyawan['bpjs_ket'] ?></td>
+								<td align="center">
+									<a href="<?= $base_url.$mod . '-edit-' . $karyawan['id'] ?>.html" title="Edit Data"><i class="fa fa-pencil"></i></a> &nbsp; 
+									<a href="<?= $aksi . '?module=pegawai&act=hapus&id=' .$karyawan['id'] ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data"><i class="fa fa-trash text-red"></i></a> &nbsp; 
+								</td>
+							<tr>
+							<?php $no++; } ?> -->
+							
 							<?php
-					$query  = "	SELECT a.nama,a.alamat, a.tgl_masuk, a.tgl_kontrak, a.report, a.bpjs_kes, a.bpjs_ket,  b.nama_jabatan as jabatan, a.id
+					$query  = "	SELECT a.nama, a.no_absen, a.alamat, a.tgl_masuk, a.tgl_kontrak, a.report, a.bpjs_kes, a.bpjs_ket,  b.nama_jabatan as jabatan, a.id
 								FROM pegawai a, jabatan b
 								WHERE a.jabatan=b.id 
-								order by b.id";
+								order by a.no_absen";
 					$tampil = mysqli_query($konek, $query);
 					$no=1;
 					while ($r=mysqli_fetch_array($tampil)){  
 						if ($r['report'] == 1 ){$rport = "iya";}else{$rport = "tidak";}
 						echo "<tr><td>$no</td>
+                			<td>$r[no_absen]</td>
                 			<td>$r[nama]</td>
 							<td>$r[jabatan]</td>
 							<td>$r[alamat]</td>
@@ -110,6 +132,12 @@ else{
 				</div><!-- /.box-header -->
 				<form method="POST" action="<?php echo $aksi; ?>?module=pegawai&act=input" class="form-horizontal">
 					<div class="box-body">
+						<div class="form-group">
+							<label for="no_absen" class="col-sm-2 control-label">No Absen</label>
+							<div class="col-sm-6">
+								<input type="number" class="form-control" id="no_absen" name="no_absen" />
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="pembuat" class="col-sm-2 control-label">Nama</label>
 							<div class="col-sm-6">
@@ -199,7 +227,12 @@ else{
 			<form method="POST" action="<?php echo $aksi; ?>?module=pegawai&act=update" class="form-horizontal">
 				<input type="hidden" name="id" value="<?php echo $res['id']; ?>">
 				<div class="box-body">
-
+					<div class="form-group">
+						<label for="no_absen" class="col-sm-2 control-label">No Absen</label>
+						<div class="col-sm-6">
+							<input type="number" class="form-control" id="no_absen" name="no_absen" value="<?php echo $res['no_absen']; ?>"/>
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="pembuat" class="col-sm-2 control-label">Nama</label>
 						<div class="col-sm-6">
