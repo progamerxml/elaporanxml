@@ -121,10 +121,10 @@ else{
     $bpjs_ket				= $_POST['bpjs_ket'];
     
     $update = "UPDATE pegawai SET nama='$nama', no_absen = $no_absen, alamat='$alamat', jabatan='$jabatan', tgl_masuk='$tgl_masuk', tgl_kontrak='$tgl_kontrak', report=$report, bpjs_kes='$bpjs_kes', bpjs_ket='$bpjs_ket' WHERE id=$id";
-    var_dump($update);
-    // mysqli_query($konek, $update);
+    // var_dump($update);
+    mysqli_query($konek, $update);
 
-    // header("location:".$base_url.$module);
+    header("location:".$base_url.$module);
   }
 
   // Aktifkan templates

@@ -98,14 +98,15 @@ else {
     {
         global $konek;
         $where = " WHERE p.id in(73,80,94)";
-        $qjdwl = mysqli_query($konek, "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, 
+        $qjdwl = mysqli_query($konek, "SELECT p.id AS pegawai_id, p.nama AS nama_pegawai, p.no_absen,
                                     r.id AS role_id, r.nama AS nama_role, 
                                     s.id AS shift_id, s.nama AS nama_shift, 
                                     sc.id AS schedule_id, sc.date
                                     FROM pegawai p
                                     LEFT JOIN schedules sc ON p.id = sc.employ_id
                                     LEFT JOIN roles r ON sc.role_id = r.id
-                                    LEFT JOIN shifts s ON sc.shift_id = s.id"
+                                    LEFT JOIN shifts s ON sc.shift_id = s.id
+                                    ORDER BY p.no_absen ASC"
         );
 
         // Membuat array untuk menyimpan data jadwal untuk setiap karyawan

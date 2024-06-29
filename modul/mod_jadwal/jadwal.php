@@ -7,7 +7,6 @@
 
     table {
         border-collapse: collapse;
-        
         width: 100%;
     }
 
@@ -316,6 +315,30 @@ else {
 
     $(document).ready(function () {
 
+        // Menangani acara klik ganda pada elemen <td>
+        $("td").dblclick(function() {
+                var tooltip = $(this).find(".tooltip_cust");
+                var roleText = $(this).find("select[id^='role']").find('option:selected').text();
+                var shiftText = $(this).find("select[id^='shift']").find('option:selected').text();
+                var displayText = "Role: " + roleText + "<br>Shift: " + shiftText;
+                tooltip.html(displayText);
+                tooltip.css({
+                    display: "block",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.7)",
+                    color: "white",
+                    padding: "10px",
+                    borderRadius: "5px"
+                });
+                setTimeout(function() {
+                    tooltip.fadeOut();
+                }, 3000); // Tooltip akan hilang setelah 3 detik
+            });
+
+            
         // untuk insert / update jadwal dan shift
         $('table').on('change', 'select', function () {
             var selectId = $(this).attr('id'); 

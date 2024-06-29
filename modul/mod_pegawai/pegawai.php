@@ -92,7 +92,7 @@ else{
 					$query  = "	SELECT a.nama, a.no_absen, a.alamat, a.tgl_masuk, a.tgl_kontrak, a.report, a.bpjs_kes, a.bpjs_ket,  b.nama_jabatan as jabatan, a.id
 								FROM pegawai a, jabatan b
 								WHERE a.jabatan=b.id 
-								order by a.no_absen";
+								order by a.no_absen DESC";
 					$tampil = mysqli_query($konek, $query);
 					$no=1;
 					while ($r=mysqli_fetch_array($tampil)){  
