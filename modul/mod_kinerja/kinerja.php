@@ -151,12 +151,13 @@ else{
                 	<table id="dataalbum" class="table table-hover">
 						<thead>
 							<tr>
-								<th style="text-align: center;" width= "5%;">No</th>
+								<th style="text-align: center;" width= "2%;">No</th>
 								<th style="text-align: center;" width= "25%;">Nama Pegawai</th>
 								<th style="text-align: center;" width= "10%">Tanggal</th>
-								<th style="text-align: center;" width= "40%">Detail Pekerjaan</th>
-								<th style="text-align: center;" width= "20%">Waktu Input</th>
-								<!-- <th>Aksi</th> -->
+								<th style="text-align: center;" width= "30%">Detail Pekerjaan</th>
+								<th style="text-align: center;" width= "15%">Waktu Input</th>
+								<th style="text-align: center;" width= "15%">Waktu Update</th>
+								<th width= "3%;">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -169,13 +170,13 @@ else{
 							if(!empty($fltrtgl) && !empty($fltrtgl2)){ $filter = " AND a.tgl between '$fltrtgl' and '$fltrtgl2' "; } //var_dump($filter);
 							if(!empty($fltrnm)){ $filter2 = " AND b.nama LIKE '%$fltrnm%'"; } //var_dump($filter2);
 							if($_SESSION['leveluser']=="admin" || $_SESSION['leveluser']=="superadmin"){
-							$query  = "SELECT a.id as idkrj, a.tgl, a.tanggal , a.pekerjaan, b.nama, b.id
+							$query  = "SELECT a.id as idkrj, a.tgl, a.tgl_update, a.tanggal , a.pekerjaan, b.nama, b.id
 							FROM pekerjaan a, pegawai b
 							WHERE a.karyawan = b.id".$filter.$filter2."
 							order by a.id DESC";
 							}else{
 							// mycode
-							$query  = "SELECT a.id as idkrj, a.tgl, a.tanggal , a.pekerjaan, b.nama, b.id
+							$query  = "SELECT a.id as idkrj, a.tgl, a.tgl_update, a.tanggal , a.pekerjaan, b.nama, b.id
 							FROM pekerjaan a, pegawai b
 							WHERE a.karyawan = b.id AND b.id = $idpg
 							order by a.id DESC"; 
@@ -185,17 +186,21 @@ else{
 							// $ceklog = mysqli_fetch_object($tampil); 
 						
 						$no=1;
-						while ($r=mysqli_fetch_array($tampil)){  ?>
+						while ($r=mysqli_fetch_array($tampil)){  $update = is_null($r['tgl_update']) ? '-' : date("d-m-Y H:i:s", strtotime($r['tgl_update'])); ?>
 							<tr>
 								<td style='vertical-align: top; text-align:center;'><?php echo $no;?></td>
 								<td style='vertical-align: top; text-align:left;'><?php echo $r['nama'];?></td>
 								<td style='vertical-align: top; text-align:center;'><?php echo date("d-m-Y",strtotime($r['tgl']));?></td>
 								<td style='vertical-align: top; '><?php echo $r['pekerjaan'];?></td>
-								<td style='vertical-align: top; text-align:center;'><?php echo date("d-m-Y H:i:s",strtotime($r['tanggal']))."<br><br>"; if ($r['id'] == $idpg){ ?>
-								<span>
-										<a href="<?php echo $base_url.$mod.'-edit-'.$r['idkrj'].'.html'; ?>" title="Edit Data"><button class="btn btn-warning btn-xs">edit</button></a>&nbsp;&nbsp;&nbsp;
-										<a href="<?php echo $aksi.'?module=kinerja&act=hapus&id='.$r['idkrj']; ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data"><button class="btn btn-danger btn-xs">hapus</button></a>
-									</span> 
+								<td style='vertical-align: top; text-align:center;'><?php echo date("d-m-Y H:i:s",strtotime($r['tanggal'])) ?></td>
+								<td style='vertical-align: top; text-align:center;'><?php echo $update; ?>
+								</td>
+								<td>
+								<?php if ($r['id'] == $idpg){ ?>
+									<div class="btn-group-vertical">
+										<a href="<?php echo $base_url.$mod.'-edit-'.$r['idkrj'].'.html'; ?>" type="button" class="btn btn-warning">Edit</a>
+										<a href="<?php echo $aksi.'?module=kinerja&act=hapus&id='.$r['idkrj']; ?>" onclick="return confirm('APAKAH ANDA YAKIN AKAN MENGHAPUS DATA INI ?')" title="Hapus Data" type="button" class="btn btn-danger">Hapus</a>
+									</div>
 								<?php } ?>
 								</td>
 							

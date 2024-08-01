@@ -57,7 +57,7 @@ else{
     $tgl = date("Y-m-d", strtotime($_POST['tanggal'])); //var_dump($tgl);
 
 
-    $update = "UPDATE pekerjaan SET karyawan=$id, pekerjaan='$detail_kerja', tanggal=CURRENT_TIMESTAMP(), tgl='$tgl' WHERE id='$idkerja'"; //var_dump($update);
+    $update = "UPDATE pekerjaan SET karyawan=$id, pekerjaan='$detail_kerja', tgl_update=CURRENT_TIMESTAMP(), tgl='$tgl' WHERE id='$idkerja'"; //var_dump($update);
     mysqli_query($konek, $update);
 
     header("location:".$base_url.$module);
